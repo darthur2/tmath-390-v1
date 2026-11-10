@@ -1,0 +1,132 @@
+---
+title: "Central Limit Theorem for Discrete Rvs"
+format: html
+editor: visual
+self-contained: true
+---
+
+## Question 1A (5 points)
+
+The functions below can be used to simulate sampling distributions of the sample mean for the Bernoulli and Poisson distributions respectively. You'll need to run this cell to use these functions.
+
+```{r, echo = TRUE}
+rbern_samp_dist <- function(n_sim, sample_size, p){
+  # n_sim: The number of random samples generated
+  # sample_size: The number of draws for each sample
+  # p: Success probability parameter
+  
+  draws <- rbinom(n_sim, sample_size, p)
+  means <- draws/sample_size
+  
+  means
+}
+
+rpois_samp_dist <- function(n_sim, sample_size, lambda){
+  # n_sim: The number of random samples generated
+  # sample_size: The number of draws for each sample
+  # lambda: The rate parameter
+  
+  draws <- replicate(n_sim, rpois(sample_size, lambda))
+  means <- colMeans(draws)
+  
+  means
+}
+```
+
+In the code block below, use the `rbern_samp_dist` function to simulate 2000 sample means from the sampling distribution when success probability is $p = 0.4$. Let the sample size for each random sample be $n = 40$.
+
+```{r, echo = TRUE}
+means <- rbern_samp_dist(2000, 40, 0.4)
+```
+
+What are the mean and the standard deviation of the normal distribution that would be used to approximate this sampling distribution?
+
+- The mean is: [0.4]{style="color: red;"}
+- The standard deviation is: [0.0775]{style="color: red;"}
+
+Now, in the code chunk below, plot a histogram of the 2000 sample means. Make sure to set the `freq` option to FALSE (i.e., `freq = FALSE`). Then, add a curve on top of the normal distribution using the `curve` function and the `dnorm` function.
+
+```{r, echo = TRUE}
+hist(means, freq = FALSE)
+curve(dnorm(x, 0.4, 0.0775), add = TRUE, col = 'red', lwd = 2)
+```
+
+## Question 1B (5 points)
+
+In the code block below, use the `rpois_samp_dist` function to simulate 2000 sample means from the sampling distribution when the rate parameter is $\lambda = 8$. Let the sample size for each random sample be $n = 35$.
+
+```{r, echo = TRUE}
+means <- rpois_samp_dist(2000, 35, 8)
+```
+
+What are the mean and the standard deviation of the normal distribution that would be used to approximate this sampling distribution?
+
+- The mean is: [8]{style="color: red;"}
+- The standard deviation is: [0.4781]{style="color: red;"}
+
+Now, in the code chunk below, plot a histogram of the 2000 sample means. Make sure to set the `freq` option to FALSE (i.e., `freq = FALSE`). Then, add a curve on top of the normal distribution using the `curve` function and the `dnorm` function.
+
+```{r, echo = TRUE}
+hist(means, freq = FALSE)
+curve(dnorm(x, 8, 0.4781), add = TRUE, col = 'red', lwd = 2)
+```
+
+## Question 2A (2 points)
+
+Consider the sampling distribution of the sampling mean from Question 1A. Use the Central Limit Theorem to compute the following probabilities, making sure to include continuity corrections:
+
+-   $P(\bar{X} \leq 0.35)$
+-   $P(\bar{X} > 0.45)$
+
+```{r, echo = TRUE}
+p <- 0.4
+n <- 40
+
+pnorm(0.35 + 0.5/n, p, sqrt(p*(1-p)/n))
+1-pnorm(0.45 + 0.5/n, p, sqrt(p*(1-p)/n))
+```
+
+## Question 2B (2 points)
+
+Consider the sampling distribution of the sampling mean from Question 1B. Use the Central Limit Theorem to compute the following probabilities, making sure to include continuity corrections:
+
+-   $P(\bar{X} \leq 7.4)$
+-   $P(\bar{X} > 7.8)$
+
+```{r, echo = TRUE}
+lambda <- 8
+n <- 35
+
+pnorm(7.4 + 0.5/n, lambda, sqrt(lambda/n))
+1-pnorm(7.8 + 0.5/n, lambda, sqrt(lambda/n))
+```
+
+## Question 3 (2 points)
+
+Consider the sampling distribution of the sampling mean from Question 1A. Compute the following probabilities exactly:
+
+-   $P(\bar{X} \leq 0.35)$
+-   $P(\bar{X} > 0.45)$
+
+```{r, echo = TRUE}
+p <- 0.4
+n <- 40
+
+pbinom(0.35*n, n, p)
+1-pbinom(0.45*n, n, p)
+```
+
+## Question 4 (2 points)
+
+Consider the sampling distribution of the sampling mean from Question 1B. Compute the following probabilities exactly:
+
+-   $P(\bar{X} \leq 7.4)$
+-   $P(\bar{X} > 7.8)$
+
+```{r, echo = TRUE}
+lambda <- 8
+n <- 35
+
+ppois(n*7.4, n*lambda)
+1-ppois(n*7.8, n*lambda)
+```

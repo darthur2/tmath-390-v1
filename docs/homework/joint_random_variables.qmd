@@ -1,0 +1,64 @@
+---
+title: "Joint Random Variables"
+format: html
+editor: visual
+self-contained: true
+---
+
+## Question 1 (3 points)
+
+Consider the following joint PMF for $X$ and $Y$:
+
+$$
+P_{X,Y}(x,y) = \frac{2x+y}{225} \text{ for } x,y \in \{1, 2, 3, 4, 5\} \text{ and } 0 \text{ otherwise}
+$$
+
+Create a function that computes the marginal probability of $X$ for any value $x$. Then use this to compute $P_{X}(2)$
+
+```{r, echo = TRUE}
+# Put the code here (make sure to compute and display the answer)
+```
+
+## Question 2 (3 points)
+
+Consider the following joint PDF for $X$ and $Y$ below:
+
+$$
+f_{X,Y}(x,y) = \frac{(x+y)^2}{216} \text{ for } x,y \in (-3, 3) \text{ and } 0 \text{ otherwise}
+$$
+
+Write a function that computes the conditional distribution of $X$ given $Y$. Then use this function to compute $f_{X|Y}(2|3)$.
+
+```{r, echo = TRUE}
+# Put the code here (make sure to compute and display the answer)
+```
+
+## Question 3 (4 points)
+
+Again, consider the following joint PDF for $X$ and $Y$ below:
+
+$$
+f_{X,Y}(x,y) = \frac{(x+y)^2}{216} \text{ for } x,y \in (-3, 3) \text{ and } 0 \text{ otherwise}
+$$
+
+Provide the necessary code needed below to compute $\text{E}[XY]$.
+
+```{r, echo = TRUE}
+# Put the code here (make sure to compute and display the answer)
+```
+
+## Question 4 (3 points)
+
+Once again, consider the following joint PDF for $X$ and $Y$ below:
+
+$$
+f_{X,Y}(x,y) = \frac{(x+y)^2}{216} \text{ for } x,y \in (-3, 3) \text{ and } 0 \text{ otherwise}
+$$
+
+Provide the necessary code needed below to compute $\text{Cov}(X, Y)$.
+
+```{r, echo = TRUE}
+# Put the code here (make sure to compute and display the answer)
+```
+
+What does this say about the relationship between $X$ and $Y$?

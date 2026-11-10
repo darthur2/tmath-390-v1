@@ -1,0 +1,87 @@
+---
+title: "Bayes' Theorem"
+format: html
+editor: visual
+self-contained: true
+---
+
+## Question 1 (4 points)
+
+```{r, echo = TRUE}
+diabetes_data <- read.csv("../Datasets/diabetes_data.csv")
+attach(diabetes_data)
+```
+
+Consider the following probabilities: 1) the probability that someone has Type 2 diabetes, given that they are a male, 2) the probability that someone has Type 2 diabetes, given that they are a female, 3) the probability that someone is a male, and 4) the probability that someone is a female.
+
+Compute estimates of these probabilities using the diabetes dataset and then use them to find the marginal probability of having Type 2 diabetes.
+
+```{r, echo = TRUE}
+# Put your code here
+```
+
+Now verify that this is the correct probability by computing it directly.
+
+```{r, echo = TRUE}
+# Put your code here
+```
+
+## Question 2 (5 points)
+
+Consider the following probabilities: 1) the probability that someone does not have diabetes, given that they are a non-smoker, 2) the probability that someone does not have diabetes, given that they are a former smoker, 3) the probability that someone does not have diabetes, given that they are a current smoker, 4) the probability that someone is a non-smoker, 5) the probability that someone is a former smoker, and 6) the probability that someone is a current smoker.
+
+Use the diabetes dataset to compute estimates of these probabilities and then use these to compute the marginal probability that someone does not have diabetes.
+
+```{r, echo = TRUE}
+# Put your code here
+```
+
+Now verify that this is the correct probability by computing the marginal probability that someone does not have diabetes directly.
+
+```{r, echo = TRUE}
+# Put your code here
+```
+
+## Question 3 (6 points)
+
+Consider the following probabilities: 1) the probability that someone has Type 2 diabetes, given that they are a male, 2) the probability that someone has Type 2 diabetes, given that they are a female, 3) the probability that someone is a male, and 4) the probability that someone is a female.
+
+Use the diabetes dataset to compute estimates of these probabilities:
+
+```{r, echo = TRUE}
+# Put your code here
+```
+
+Now use these probabilities to compute the probability that someone is a male, given that they have Type 2 diabetes.
+
+```{r, echo = TRUE}
+# Put your code here
+```
+
+Now verify that this is the correct probability by computing it directly.
+
+```{r, echo = TRUE}
+# Put your code here
+```
+
+## Question 4 (9 points)
+
+Consider the following probabilities: 1) the probability that someone does not have diabetes, given that they are a non-smoker, 2) the probability that someone does not have diabetes, given that they are a former smoker, 3) the probability that someone does not have diabetes, given that they are a current smoker, 4) the probability that someone is a non-smoker, 5) the probability that someone is a former smoker, and 6) the probability that someone is a current smoker.
+
+Use the diabetes dataset to compute estimates of these probabilities:
+
+```{r, echo = TRUE}
+# Put your code here
+```
+
+Now use these probabilities to compute the probability that someone is a non-smoker, given that they do not have diabetes.
+
+```{r, echo = TRUE}
+# Put your code here
+```
+
+Now verify that this is the correct probability by computing it directly.
+
+```{r, echo = TRUE}
+# Put your code here
+```

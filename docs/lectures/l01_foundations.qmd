@@ -1,0 +1,163 @@
+---
+title: "Introduction to Statistics"
+format:
+  revealjs:
+    slideNumber: true
+    scrollable: true
+    self-contained: true
+editor: visual
+---
+
+## What is Statistics?
+
+::: {.callout title="Definition 1.1"}
+The field of **statistics** is concerned with the scientific study of collecting, organizing, analyzing, and drawing conclusions from data.
+:::
+
+## Population
+
+::: {.callout title="Definition 1.2"}
+A **population** is the collection or set of all objects or measurements that are of interest to the collector.
+:::
+
+. . .
+
+## Parameter
+
+::: {.callout title="Definition 1.3"}
+A **parameter** is any quantity of a statistical population that summarizes or describes an aspect of the population. These are often denoted as Greek letters or Latin letters without diacritics (e.g., $\hat{}$, $\tilde{}$, $\bar{}$, etc.)
+:::
+
+. . .
+
+Some examples of population parameters are:
+
+-   The population mean $\mu$
+-   The population proportion $p$
+-   The population variance $\sigma^2$
+-   The population standard deviation $\sigma$
+
+## Sample
+
+::: {.callout title="Definition 1.4"}
+The **sample** is a subset of data selected from a population. The size of a sample is the number of elements in it.
+:::
+
+## Statistic
+
+::: {.callout title="Definition 1.5"}
+A **statistic** is any quantity computed from values in a sample which is considered for a statistical purpose. These are often denoted as Latin letters and sometimes include diacritics.
+:::
+
+. . .
+
+Some examples of sample statistics are:
+
+-   The sample mean $\bar{x}$
+-   The sample proportion $\hat{p}$
+-   The sample variance $s^2$
+-   The sample standard deviation $s$
+
+## Ex: Adult Heights
+
+::: {.callout title="Example 1.1"}
+A researcher wants to study the average height of all adult males in a city. She measures the height of 200 randomly selected adult males and computes the mean of these 200 heights.
+:::
+
+. . .
+
+The population is ***all adult males in the city***. The sample is the ***200 randomly selected adult males***. The population parameter is the ***average height of all adult males in the city,*** $\mu$. The sample statistic is the ***average height of the 200 random selected males,*** $\bar{x}$.
+
+## Ex: Groceries
+
+::: {.callout title="Example 1.2"}
+A survey is conducted to find out the proportion of families in a specific town that spend more than \$1000 a month on groceries. Data is collected from 150 randomly selected families and it is found that 60% of these families spend more than \$1000 a month on groceries.
+:::
+
+. . .
+
+The population is ***all families in the specific town***. The sample is the ***150 randomly selected families in the town***. The parameter is the ***proportion of all families in the town that spend more than \$1000 a month on groceries,*** $p$. The statistic is the ***proportion of the 150 families that spend more than \$1000 a month on groceries,*** $\hat{p}$.
+
+## Ex: Dog Weights
+
+::: {.callout title="Example 1.3"}
+A researcher wants to study the average weight of a certain breed of dog. She calculates the mean weight from a sample of 200 randomly selected dogs of that breed.
+
+In this example, what are the population and sample and what are the population parameter and sample statistic, along with their appropriate symbols?
+:::
+
+. . .
+
+The population is ***YOUR ANSWER***. The sample is the ***YOUR ANSWER***. The parameter is the ***YOUR ANSWER,*** $\text{symbol here}$. The statistic is the ***YOUR ANSWER,*** $\text{symbol here}$.
+
+## Ex: Diabetes Prevalence
+
+::: {.callout title="Example 1.4"}
+A health organization studies the prevalence of diabetes among adults aged 40-60 in a city. They calculate the proportion of diabetes cases from a sample of 300 individuals in this age group.
+
+In this example, what are the population and sample and what are the population parameter and sample statistic, along with their appropriate symbols?
+:::
+
+. . .
+
+The population is ***YOUR ANSWER***. The sample is the ***YOUR ANSWER***. The parameter is the ***YOUR ANSWER,*** $\text{symbol here}$. The statistic is the ***YOUR ANSWER,*** $\text{symbol here}$.
+
+## Descriptive Statistics
+
+::: {.callout title="Definition 1.6"}
+**Descriptive statistics** are statistics that assist us in organizing, describing, summarizing, and displaying experimental or observational data.
+:::
+
+## Statistical Inference
+
+::: {.callout title="Definition 1.7"}
+A **statistical inference** is an estimate, a prediction, a decision, or a generalization about the population based on information contained in a sample.
+:::
+
+## Ex: Athlete Heights
+
+::: {.callout title="Example 1.5"}
+A researcher collects a random sample of 30 athletes from a specific country. They report that the sample mean height ($\bar{x}$) of 30 athletes in a country is 170 cm.
+
+Is this an example of descriptive statistics or statistical inference?
+:::
+
+. . .
+
+This is an example of descriptive statistics.
+
+## Ex: Defective Parts
+
+::: {.callout title="Example 1.6"}
+A worker takes a random sample of 50 parts manufactured at a specific location. They find that the sample proportion ($\hat{p}$) of defective parts 5% and state that they expect that 5% of all parts are likely defective.
+
+Is this an example of descriptive statistics or statistical inference?
+:::
+
+. . .
+
+This is an example of statistical inference.
+
+## Ex: Cell Toxicity
+
+::: {.callout title="Example 1.7"}
+A research scientist collects a random sample of 100 cells from a particular tissue sample and measures the toxicity level for each cell. They find that 95% of toxicity levels are between 30 and 50 ppm and conclude that toxicity levels for all cells likely fall within this range.
+
+Is this an example of descriptive statistics or statistical inference?
+:::
+
+. . .
+
+This is an example of ***YOUR ANSWER***.
+
+## Ex: Bridge Strength
+
+::: {.callout title="Example 1.8"}
+An engineer is testing the strength of a material used in bridge construction. They produce 50 batches of this material and test how much weight each batch of material can hold before breaking. They report that the average weight held by the material before breaking is 200 pounds.
+
+Is this an example of descriptive statistics or statistical inference?
+:::
+
+. . .
+
+This is an example of ***YOUR ANSWER***.

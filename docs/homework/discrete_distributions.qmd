@@ -1,0 +1,38 @@
+---
+title: "Discrete Distributions"
+format: html
+editor: visual
+self-contained: true
+---
+
+## Question 1 (4 points)
+
+For each of the following scenarios, decide which discrete distribution would be most appropriate to use.
+
+-   This distribution would be used use to model the number of events that occur in a given period of time. \_\_\_\_\_\_\_\_
+
+-   This distribution would be used to model a random variable with only two possible outcomes. \_\_\_\_\_\_\_\_
+
+-   This distribution would be used to model the number of successes out of a fixed number of trials. \_\_\_\_\_\_\_\_
+
+-   This distribution would be used to model the number of failures until a success occurs. \_\_\_\_\_\_\_\_
+
+## Question 2 (3 points)
+
+You have a bag with 4 red balls and 6 green balls. You are performing an experiment where you draw a ball from the bag. If it is red, you stop. If it is green, you put the ball back and try again. How many times do you expect to repeat this experiment until you stop?
+
+## Question 3 (3 points)
+
+You have a bag with 7 green balls and 13 red balls. You perform an experiment where you draw 10 balls with replacement and record the color of each ball as you go. Use the code block below to calculate the probability that you draw 6 green balls.
+
+```{r, echo = TRUE}
+# Put the code here (make sure to compute and display the answer)
+```
+
+## Question 4 (3 points)
+
+You have been told that on average there are 4 green houses per block in your city. You decided to pick a random block in the city and walk around it, recording how many green houses you see. Use the code block below to compute the probability that you see more than 4 houses on that block.
+
+```{r, echo = TRUE}
+# Put the code here (make sure to compute and display the answer)
+```

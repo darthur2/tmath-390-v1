@@ -1,0 +1,38 @@
+---
+title: "Counting"
+format: html
+editor: visual
+self-contained: true
+---
+
+## Question 1 (2 points)
+
+Use R to determine the number of different basketball teams that could be formed from a group of 12 individuals. (A basketball team has 5 people)
+
+```{r, echo = TRUE}
+choose(12, 5)
+```
+
+## Question 2 (2 points)
+
+Use R to determine the number of ways you could assign 3 different, unique projects to 3 individuals in a group of 7 individuals.
+
+```{r, echo = TRUE}
+factorial(7)/factorial(4)
+```
+
+## Question 3 (2 points)
+
+There are 15 people where 7 people play string instruments and 8 people play wind instruments. You want to form a group of 5 people where 2 play string instruments and 3 play wind instruments. Use R to compute the number of ways this can be done.
+
+```{r, echo = TRUE}
+choose(7,2)*choose(8,3)
+```
+
+## Question 4 (2 points)
+
+There are 15 people where 4 people play string instruments, 4 people play wind instruments, and the other people play some other type of instrument. You want to form a musical group with 6 people, where 2 of them should play a string instrument, 2 should play a wind instrument, and the other 2 can play one of the other instruments. Use R to compute the number of ways this can be done.
+
+```{r, echo = TRUE}
+choose(4,2)*choose(4,2)*choose(7,2)
+```

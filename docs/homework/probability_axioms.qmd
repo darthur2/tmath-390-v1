@@ -1,0 +1,60 @@
+---
+title: "Probability Axioms"
+format: html
+editor: visual
+self-contained: true
+---
+
+## Question 1 (2 points)
+
+You survey 50 people about tee-time preferences for golf and find the following:
+
+-   Twenty (20) people said they don't like to play at either time. This means that 30 individuals like to play in the morning or the evening. This means it could be one or the other or both.
+-   Twenty-five (25) people said they like to play in the morning.
+-   Fifteen (15) people said they like to play in the evening.
+
+If you randomly select a person from this group of 50, what is the probability that they enjoy playing in the morning and in the evening?
+
+*Hint*: This is asking for the probability of an intersection of two events, not a union, but you can still use the general law of addition (inclusion-exclusion principle) to find the answer.
+
+The probability is \_\_\_\_\_\_\_\_.
+
+## Question 2 (2 points)
+
+There are 300 students at a school. Of these students 80 have said that they are taking math, 80 have said they are taking physics, and 85 have said they are taking chemistry. You know that the number of students taking both math and physics is equal to the number of students taking math and chemistry and is also equal to the number of students taking physics and chemistry. You also know that only 10 students are taking all three.
+
+The probability that a randomly selected student is taking at least one of these three classes is 60%. How many students are taking both math and chemistry? \_\_\_\_\_\_\_\_
+
+## Question 3 (2 points)
+
+You roll a fair six-sided die 5 times. You are interested in the probability that the first two rolls are even numbers *or* the sum of the dice is greater than 15. In words, describe the complement of this event. Type your answer below.
+
+## Question 4 (4 points)
+
+Complete the code below to run a simulation to compute the probability of the event mentioned in the previous question. The simulation is designed to compute the probability of the complement of this event and the probability of interest can be found using $P(E^C) = 1-P(E)$.
+
+*Hint*: There are three conditions we are checking for, one involving the first roll, another involving the second roll, and a third involving the sum of the rolls. The first condition has been completed for you and you must complete the other two conditions. Again, to get the sum of the rolls you can use the `sum` function on the variable `dice_rolls`.
+
+```{r, echo = TRUE}
+set.seed(100)
+
+N <- 100000
+count <- 0
+
+for (i in 1:N){
+  die <- 1:6
+  
+  dice_rolls <- sample(die, size = 5, replace = TRUE)
+  
+  condition1 <- dice_rolls[1] %in% c(1, 3, 5) # Checks if first roll is odd
+  # condition2 <- _______ Fill in your code here
+  # condition3 <- _______ Fill in your code here
+  
+  # Complete the code that is missing here
+  {
+    count <- count + 1
+  }
+}
+
+1-count/N
+```

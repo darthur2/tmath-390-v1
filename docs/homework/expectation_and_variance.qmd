@@ -1,0 +1,107 @@
+---
+title: "Expectation and Variance"
+format: html
+editor: visual
+self-contained: true
+---
+
+## Question 1 (3 points)
+
+Let $X$ again be the random variable corresponding to the number of green balls obtained out of 5 balls drawn from a bag with 5 green balls and 6 red balls. Use the R function below, `PX_11`, to compute $\text{E}[X]$ and $\text{Var}[X]$. Compute $\text{Var}[X]$ both directly using the definition of variance and using the alternative representation where $\text{Var}[X] = \text{E}[X^2] - \text{E}[X]^2$.
+
+```{r, echo = FALSE}
+PX_11 <- function(x){
+  choose(5, x)*choose(6, 5-x)/choose(11, 5)
+}
+```
+
+```{r, echo = TRUE}
+x_values <- 0:5
+P_x_values <- PX_11(x_values)
+
+EX_21 <- "Put the code needed to compute E[X] here"
+
+cat("The expected number of green balls drawn is: ", EX_21, "\n")
+
+VarX_21 <- "Put the code needed to compute Var[X] here"
+
+cat("The variance in the number of green balls drawn is: ", VarX_21, "\n")
+
+EX2_21 <- "Put the code needed to compute E[X^2] here"
+
+cat("The variance in the number of green balls drawn is: ", "Put answer here", "\n")
+```
+
+## Question 2 (3 points)
+
+Let $X$ be the random variable with the PDF found below:
+
+$$
+f_X(x) = 
+\begin{cases}
+60 x^3 (1-x)^2 &\text{for } x \in (0, 1) \\
+0 &\text{otherwise}
+\end{cases}
+$$
+
+Use the R function given below, `fX_12`, along with the `integrate` function to compute $\text{E}[X]$ and $\text{Var}[X]$. Compute $\text{Var}[X]$ both directly using the definition of variance and using the alternative representation where $\text{Var}[X] = \text{E}[X^2] - \text{E}[X]^2$.
+
+```{r, echo = FALSE}
+fX_12 <- function(x){
+  60*x^3*(1-x)^2
+}
+```
+
+```{r, echo = TRUE}
+EX_22 <- "Put the code needed to compute E[X] here"
+
+cat("The expected value of X is: ", EX_22, "\n")
+
+VarX_22 <- "Put the code needed to compute Var[X] here"
+
+cat("The variance of X is: ", VarX_22, "\n")
+
+EX2_22 <- "Put the code needed to compute E[X^2] here"
+
+cat("The variance of X is: ", "Put answer here", "\n")
+```
+
+## Question 3 (4 points)
+
+Let $X$ be a continuous random variable with the PDF given in Question 2. Let $Y = g(X) = 2X+3$. Find $\text{E}[Y]$ and $\text{Var}[Y]$, first (1) by using the `integrate` function and the function you wrote in Part 1 Question 2, `fX_12`, and second (2) by using properties of expectations and variance for linear transformations.
+
+```{r, echo = FALSE}
+EY_23 <- "Put the code needed to compute E[Y] here"
+
+VarY_23 <- "Put the code needed to compute Var[Y] here"
+
+cat("The expected value of Y is: ", EY_23, "\n")
+
+cat("The variance of Y is: ", VarY_23, "\n")
+```
+
+```{r, echo = FALSE}
+cat("The expected value of Y is: ", "Put the answer for E[2X+3] here", "\n")
+
+cat("The variance of Y is: ", "Put the answer for Var[2X+3] here", "\n")
+```
+
+## Question 4 (3 points)
+
+Let $X$ again be the random variable that was first presented in Question 2. Consider a nonlinear function of $X$, $g(X) = \ln(X)$. Use the R function you wrote, `fX12`, along with the `integrate` function to compute $\text{E}[g(X)]$ and $\text{Var}[g(X)]$. Compute $\text{Var}[g(X)]$ both directly using the definition of variance and using the alternative representation where $\text{Var}[g(X)] = \text{E}[g(X)^2] - \text{E}[g(X)]^2$.
+
+Note: The R function `log` computes the natural logarithm by default so this can be used to compute $\ln(x)$.
+
+```{r, echo = TRUE}
+ElogX_24 <- "Put the code to compute E[ln(X)] here"
+
+cat("The expected value of X is: ", ElogX_24, "\n")
+
+VarlogX_24 <- "Put the code to compute Var[ln(X)] here"
+
+cat("The variance of X is: ", VarlogX_24, "\n")
+
+ElogX2_24 <- "Put the code to compute E[ln(X)^2] here"
+
+cat("The variance of X is: ", "Put answer here", "\n")
+```

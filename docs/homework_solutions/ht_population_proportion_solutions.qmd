@@ -1,0 +1,25 @@
+---
+title: "Hypothesis Test for Population Proportion"
+format: html
+editor: visual
+self-contained: true
+---
+
+## Question 1 (4 points)
+
+A company claims that a new microcontroller maintains functionality in 95% of extreme temperature test cases (e.g., -40°C to 85°C). However, you believe the actual percentage is less than 95%. You collect a random sample of 200 test cases and observe that 187 of the 200 microcontrollers maintained functionality at these temperatures.
+
+In the code block below, perform a hypothesis test at the 5% significance level to test these claims. STATE YOUR CONCLUSION IN CONTEXT OF THE PROBLEM.
+
+```{r, echo = TRUE}
+n <- 200
+phat <- 187/200
+p0 <- 0.95
+alpha <- 0.05
+
+cat("Test Statistic: ", (phat-p0)/sqrt(p0*(1-p0)/n), "\n")
+cat("Critical Value: ", qnorm(alpha), "\n")
+cat("P-Value: ", pnorm((phat-p0)/sqrt(p0*(1-p0)/n)), "\n")
+```
+
+[With a p-value of $0.1652 > 0.05$, we fail to reject the null hypothesis and conclude that the true proportion of microcontrollers that function at these temperatures is not significantly less that 95%.]{style="color: red;"}

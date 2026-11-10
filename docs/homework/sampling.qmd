@@ -1,0 +1,35 @@
+---
+title: "Sampling"
+format: html
+editor: visual
+self-contained: true
+---
+
+# Diabetes Data Description
+
+Scenario: You are a health analytics consultant that has been asked to perform an exploratory data analysis regarding diabetes. You are given a dataset containing information for 100 randomly sampled patients from all patients at a specific hospital. The dataset includes the following:
+
+-   **Gender**: Their gender (Male or Female)
+-   **Diabetes_Type**: Their type of diabetes
+-   **Age**: Their age (in *whole* years, no decimals)
+-   **Smoking_Status**: Their smoking status (current, former, or never)
+-   **Number_of_Visits**: The number of times they've visited the hospital
+-   **Exercise_Frequency**: How often they exercise
+-   **Fasting_Blood_Sugar**: Their blood sugar level while fasting (mg/dL)
+-   **HbA1c**: Glucose attached to hemoglobin in red blood cells (mmol/mol)
+
+```{r, echo = TRUE}
+suppressWarnings(suppressMessages(library(ggplot2)))
+suppressWarnings(suppressMessages(library(dplyr)))
+
+diabetes_data <- read.csv("../Datasets/diabetes_data.csv") # Fill in the path to the dataset
+attach(diabetes_data)
+```
+
+## Question 1 (1 point)
+
+In which sampling method would patients have been divided into different age groups and then a proportional number of patients been selected from each age group? \_\_\_\_\_\_\_\_
+
+## Question 2 (1 point)
+
+Suppose that this sample was collected by assigning a unique number to each patient at the hospital and then using a random number generator to select 100 of these numbers. This would be an example of \_\_\_\_\_\_\_\_ sampling.

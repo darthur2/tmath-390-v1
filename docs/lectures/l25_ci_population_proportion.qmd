@@ -1,0 +1,148 @@
+---
+title: "Confidence Interval for Population Proportion"
+format:
+  revealjs:
+    slideNumber: true
+    scrollable: true
+    self-contained: true
+editor: visual
+---
+
+```{r}
+set.seed(100)
+```
+
+## CI for Population Proportion
+
+::: {.callout title="Theorem 22.1"}
+Let $\boldsymbol{X} = (X_1, X_2, \dots X_n)$ be independent Bernoulli random variables with success parameter $p$ and let $\boldsymbol{x} = (x_1, x_2, \dots, x_n)$ be observed values for these. If $n$ is sufficiently large, then an approximate $100 \times (1-\alpha)\%$ confidence interval for $p$ is:
+
+$$
+\left(\hat{p} - z_{1-\alpha/2}\sqrt{\frac{\hat{p}(1-\hat{p})}{n}}, \hat{p} + z_{1-\alpha/2}\sqrt{\frac{\hat{p}(1-\hat{p})}{n}}\right)
+$$
+
+Where $\hat{p} = \frac{1}{n} \sum_{i=1}^n x_i$. This result uses the fact that
+
+$$
+\hat{p} \overset{\cdot}{\sim} N\left(p, \sqrt{\frac{p(1-p)}{n}} \right)
+$$
+
+due to the CLT and the fact that $\hat{p}$ converges to $p$ as $n \rightarrow \infty$.
+:::
+
+## Ex: Exam (1)
+
+::: {.callout title="Example 22.1"}
+You administer an exam with 40 questions to a student and record whether they got each question right or wrong. You would like to construct a 95% confidence interval for $p$, the true probability of responding correctly to a question. You find that the student got 34 of the questions correct.
+
+What is the quantile $z_{1-\alpha/2}$ and the standard error used to construct this confidence interval?
+:::
+
+. . .
+
+```{r, echo = TRUE}
+n <- 40
+p_hat <- 34/n
+alpha <- 0.05
+z_quant <- qnorm(1-alpha/2)
+std_error <- sqrt(p_hat*(1-p_hat)/n)
+
+z_quant
+std_error
+```
+
+## Ex: Survey (1)
+
+::: {.callout title="Example 22.2"}
+A survey is conducted to estimate the proportion of customers who are satisfied with a new product. Out of 120 respondents, 82 report being satisfied. You wish to construct a 90% confidence interval for $p$, the true proportion of satisfied customers.
+
+What is the quantile $z_{1-\alpha/2}$ and the standard error used to construct this confidence interval?
+:::
+
+. . .
+
+```{r, echo = TRUE}
+n <- 120  
+p_hat <- 82/n  
+alpha <- 0.1 
+z_quant <- qnorm(1 - alpha / 2)  
+std_error <- sqrt(p_hat * (1 - p_hat) / n)  
+
+z_quant  
+std_error
+```
+
+## Ex: Light Bulbs (1)
+
+::: {.callout title="Example 22.3"}
+A manufacturer inspects a random sample of 75 light bulbs from a production line and finds that 15 are defective. You want to construct a 99% confidence interval for $p$, the true proportion of defective bulbs.
+
+What is the quantile $z_{1-\alpha/2}$ and the standard error used to construct this confidence interval?
+:::
+
+. . .
+
+```{r, echo = TRUE}
+n <- 75  
+p_hat <- 15/n  
+alpha <- 0.01
+z_quant <- qnorm(1 - alpha / 2)  
+std_error <- sqrt(p_hat * (1 - p_hat) / n)  
+
+z_quant  
+std_error  
+```
+
+## Ex: Exam (2)
+
+::: {.callout title="Example 22.4"}
+You administer an exam with 40 questions to a student and record whether they got each question right or wrong. You find that the student got 34 of the questions correct. You would like to construct a 95% confidence interval for $p$, the true probability of responding correctly to a question.
+:::
+
+. . .
+
+```{r, echo = TRUE}
+n <- 40
+p_hat <- 34/n
+alpha <- 0.05
+z_quant <- qnorm(1-alpha/2)
+std_error <- sqrt(p_hat*(1-p_hat)/n)
+
+p_hat + c(-1, 1)*z_quant*std_error
+```
+
+## Ex: Survey (2)
+
+::: {.callout title="Example 22.5"}
+A survey is conducted to estimate the proportion of customers who are satisfied with a new product. Out of 120 respondents, 82 report being satisfied. You wish to construct a 90% confidence interval for $p$, the true proportion of satisfied customers.
+:::
+
+. . .
+
+```{r, echo = TRUE}
+n <- 120  
+p_hat <- 82/n  
+alpha <- 0.1 
+z_quant <- qnorm(1 - alpha / 2)  
+std_error <- sqrt(p_hat * (1 - p_hat) / n)  
+
+p_hat + c(-1, 1)*z_quant*std_error
+```
+
+## Ex: Light Bulbs (2)
+
+::: {.callout title="Example 22.6"}
+A manufacturer inspects a random sample of 75 light bulbs from a production line and finds that 15 are defective. You want to construct a 99% confidence interval for $p$, the true proportion of defective bulbs.
+:::
+
+. . .
+
+```{r, echo = TRUE}
+n <- 75  
+p_hat <- 15/n  
+alpha <- 0.01
+z_quant <- qnorm(1 - alpha / 2)  
+std_error <- sqrt(p_hat * (1 - p_hat) / n)  
+
+p_hat + c(-1, 1)*z_quant*std_error
+```

@@ -1,0 +1,50 @@
+---
+title: "Introduction to Statistics"
+format: html
+editor: visual
+self-contained: true
+---
+
+# Diabetes Data Description
+
+Scenario: You are a health analytics consultant that has been asked to perform an exploratory data analysis regarding diabetes. You are given a dataset containing information for 100 randomly sampled patients from all patients at a specific hospital. The dataset includes the following:
+
+-   **Gender**: Their gender (Male or Female)
+-   **Diabetes_Type**: Their type of diabetes
+-   **Age**: Their age (in *whole* years, no decimals)
+-   **Smoking_Status**: Their smoking status (current, former, or never)
+-   **Number_of_Visits**: The number of times they've visited the hospital
+-   **Exercise_Frequency**: How often they exercise
+-   **Fasting_Blood_Sugar**: Their blood sugar level while fasting (mg/dL)
+-   **HbA1c**: Glucose attached to hemoglobin in red blood cells (mmol/mol)
+
+```{r, echo = TRUE}
+suppressWarnings(suppressMessages(library(ggplot2)))
+suppressWarnings(suppressMessages(library(dplyr)))
+
+diabetes_data <- read.csv("../Datasets/diabetes_data.csv") # Fill in the path to the dataset
+attach(diabetes_data)
+```
+
+## Question 1 (2 points)
+
+The population in this scenario is \_\_\_\_\_\_\_\_.
+
+The sample in this scenario is \_\_\_\_\_\_\_\_.
+
+## Question 2 (4 points)
+
+One piece of information you are interested in is the average age of patients at the hospital. You calculate the average age for the 100 patients in the sample. Identify the population parameter and sample statistic in this scenario, including the appropriate symbols for these.
+
+Hint: Below are the different population parameters and statistics with their corresponding symbols.
+
+-   Population Mean: $\mu$
+-   Sample Mean: $\bar{x}$
+-   Population Variance: $\sigma^2$
+-   Sample Variance: $s^2$
+-   Population Standard Deviation: $\sigma$
+-   Sample Standard Deviation: $s$
+-   Population Proportion: $p$
+-   Sample Proportion: $\hat{p}$
+
+The population parameter in this scenario is \_\_\_\_\_\_\_\_ and the corresponding symbol is \_\_\_\_\_\_\_\_. The sample statistic in this scenario is \_\_\_\_\_\_\_\_ and the corresponding symbol is \_\_\_\_\_\_\_\_.

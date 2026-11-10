@@ -1,0 +1,625 @@
+---
+title: "Joint Random Variables"
+format:
+  revealjs:
+    slideNumber: true
+    scrollable: true
+    self-contained: true
+editor: visual
+---
+
+```{r}
+suppressWarnings(suppressMessages(library(dplyr)))
+suppressWarnings(suppressMessages(library(plotly)))
+```
+
+## Joint Random Variables
+
+::: {.callout title="Definition 13.1"}
+A **joint probability mass function** (PMF) $P_{X,Y}(x,y) = P(X=x, Y=y)$ for discrete random variables $X$ and $Y$ satisfies:
+
+1.  $P_{X,Y}(x,y) \geq 0$ for all $(x,y) \in \mathcal{X} \times \mathcal{Y}$,
+2.  $\sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} P_{X,Y}(x,y) = 1$.
+
+A **joint probability density function** (PDF) $f_{X,Y}(x,y)$ for continuous random variables $X$ and $Y$ satisfies:
+
+1.  $f_{X,Y}(x,y) \geq 0$ for all $(x,y) \in \mathcal{X} \times \mathcal{Y}$,
+2.  $\int_{\mathcal{X}} \int_{\mathcal{Y}} f_{X,Y}(x,y) \, dx \, dy = 1$.
+:::
+
+## Ex: Dice
+
+::: {.callout title="Example 13.1"}
+You roll two three-sided dice. Let $X$ be the sum of the two dice and let $Y$ be the absolute difference of the two dice. What is the joint PMF for $X$ and $Y$?
+:::
+
+. . .
+
+We find the following:
+
+$$
+S = \{(1,1), (1,2), (1,3), (2,1), (2,2), (2,3), (3,1), (3,2), (3,3)\}
+$$
+
+$$
+(x,y) \in \{(2,0), (3,1), (4,2), (4,0), (5,1), (6,0)\}
+$$
+
+Thus the PMF for $(X,Y)$ is:
+
+$$
+\begin{array}{c|cccccc}
+P_{X,Y}(x,y) & x=2 & x=3 & x=4 & x=5 & x=6 \\
+\hline
+y = 0 & \frac{1}{9} & 0 & \frac{1}{9} & 0 & \frac{1}{9} \\
+y = 1 & 0 & \frac{2}{9} & 0 & \frac{2}{9} & 0 \\
+y = 2 & 0 & 0 & \frac{2}{9} & 0 & 0
+\end{array}
+$$
+
+## Ex: Joint PMF
+
+::: {.callout title="Example 13.2"}
+Let $X$ and $Y$ be discrete random variables with the following joint distribution:
+
+$$
+P_{X,Y}(x,y) = P(X = x, Y = y) = \frac{x+y}{48} \quad \text{for} \quad x, y \in \{0, 1, 2, 3\} \text{ and } 0 \text{ otherwise}
+$$
+:::
+
+. . .
+
+$$
+\begin{array}{c|cccc}
+P_{X,Y}(x,y) & y = 0 & y = 1 & y = 2 & y = 3 \\
+\hline
+x = 0 & \frac{0+0}{48} = 0 & \frac{0+1}{48} = \frac{1}{48} & \frac{0+2}{48} = \frac{2}{48} & \frac{0+3}{48} = \frac{3}{48} \\
+x = 1 & \frac{1+0}{48} = \frac{1}{48} & \frac{1+1}{48} = \frac{2}{48} & \frac{1+2}{48} = \frac{3}{48} & \frac{1+3}{48} = \frac{4}{48} \\
+x = 2 & \frac{2+0}{48} = \frac{2}{48} & \frac{2+1}{48} = \frac{3}{48} & \frac{2+2}{48} = \frac{4}{48} & \frac{2+3}{48} = \frac{5}{48} \\
+x = 3 & \frac{3+0}{48} = \frac{3}{48} & \frac{3+1}{48} = \frac{4}{48} & \frac{3+2}{48} = \frac{5}{48} & \frac{3+3}{48} = \frac{6}{48}
+\end{array}
+$$
+
+## Ex: Joint PDF (1)
+
+::: {.callout title="Example 13.3"}
+Let $X$ and $Y$ be continuous random variables with the following joint distribution:
+
+$$
+f_{X,Y}(x,y) = \frac{3}{2} (x^2 + y^2) \quad \text{for} \quad x, y \in (0, 1) \text{ and } 0 \text{ otherwise}
+$$
+:::
+
+. . .
+
+```{r}
+fXY <- function(x, y) {
+  3/2 * (x^2 + y^2)
+}
+
+# Create a grid of (x, y) values
+x_vals <- seq(0, 1, length.out = 50)
+y_vals <- seq(0, 1, length.out = 50)
+z_vals <- outer(x_vals, y_vals, fXY)
+
+# Create the plot
+plot_ly(x = ~x_vals, y = ~y_vals, z = ~z_vals, type = "surface") %>%
+  layout(title = "Joint PDF f(x,y)",
+         scene = list(xaxis = list(title = "X"),
+                      yaxis = list(title = "Y"),
+                      zaxis = list(title = "f(X,Y)")))
+```
+
+## Ex: Joint PDF (2)
+
+::: {.callout title="Example 13.4"}
+Let $X$ and $Y$ be continuous random variables with the following joint density function:
+
+$$
+f_{X,Y}(x,y) = \frac{1}{2\pi} \exp\left\{-\frac{1}{2}(x^2+y^2)\right\} \quad \text{for} \quad x, y \in (-\infty, \infty)
+$$
+:::
+
+. . .
+
+```{r}
+fXY <- function(x, y) {
+  1/(2*pi)*exp(-1/2*(x^2+y^2))
+}
+
+# Create a grid of (x, y) values
+x_vals <- seq(-3, 3, length.out = 50)
+y_vals <- seq(-3, 3, length.out = 50)
+z_vals <- outer(x_vals, y_vals, fXY)
+
+# Create the plot
+plot_ly(x = ~x_vals, y = ~y_vals, z = ~z_vals, type = "surface") %>%
+  layout(title = "Joint PDF f(x,y)",
+         scene = list(xaxis = list(title = "X"),
+                      yaxis = list(title = "Y"),
+                      zaxis = list(title = "f(X,Y)")))
+```
+
+## Probability Computations with Joint Random Variables
+
+Probabilities $P(a \leq X \leq b, c \leq Y \leq d)$ can be calculated for joint random variables by summing over PMFs or integrating over joint PDFs.
+
+For discrete random variables:
+
+$$
+P(a \leq X \leq b, c \leq Y \leq d) = \sum_{x=a}^{b} \sum_{y=c}^{d} P_{X,Y}(x, y)
+$$
+
+For continuous random variables:
+
+$$
+P(a \leq X \leq b, c \leq Y \leq d) = \int_a^b \int_c^d f_{X,Y}(x, y) \, dy \, dx
+$$
+
+## Marginal Distribution
+
+::: {.callout title="Definition 13.2"}
+The **marginal distributions** for $X$ and $Y$ can be found as follows:
+
+$$
+P_X(x) = \sum_{y \in \mathcal{Y}} P_{X,Y}(x,y)
+$$
+
+$$
+P_Y(y) = \sum_{x \in \mathcal{X}} P_{X,Y}(x,y)
+$$
+
+For continuous random variables, the **marginal distributions** for $X$ and $Y$ are:
+
+$$
+f_X(x) = \int_{y \in \mathcal{Y}} f_{X,Y}(x,y) \, dy
+$$
+
+$$
+f_Y(y) = \int_{x \in \mathcal{X}} f_{X,Y}(x,y) \, dx
+$$
+:::
+
+## Ex: Dice
+
+::: {.callout title="Example 13.5"}
+Let $X$ and $Y$ be the sum and absolute difference of two three-sided die respectively, with joint PMF:
+
+$$
+\begin{array}{c|cccccc}
+P_{X,Y}(x,y) & x=2 & x=3 & x=4 & x=5 & x=6 \\
+\hline
+y = 0 & \frac{1}{9} & 0 & \frac{1}{9} & 0 & \frac{1}{9} \\
+y = 1 & 0 & \frac{2}{9} & 0 & \frac{2}{9} & 0 \\
+y = 2 & 0 & 0 & \frac{2}{9} & 0 & 0
+\end{array}
+$$
+
+What are $P_X(3)$ and $P_Y(2)$?
+:::
+
+. . .
+
+$$
+\begin{array}{c|ccccc|c}
+P_{X,Y}(x,y) & x=2 & x=3 & x=4 & x=5 & x=6 & P_Y(y) \\
+\hline
+y = 0 & \frac{1}{9} & 0 & \frac{1}{9} & 0 & \frac{1}{9} & \frac{3}{9} \\
+y = 1 & 0 & \frac{2}{9} & 0 & \frac{2}{9} & 0 & \frac{4}{9} \\
+y = 2 & 0 & 0 & \frac{2}{9} & 0 & 0 & \frac{2}{9} \\
+\hline
+P_X(x) & \frac{1}{9} & \frac{2}{9} & \frac{3}{9} & \frac{2}{9} & \frac{1}{9} & 1
+\end{array}
+$$
+
+## Ex: Marginal PMF
+
+::: {.callout title="Example 13.6"}
+Let $X$ and $Y$ be discrete random variables with the following joint distribution:
+
+$$
+P_{X,Y}(x,y) = P(X = x, Y = y) = \frac{x+y}{48} \quad \text{for} \quad x, y \in \{0, 1, 2, 3\} \text{ and } 0 \text{ otherwise}
+$$
+
+What are $P_X(1)$ and $P_Y(3)$?
+:::
+
+. . .
+
+YOUR ANSWERS HERE
+
+## Ex: Marginal PDF (1)
+
+::: {.callout title="Example 13.7"}
+Let $X$ and $Y$ be continuous random variables with the following joint distribution:
+
+$$
+f_{X,Y}(x,y) = \frac{3}{2} (x^2 + y^2) \quad \text{for} \quad x, y \in (0, 1) \text{ and } 0 \text{ otherwise}
+$$
+
+What is $f_X\left(\frac{1}{2}\right)$?
+:::
+
+. . .
+
+$$
+\begin{align}
+f_X(x) &= \int_0^1 \frac{3}{2} (x^2 + y^2) \ dy = \frac{3}{2} \left[\int_0^1 x^2 \ dy + \int_0^1 y^2 \ dy \right]\\
+&= \frac{3}{2} \left(x^2 + \frac{1}{3}\right) \Rightarrow f_X\left(\frac{1}{2}\right) = \frac{7}{8}
+\end{align}
+$$
+
+```{r, echo = TRUE}
+integrate(function(y) 3/2*(0.5^2 + y^2), lower = 0, upper = 1)$value
+```
+
+## Ex: Marginal PDF (2)
+
+::: {.callout title="Example 13.8"}
+Let $X$ and $Y$ be continuous random variables with the following joint distribution:
+
+$$
+f_{X,Y}(x,y) = \frac{1}{27} (x-y) \quad \text{for} \quad x \in (3,6), \quad y \in (0, 3) \text{ and } 0 \text{ otherwise}
+$$
+
+What is $f_Y(2)$?
+:::
+
+. . .
+
+YOUR ANSWER HERE
+
+## Conditional Distribution
+
+::: {.callout title="Definition 13.3"}
+For discrete random variables $X$ and $Y$, the **conditional probability mass function** of $X$ given $Y$ is:
+
+$$
+P_{X|Y}(x|y) = \frac{P_{X,Y}(x,y)}{P_Y(y)}
+$$
+
+$$
+P_{Y|X}(y|x) = \frac{P_{X,Y}(x,y)}{P_X(x)}
+$$
+
+For continuous random variables $X$ and $Y$, the **conditional probability density function** of $X$ given $Y$ is:
+
+$$
+f_{X|Y}(x|y) = \frac{f_{X,Y}(x,y)}{f_Y(y)}
+$$
+
+$$
+f_{Y|X}(y|x) = \frac{f_{X,Y}(x,y)}{f_X(x)}
+$$
+:::
+
+## Ex: Dice
+
+::: {.callout title="Example 13.9"}
+Let $X$ and $Y$ be the sum and absolute difference of two three-sided die respectively, with joint PMF:
+
+$$
+\begin{array}{c|ccccc|c}
+P_{X,Y}(x,y) & x=2 & x=3 & x=4 & x=5 & x=6 & P_Y(y) \\
+\hline
+y = 0 & \frac{1}{9} & 0 & \frac{1}{9} & 0 & \frac{1}{9} & \frac{3}{9} \\
+y = 1 & 0 & \frac{2}{9} & 0 & \frac{2}{9} & 0 & \frac{4}{9} \\
+y = 2 & 0 & 0 & \frac{2}{9} & 0 & 0 & \frac{2}{9} \\
+\hline
+P_X(x) & \frac{1}{9} & \frac{2}{9} & \frac{3}{9} & \frac{2}{9} & \frac{1}{9} & 1
+\end{array}
+$$
+
+What are $P_{X|Y}(5|1)$ and $P_{Y|X}(0|4)$?
+:::
+
+. . .
+
+$$
+P_{X|Y}(5|1) = \frac{P_{X,Y}(5,1)}{P_Y(1)} = \frac{2/9}{4/9} = \frac{1}{2}
+$$
+
+$$
+P_{Y|X}(0|4) = \frac{P_{X,Y}(4,0)}{P_X(4)} = \frac{1/9}{3/9} = \frac{1}{3}
+$$
+
+## Ex: Conditional PMF
+
+::: {.callout title="Example 13.10"}
+Let $X$ and $Y$ be discrete random variables with the following joint distribution:
+
+$$
+P_{X,Y}(x,y) = P(X = x, Y = y) = \frac{x+y}{48} \quad \text{for} \quad x, y \in \{0, 1, 2, 3\} \text{ and } 0 \text{ otherwise}
+$$
+
+What are $P_{X|Y}(2|1)$ and $P_{Y|X}(3|2)$?
+:::
+
+. . .
+
+YOUR ANSWERS HERE
+
+## Ex: Conditional PDF (1)
+
+::: {.callout title="Example 13.11"}
+Let $X$ and $Y$ be continuous random variables with the following joint distribution:
+
+$$
+f_{X,Y}(x,y) = \frac{3}{2} (x^2 + y^2) \quad \text{for} \quad x, y \in (0, 1) \text{ and } 0 \text{ otherwise}
+$$
+
+What is $f_{Y|X}\left(\frac{1}{2} \bigg| \frac{1}{2} \right)$?
+:::
+
+. . .
+
+$$
+f_{Y|X}\left(\frac{1}{2} \bigg| \frac{1}{2} \right) = \frac{\frac{3}{2} (x^2 + y^2)}{\frac{3}{2} \left(x^2 + \frac{1}{3}\right)} = \frac{\left(\frac{1}{4} + \frac{1}{4}\right)}{\left(\frac{1}{4} + \frac{1}{3}\right)} = \frac{6}{7}
+$$
+
+```{r, echo = TRUE}
+fxy_joint <- 3/2*(0.5^2 + 0.5^2)
+fx_marg <- integrate(function(y) 3/2*(0.5^2 + y^2), lower = 0, upper = 1)$value
+
+fxy_joint/fx_marg
+```
+
+## Ex: Conditional PDF (2)
+
+::: {.callout title="Example 13.12"}
+Let $X$ and $Y$ be continuous random variables with the following joint distribution:
+
+$$
+f_{X,Y}(x,y) = \frac{1}{27} (x-y) \quad \text{for} \quad x \in (3,6), \quad y \in (0, 3) \text{ and } 0 \text{ otherwise}
+$$
+
+What is $f_{X|Y}(5|2)$?
+:::
+
+. . .
+
+YOUR ANSWER HERE
+
+## Independence of Joint Random Variables
+
+::: {.callout title="Theorem 13.1"}
+Let $X$ and $Y$ be two random variables and assume the support for $X$ does not depend on $Y$ and vice-versa. If $X$ and $Y$ are discrete, then they are independent if and only if:
+
+$$
+P_{X,Y}(x,y) = P_X(x) P_Y(y)
+$$
+
+If $X$ and $Y$ are continuous, they are independent if and only if:
+
+$$
+f_{X,Y}(x,y) = f_X(x) f_Y(y)
+$$
+:::
+
+In other words, if the joint distribution factorizes into marginal distributions, then the random variables are independent. Equivalently, this implies that a conditional distribution is equal to the marginal distribution.
+
+## Product Expectation
+
+::: {.callout title="Definition 13.4"}
+Let $X$ and $Y$ be two random variables. If $X$ and $Y$ are discrete, then the **product expectation** $\text{E}[XY]$ is:
+
+$$
+\text{E}[XY] = \sum_{y\in \mathcal{Y}} \sum_{x \in \mathcal{X}} xy \cdot P_{X,Y}(x,y)
+$$
+
+If $X$ and $Y$ are continuous then the **product expectation** $\text{E}[XY]$ is:
+
+$$
+\text{E}[XY] = \int_{y\in \mathcal{Y}} \int_{x \in \mathcal{X}} xy \cdot f_{X,Y}(x,y) \ dx \ dy
+$$
+:::
+
+## Ex: Dice
+
+::: {.callout title="Example 13.13"}
+Let $X$ and $Y$ be the sum and absolute difference of two three-sided die respectively, with joint PMF:
+
+$$
+\begin{array}{c|ccccc|c}
+P_{X,Y}(x,y) & x=2 & x=3 & x=4 & x=5 & x=6 & P_Y(y) \\
+\hline
+y = 0 & \frac{1}{9} & 0 & \frac{1}{9} & 0 & \frac{1}{9} & \frac{3}{9} \\
+y = 1 & 0 & \frac{2}{9} & 0 & \frac{2}{9} & 0 & \frac{4}{9} \\
+y = 2 & 0 & 0 & \frac{2}{9} & 0 & 0 & \frac{2}{9} \\
+\hline
+P_X(x) & \frac{1}{9} & \frac{2}{9} & \frac{3}{9} & \frac{2}{9} & \frac{1}{9} & 1
+\end{array}
+$$
+
+What is $\text{E}[XY]$?
+:::
+
+. . .
+
+$$
+\text{E}[XY] = (2)(0)\frac{1}{9} + (4)(0)\frac{1}{9} + (6)(0)\frac{1}{9} + (3)(1)\frac{2}{9} + (5)(1)\frac{2}{9} + (4)(2)\frac{2}{9} = \frac{32}{9}
+$$
+
+## Ex: Discrete Product Expectation
+
+::: {.callout title="Example 13.14"}
+Let $X$ and $Y$ be discrete random variables with the following joint distribution:
+
+$$
+P_{X,Y}(x,y) = P(X = x, Y = y) = \frac{x+y}{48} \quad \text{for} \quad x, y \in \{0, 1, 2, 3\} \text{ and } 0 \text{ otherwise}
+$$
+
+What is $\text{E}[XY]$?
+:::
+
+. . .
+
+YOUR ANSWER HERE
+
+## Ex: Continuous Product Expectation (1)
+
+::: {.callout title="Example 13.15"}
+Let $X$ and $Y$ be continuous random variables with the following joint distribution:
+
+$$
+f_{X,Y}(x,y) = \frac{3}{2} (x^2 + y^2) \quad \text{for} \quad x, y \in (0, 1) \text{ and } 0 \text{ otherwise}
+$$
+
+What is $\text{E}[XY]$?
+:::
+
+. . .
+
+YOUR ANSWER HERE
+
+## Ex: Continuous Product Expectation (2)
+
+::: {.callout title="Example 13.16"}
+Let $X$ and $Y$ be continuous random variables with the following joint distribution:
+
+$$
+f_{X,Y}(x,y) = \frac{1}{27} (x-y) \quad \text{for} \quad x \in (3,6), \quad y \in (0, 3) \text{ and } 0 \text{ otherwise}
+$$
+
+What is $\text{E}[XY]$?
+:::
+
+. . .
+
+```{r, echo = TRUE}
+integrate(function(y){
+  sapply(y, function(z){
+    integrate(function(x){
+    x*z*1/27*(x-z)
+  }, lower = 3, upper = 6)$value
+  })
+}, lower = 0, upper = 3)$value
+```
+
+## Covariance
+
+::: {.callout title="Definition 13.5"}
+The covariance of joint random variables $X$ and $Y$ is defined as:
+
+$$
+\text{Cov}(X,Y) = \text{E}[XY] - \text{E}[X]\text{E}[Y]
+$$
+
+For independent random variables, $\text{Cov}(X,Y) = 0$.
+:::
+
+The covariance is a number between $-\infty$ and $\infty$ where a larger positive number means that large values of one variable tend to correspond to large values of the other variable and large negative numbers mean that large values of one variable tend to correspond to small values of the other variable.
+
+## Ex: Dice
+
+::: {.callout title="Example 13.17"}
+Let $X$ and $Y$ be the sum and absolute difference of two three-sided die respectively, with joint PMF:
+
+$$
+\begin{array}{c|ccccc|c}
+P_{X,Y}(x,y) & x=2 & x=3 & x=4 & x=5 & x=6 & P_Y(y) \\
+\hline
+y = 0 & \frac{1}{9} & 0 & \frac{1}{9} & 0 & \frac{1}{9} & \frac{3}{9} \\
+y = 1 & 0 & \frac{2}{9} & 0 & \frac{2}{9} & 0 & \frac{4}{9} \\
+y = 2 & 0 & 0 & \frac{2}{9} & 0 & 0 & \frac{2}{9} \\
+\hline
+P_X(x) & \frac{1}{9} & \frac{2}{9} & \frac{3}{9} & \frac{2}{9} & \frac{1}{9} & 1
+\end{array}
+$$
+
+What is $\text{Cov}(X,Y)$?
+:::
+
+. . .
+
+$$
+\text{E}[X] = 2\cdot\frac{1}{9} + 3\cdot\frac{2}{9} + 4\cdot\frac{3}{9} + 5 \cdot \frac{2}{9} + 6 \cdot \frac{1}{9} = 4
+$$
+
+$$
+\text{E}[Y] = 0 \cdot \frac{3}{9} + 1 \cdot \frac{4}{9} + 2 \cdot \frac{2}{9} = \frac{8}{9}
+$$
+
+$$
+\text{Cov}[X,Y] = \text{E}[XY] - \text{E}[X]\text{E}[Y] = \frac{32}{9} - 4 \cdot \frac{8}{9} = 0
+$$
+
+## Ex: Discrete Covariance
+
+::: {.callout title="Example 13.18"}
+Let $X$ and $Y$ be discrete random variables with the following joint distribution:
+
+$$
+P_{X,Y}(x,y) = P(X = x, Y = y) = \frac{x+y}{48} \quad \text{for} \quad x, y \in \{0, 1, 2, 3\} \text{ and } 0 \text{ otherwise}
+$$
+
+What is $\text{Cov}(X,Y)$?
+:::
+
+. . .
+
+YOUR ANSWER HERE
+
+## Ex: Continuous Covariance
+
+::: {.callout title="Example 13.19"}
+Let $X$ and $Y$ be continuous random variables with the following joint distribution:
+
+$$
+f_{X,Y}(x,y) = \frac{3}{2} (x^2 + y^2) \quad \text{for} \quad x, y \in (0, 1) \text{ and } 0 \text{ otherwise}
+$$
+
+What is $\text{Cov}(X,Y)$?
+:::
+
+. . .
+
+```{r, echo = TRUE}
+EX <- integrate(function(x) x*3/2*(x^2 + 1/3), lower = 0, upper = 1)$value
+
+EY <- integrate(function(y) y*3/2*(y^2 + 1/3), lower = 0, upper = 1)$value
+
+EXY <- integrate(function(y){
+  sapply(y, function(z){
+    integrate(function(x){
+    x*z*3/2*(x^2 + z^2)
+  }, lower = 0, upper = 1)$value
+  })
+}, lower = 0, upper = 1)$value
+
+EXY - EX*EY
+```
+
+## Ex: Continuous Covariance (2)
+
+::: {.callout title="Example 13.20"}
+Let $X$ and $Y$ be continuous random variables with the following joint distribution:
+
+$$
+f_{X,Y}(x,y) = \frac{1}{27} (x-y) \quad \text{for} \quad x \in (3,6), \quad y \in (0, 3) \text{ and } 0 \text{ otherwise}
+$$
+
+What is $\text{Cov}(X,Y)$?
+:::
+
+. . .
+
+YOUR ANSWER HERE
+
+## Expectation and Variance for Joint Random Variables
+
+::: {.callout title="Theorem 13.2"}
+Let $X$ and $Y$ be two joint random variables, then for the linear transformation $aX + bY + c$, we have the following:
+
+-   $\text{E}[aX + bY + c] = a\text{E}[X] + b\text{E}[Y] + c$
+
+-   $\text{Var}[aX + bY + c] = a^2 \text{Var}(X) + b^2 \text{Var}(Y) + 2ab \text{Cov}(X,Y)$
+:::
+
+::: {.callout title="Theorem 13.3"}
+If $X$ and $Y$ are independent, we have:
+
+-   $\text{E}[aX + bY + c] = a\text{E}[X] + b\text{E}[Y] + c$
+
+-   $\text{Var}[aX + bY + c] = a^2 \text{Var}(X) + b^2 \text{Var}(Y)$
+:::

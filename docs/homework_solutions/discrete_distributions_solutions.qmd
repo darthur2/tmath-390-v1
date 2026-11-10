@@ -1,0 +1,55 @@
+---
+title: "Discrete Distributions"
+format: html
+editor: visual
+self-contained: true
+---
+
+## Question 1 (4 points)
+
+For each of the following scenarios, decide which discrete distribution would be most appropriate to use.
+
+- This distribution would be used use to model the number of events that occur in a given period of time. [Poisson]{style="color: red;"}
+
+- This distribution would be used to model a random variable with only two possible outcomes. [Bernoulli]{style="color: red;"}
+
+- This distribution would be used to model the number of successes out of a fixed number of trials. [Binomial]{style="color: red;"}
+
+- This distribution would be used to model the number of failures until a success occurs. [Geometric]{style="color: red;"}
+
+## Question 2 (3 points)
+
+You have a bag with 4 red balls and 6 green balls. You are performing an experiment where you draw a ball from the bag. If it is red, you stop. If it is green, you put the ball back and try again. How many times do you expect to repeat this experiment until you stop?
+
+[This is asking for $\text{E}[X]$ where $X$ follows a geometric distribution with probability $p = 0.4$. Since $\text{E}[X] = \frac{1-p}{p}$, we get the the expected number of trials is:]{style="color: red;"}
+
+$$
+\text{E}[X] = \frac{1-0.4}{0.4} = 1.5
+$$
+
+[If you interpreted this as the number of trials until you stop, then the answer would just be one more than this: $1 + 1.5 = 2.5$.]{style="color: red;"}
+
+## Question 3 (3 points)
+
+You have a bag with 7 green balls and 13 red balls. You perform an experiment where you draw 10 balls with replacement and record the color of each ball as you go. Use the code block below to calculate the probability that you draw 6 green balls.
+
+```{r, echo = TRUE}
+n <- 10
+p <- 7/(7+13)
+
+prob_6_green <- dbinom(6, n, p)
+
+cat("The probability you get six green balls is:", prob_6_green)
+```
+
+## Question 4 (3 points)
+
+You have been told that on average there are 4 green houses per block in your city. You decided to pick a random block in the city and walk around it, recording how many green houses you see. Use the code block below to compute the probability that you see more than 4 houses on that block.
+
+```{r, echo = TRUE}
+lambda <- 4
+
+prob_more_4 <- 1-ppois(4, lambda)
+
+cat("The probability you see more than 4 houses is:", prob_more_4)
+```
