@@ -1,0 +1,40 @@
+---
+title: "Conditional Probability"
+format: html
+---
+
+## Question 1 (2 points)
+
+Compute the joint probability that someone is a current smoker and they have Type 2 diabetes. Also compute the joint probability that someone is a non-smoker and they have Type 2 diabetes.
+
+```{r, echo = TRUE}
+# Put your code here
+```
+
+## Question 2 (2 points)
+
+Compute the conditional probability that someone has Type 2 diabetes given that they exercise regularly. Also compute the probability that someone has Type 2 diabetes given that they do not exercise at all.
+
+```{r, echo = TRUE}
+# Put your code here
+```
+
+## Question 3 (4 points)
+
+We are interested in three probabilities: 1) The probability someone is a current smoker, 2) the probability that someone exercises occasionally, and 3) the probability that someone is a current smoker and exercises occasionally. Compute these probabilities below using the diabetes dataset.
+
+```{r, echo = TRUE}
+# Put your code here
+```
+
+Using the definition of independence and based solely on these numbers, would we say that exercising occasionally is independent of being a current smoker?
+
+## Question 4 (4 points)
+
+We are interested in three probabilities: 1) The probability someone has Type 2 diabetes, 2) the probability that someone's fasting blood sugar is above 100, and 3) the probability that someone has Type 2 diabetes and their fasting blood sugar is above 100. Compute these probabilities below using the diabetes dataset.
+
+```{r, echo = TRUE}
+# Put your code here
+```
+
+Using the definition of independence and based solely on these numbers, would we say that having Type 2 diabetes and having a fasting blood sugar above 100 are independent?

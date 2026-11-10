@@ -1,1 +1,21 @@
-data/
+# Quarto build output and caches
+_site/
+.quarto/
+_freeze/
+
+# Local/private course materials
+private/
+
+# R session artifacts
+.Rhistory
+.Rapp.history
+.RData
+.Ruserdata
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+*.swp
+
+/.quarto/
+**/*.quarto_ipynb

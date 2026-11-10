@@ -1,0 +1,50 @@
+---
+title: "Lecture Slides"
+toc: false
+---
+
+Lecture slides are built as interactive [Reveal.js](https://revealjs.com/) presentations. Use the arrow keys to navigate, `S` for speaker notes, `F` for fullscreen, and `O` for the slide overview.
+
+## Module 1: Foundations and Data Exploration
+
+- [1.1 Introduction to Statistics](l01_foundations.qmd)
+- [1.2 Sampling Methods](l02_sampling.qmd)
+- [1.3 Numeric Summaries](l03_numeric_summaries.qmd)
+- [1.4 Data Visualization](l04_data_visualization.qmd)
+
+## Module 2: Probability
+
+- [2.1 Counting](l05_counting.qmd)
+- [2.2 Introduction to Probability](l06_introduction_to_probability.qmd)
+- [2.3 Probability Axioms](l07_probability_axioms.qmd)
+- [2.4 Conditional Probability](l08_conditional_probability.qmd)
+- [2.5 Bayes' Theorem](l09_bayes_theorem.qmd)
+
+## Module 3: Random Variables
+
+- [3.1 Random Variables](l10_random_variables.qmd)
+- [3.2 Expectation and Variance](l11_expectation_and_variance.qmd)
+- [3.3 Transformations of Random Variables](l12_transformations.qmd)
+- [3.4 Joint Random Variables](l13_joint_random_variables.qmd)
+
+## Module 4: Distributions and Sampling
+
+- [4.1 Discrete Distributions](l14_discrete_distributions.qmd)
+- [4.2 Continuous Distributions](l15_continuous_distributions.qmd)
+- [4.3 Normal Distribution](l16_normal_distribution.qmd)
+- [4.4 Sampling Distributions](l17_sampling_distributions.qmd)
+- [4.5 Central Limit Theorem](l18_clt_continuous.qmd)
+- [4.6 Central Limit Theorem for Discrete Random Variables](l19_clt_discrete.qmd)
+
+## Module 5: Statistical Inference
+
+- [5.1 Maximum Likelihood Estimation](l20_maximum_likelihood_estimation.qmd)
+- [5.2 Confidence Interval for a Population Mean](l21_ci_one_population_mean.qmd)
+- [5.3 Hypothesis Test for a Population Mean](l22_ht_one_population_mean.qmd)
+- [5.4 Confidence Interval for the Difference of Population Means](l23_ci_difference_of_population_means.qmd)
+- [5.5 Hypothesis Test for the Difference of Population Means](l24_ht_difference_of_population_means.qmd)
+- [5.6 Confidence Interval for a Population Proportion](l25_ci_population_proportion.qmd)
+- [5.7 Hypothesis Test for a Population Proportion](l26_ht_population_proportion.qmd)
+- [5.8 Confidence Interval for a Paired Mean Difference](l27_ci_population_mean_difference.qmd)
+- [5.9 Hypothesis Test for a Paired Mean Difference](l28_ht_population_mean_difference.qmd)
+- [5.10 Simple Linear Regression](l29_simple_linear_regression.qmd)

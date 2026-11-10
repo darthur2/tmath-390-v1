@@ -1,0 +1,40 @@
+/*-- scss:defaults --*/
+
+$primary: #4b2e83;
+$link-color: #4b2e83;
+$body-color: #222222;
+
+/*-- scss:rules --*/
+
+.navbar {
+  border-bottom: 3px solid $primary;
+}
+
+.hero {
+  padding: 2.5rem 2rem;
+  margin-bottom: 2rem;
+  border-radius: 0.5rem;
+  background: linear-gradient(135deg, #f4f1fa 0%, #ffffff 100%);
+  border-left: 6px solid $primary;
+}
+
+.hero h1 {
+  margin-top: 0;
+}
+
+.callout {
+  border-radius: 0.35rem;
+}
+
+.module {
+  margin-bottom: 2rem;
+}
+
+.module h2 {
+  padding-bottom: 0.35rem;
+  border-bottom: 2px solid #e5e5e5;
+}
+
+.listing-grid {
+  margin-top: 1rem;
+}

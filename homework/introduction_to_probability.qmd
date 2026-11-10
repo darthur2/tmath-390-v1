@@ -1,0 +1,60 @@
+---
+title: "Introduction to Probability"
+format: html
+---
+
+## Question 1 (2 points)
+
+You roll a six-sided die four times. Use the `expand.grid` function to create and output a data frame containing all of the possible outcomes in the sample space for this experiment.
+
+```{r, echo = TRUE}
+# First, create a variable that lists the outcomes of a single die roll
+# Then use expand.grid function to create the data frame of the sample space of the four rolls
+```
+
+## Question 2 (4 points)
+
+You roll a six-sided die four times. You want to compute the probability that the sum of the rolls is greater than 16. Use the data frame created in the previous problem to compute this probability.
+
+```{r, echo = TRUE}
+# The data frame has four columns, one corresponding to each of the four rolls.
+# You can use the rowSums function to sum over each row
+# You can use boolean operators to see which outcomes are greater than 16
+# Then you can use the mean function to compute the proportion that are greater than 16
+```
+
+## Question 3 (2 points)
+
+You toss a fair coin 6 times. What is the probability that two of the flips are tails? Use R to compute this probability directly by using counting principles (not by creating a data frame of the sample space).
+
+```{r, echo = TRUE}
+# Put your code here
+```
+
+## Question 4 (2 points)
+
+On any given day, there is a 60% chance that it rains. If it rains, there is an 80% chance you will drive and a 20% chance you will take the bus to work. If it doesn't rain, there is a 30% chance you will drive and a 70% chance you will take the bus to work. Complete the code below to estimate the probability that, on any given day, you drive to work.
+
+```{r, echo = TRUE}
+set.seed(100)
+
+N <- 100000
+count <- 0
+
+for (i in 1:N){
+  rains <- sample(c("Yes", "No"), 1, prob = c(0.6, 0.4))
+  
+  if (rains == "Yes"){
+    drives <- sample(c("Yes", "No"), 1, prob = c(0.8, 0.2))
+  } else if (rains == "No"){
+    drives <- sample(c("Yes", "No"), 1, prob = c(0.3, 0.7))
+  }
+  
+  # Fill in the missing piece of code here
+  {
+    count <- count + 1
+  }
+}
+
+count/N
+```

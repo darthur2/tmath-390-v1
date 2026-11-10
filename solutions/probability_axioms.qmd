@@ -1,0 +1,81 @@
+---
+title: "Probability Axioms"
+format: html
+---
+
+## Question 1 (2 points)
+
+You survey 50 people about tee-time preferences for golf and find the following:
+
+-   Twenty (20) people said they don't like to play at either time. This means that 30 individuals like to play in the morning or the evening. This means it could be one or the other or both.
+-   Twenty-five (25) people said they like to play in the morning.
+-   Fifteen (15) people said they like to play in the evening.
+
+If you randomly select a person from this group of 50, what is the probability that they enjoy playing in the morning and in the evening?
+
+*Hint*: This is asking for the probability of an intersection of two events, not a union, but you can still use the general law of addition (inclusion-exclusion principle) to find the answer.
+
+The probability is [0.2]{style="color: red;"}.
+
+```{r, echo = TRUE}
+25/50 + 15/50 - 30/50
+```
+
+## Question 2 (2 points)
+
+There are 300 students at a school. Of these students 80 have said that they are taking math, 80 have said they are taking physics, and 85 have said they are taking chemistry. You know that the number of students taking both math and physics is equal to the number of students taking math and chemistry and is also equal to the number of students taking physics and chemistry. You also know that only 10 students are taking all three.
+
+The probability that a randomly selected student is taking at least one of these three classes is 60%. How many students are taking both math and chemistry? [25]{style="color: red;"}
+
+```{r, echo = TRUE}
+(300*0.6 - 80 - 80 - 85 - 10)/-3
+```
+
+## Question 3 (2 points)
+
+You roll a fair six-sided die 5 times. You are interested in the probability that the first two rolls are even numbers *or* the sum of the dice is greater than 15. In words, describe the complement of this event. Type your answer below.
+
+[A general approach would be to define event $A$ as the first two rolls are even numbers and $B$ as the sum of the dice is greater than 15. We want to find $(A \cup B)^C$ which by De Morgan's Laws is $A^C \cap B^C$.]{style="color: red;"}
+
+[Then the complement of this event would be getting at least one odd number on the first two rolls and the sum of the dice is less than or equal to 15.]{style="color: red;"}
+
+[You could also be more specific and break this down even further by defining $A_1$ as getting an even number on the first roll, $A_2$ as getting an even number on the second roll, and $B$ as getting a sum greater than 15. Then we would be looking for:]{style="color: red;"}
+
+$$
+\begin{align}
+((A_1 \cap A_2) \cup B)^C &= ((A_1 \cap A_2)^C \cap B^C) \\
+&=((A_1^C \cup A_2^C) \cap B^C)
+\end{align}
+$$
+
+[This is just another way of saying that at least one of the first two rolls is not even (i.e., is odd) and the sum of the dice is not greater than 15 (i.e., is less than or equal to 15).]{style="color: red;"}
+
+## Question 4 (4 points)
+
+Complete the code below to run a simulation to compute the probability of the event mentioned in the previous question. The simulation is designed to compute the probability of the complement of this event and the probability of interest can be found using $P(E^C) = 1-P(E)$.
+
+*Hint*: There are three conditions we are checking for, one involving the first roll, another involving the second roll, and a third involving the sum of the rolls. The first condition has been completed for you and you must complete the other two conditions. Again, to get the sum of the rolls you can use the `sum` function on the variable `dice_rolls`.
+
+```{r, echo = TRUE}
+set.seed(100)
+
+N <- 100000
+count <- 0
+
+for (i in 1:N){
+  die <- 1:6
+  
+  dice_rolls <- sample(die, size = 5, replace = TRUE)
+  
+  condition1 <- dice_rolls[1] %in% c(1, 3, 5) # Checks if first roll is odd
+  condition2 <- dice_rolls[2] %in% c(1, 3, 5) # Checks if second roll is odd
+  condition3 <- sum(dice_rolls) <= 15
+  
+  if ((condition1 || condition2) && condition3)
+  {
+    count <- count + 1
+  }
+}
+
+1-count/N
+```

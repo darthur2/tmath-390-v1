@@ -1,0 +1,384 @@
+---
+title: Confidence Interval Questions
+---
+
+Question 1
+
+A software engineering company is interested in comparing the performance of two different programming languages, Python and Java, in terms of their average execution time for a specific task. The company runs an experiment in which a random sample of 30 Python scripts and 35 Java scripts are executed, and the execution times (in seconds) for each script are recorded. The data are given below:
+
+java \<- c(3.39, 4.04, 3.52, 3.62, 2.64, 3, 3.34, 2.63, 3.07, 3.05,\
+2.13, 3.1, 4.02, 3.08, 3.45, 2.29, 3.23, 3.09, 3.41, 2.81,\
+2.05, 3.84, 2.57, 3.19, 2.75, 2.31, 2.38, 2.96, 3.75, 3.97,\
+3.19, 2.04, 3.22, 3.6, 3.01)\
+\
+python \<- c(4.31, 2.1, 3.52, 3.27, 2.91, 3.33, 3.75, 3.46, 3.73, 4.2,\
+3.13, 2.97, 3.61, 3.21, 3.74, 3.06, 3.53, 3.55, 3.34, 3.17,\
+3.26, 3.43, 2.98, 3.51, 2.02, 3.12, 3.42, 2, 3.73, 3.38)
+
+Which of the following options gives the correct 95% confidence interval for the true difference between mean execution times (defined as Python minus Java), along with the correct interpretation of this interval?
+
+**Answer Choices:**\
+A. The confidence interval is (-0.0579, 0.4840). We are 95% confident that the true difference between the mean execution times is between -0.0579 and 0.4840 seconds.
+
+B. The confidence interval is (-0.0572, 0.4833). We are 95% confident that the true difference between the mean execution times is between -0.0572 and 0.4833 seconds.
+
+C. The confidence interval is (-0.4840, 0.0579). We are 95% confident that the true difference between the mean execution times is between -0.4840 and 0.0579 seconds.
+
+D. The confidence interval is (-0.4833, 0.0572). We are 95% confident that the true difference between the mean execution times is between -0.4833 and 0.0572 seconds.
+
+Question 2
+
+A health-conscious consumer is interested in comparing the fiber content in two popular cereal brands, Brand A and Brand B. The consumer randomly selects 30 boxes of cereal from each brand and measures the fiber content (in grams per serving) for each box. The data are given below:
+
+brand_A \<- c(5, 4, 4, 3, 4, 4, 4, 5, 5, 4, 4, 4, 4, 4, 4, 5, 5, 4, 4, 4,\
+4, 4, 4, 4, 4, 4, 4, 3, 5, 4)\
+\
+brand_B \<- c(5, 5, 5, 9, 5, 7, 7, 5, 5, 7, 8, 3, 7, 4, 4, 3, 7, 7, 5, 6,\
+6, 9, 7, 5, 5, 4, 7, 7, 2, 4)
+
+Which of the following options gives the correct 99% confidence interval for the true difference between mean fiber content (defined as Brand A minus Brand B), along with the correct interpretation of this interval?
+
+**Answer Choices:**\
+A. The confidence interval is (-2.4309, -0.6358). We are 99% confident that the true difference in mean fiber content is between -2.4309 and -0.6358 grams.
+
+B. The confidence interval is (-2.4094, -0.6573). We are 99% confident that the true difference in mean fiber content is between -2.4094 and -0.6573 grams.
+
+C. The confidence interval is (0.6358, 2.4309). We are 99% confident that the true difference in mean fiber content is between 0.6358 and 2.4309 grams.
+
+D. The confidence interval is (0.6573, 2.4094). We are 99% confident that the true difference in mean fiber content is between 0.6573 and 2.4094 grams.
+
+Question 3
+
+A World of Warcraft guild leader is interested in comparing the average number of healing potions used per raid between two groups: Tanks and DPS (damage dealers). The leader randomly samples 30 recent raid logs for each group and records the number of healing potions used in each raid. The data are shown below:
+
+tanks \<- c(5, 4, 4, 3, 4, 4, 4, 5, 5, 4, 4, 4, 4, 4, 4, 5, 5, 4, 4, 4,\
+4, 4, 4, 4, 4, 4, 4, 3, 5, 4)\
+\
+dps \<- c(5, 5, 5, 9, 5, 7, 7, 5, 5, 7, 8, 3, 7, 4, 4, 3, 7, 7, 5, 6,\
+6, 9, 7, 5, 5, 4, 7, 7, 2, 4)
+
+Which of the following options gives the correct 99% confidence interval for the true difference in mean potion use per raid (defined as Tanks minus DPS), along with the correct interpretation of this interval?
+
+**Answer Choices:**\
+A. The confidence interval is (-2.4309, -0.6358). We are 99% confident that the true difference in mean number of potions used is between -2.4309 and -0.6358 potions.
+
+B. The confidence interval is (-2.4094, -0.6573). We are 99% confident that the true difference in mean number of potions used is between -2.4094 and -0.6573 potions.
+
+C. The confidence interval is (0.6358, 2.4309). We are 99% confident that the true difference in mean number of potions used is between 0.6358 and 2.4309 potions.
+
+D. The confidence interval is (0.6573, 2.4094). We are 99% confident that the true difference in mean number of potions used is between 0.6573 and 2.4094 potions.
+
+Question 4
+
+A nutrition research team is comparing the average sugar content (in grams) of two types of breakfast cereals, Cereal A and Cereal B. Random samples of 30 boxes of Cereal A and 35 boxes of Cereal B are collected. The sugar content of each box is recorded below:
+
+cereal_b \<- c(3.39, 4.04, 3.52, 3.62, 2.64, 3, 3.34, 2.63, 3.07, 3.05,\
+2.13, 3.1, 4.02, 3.08, 3.45, 2.29, 3.23, 3.09, 3.41, 2.81,\
+2.05, 3.84, 2.57, 3.19, 2.75, 2.31, 2.38, 2.96, 3.75, 3.97,\
+3.19, 2.04, 3.22, 3.6, 3.01)\
+\
+cereal_a \<- c(4.31, 2.1, 3.52, 3.27, 2.91, 3.33, 3.75, 3.46, 3.73, 4.2,\
+3.13, 2.97, 3.61, 3.21, 3.74, 3.06, 3.53, 3.55, 3.34, 3.17,\
+3.26, 3.43, 2.98, 3.51, 2.02, 3.12, 3.42, 2, 3.73, 3.38)
+
+Which of the following options gives the correct 95% confidence interval for the true difference in mean sugar content (defined as Cereal A minus Cereal B), along with the correct interpretation of this interval?
+
+**Answer Choices:**\
+A. The confidence interval is (-0.0579, 0.4840). We are 95% confident that the true difference between the mean sugar contents is between -0.0579 and 0.4840 grams.
+
+B. The confidence interval is (-0.0572, 0.4833). We are 95% confident that the true difference between the mean sugar contents is between -0.0572 and 0.4833 grams.
+
+C. The confidence interval is (-0.4840, 0.0579). We are 95% confident that the true difference between the mean sugar contents is between -0.4840 and 0.0579 grams.
+
+D. The confidence interval is (-0.4833, 0.0572). We are 95% confident that the true difference between the mean sugar contents is between -0.4833 and 0.0572 grams.
+
+Question 5
+
+You are comparing house prices (in hundreds of thousands of dollars) in two neighboring cities, City A and City B. You collect a random sample of 40 houses from City A and 35 houses from City B. Use the data below to find the **upper bound** of the 90% confidence interval for the difference in average house prices (defined as City B minus City A). Round your answer to four decimal places.
+
+city_A \<- c(425, 430, 410, 400, 405, 420, 415, 430, 410, 405,\
+412, 419, 430, 421, 422, 430, 412, 418, 407, 435,\
+415, 416, 428, 417, 419, 429, 424, 418, 425, 426,\
+419, 427, 431, 422, 423, 429, 417, 426, 411, 430)\
+\
+city_B \<- c(480, 490, 470, 450, 460, 510, 460, 480, 440, 430,\
+470, 494, 484, 498, 456, 470, 474, 480, 454, 500,\
+480, 486, 482, 470, 472, 496, 500, 474, 478, 484,\
+468, 464, 458, 488, 480)
+
+Question 6
+
+You are comparing the on-time performance of two airlines, Airline A and Airline B. You take a random sample of 40 flights from Airline A and 45 flights from Airline B and record delay times (in minutes). What is the **lower bound** of the 95% confidence interval for the difference in average delay times (defined as Airline A minus Airline B)? Round your answer to four decimal places.
+
+Question 7
+
+You are comparing support certainty for two political candidates, Candidate A and Candidate B. You randomly sample 50 supporters of Candidate A and 45 supporters of Candidate B and record certainty percentages. Use the data below to find the **lower bound** of the 95% confidence interval for the difference (defined as Candidate B minus Candidate A). Round your answer to four decimal places.
+
+certainty_A \<- c(85, 91, 79, 75, 83, 73, 77, 85, 89, 81,\
+75, 71, 77, 85, 83, 87, 73, 79, 81, 83,\
+85, 89, 73, 77, 75, 87, 83, 81, 85, 75,\
+79, 81, 73, 85, 87, 83, 77, 81, 79, 85,\
+89, 91, 77, 81, 75, 87, 83, 85, 81, 83)\
+\
+certainty_B \<- c(78, 75, 80, 82, 81, 77, 79, 74, 76, 78,\
+79, 77, 80, 76, 77, 74, 78, 76, 75, 79,\
+77, 74, 76, 80, 81, 79, 77, 78, 79, 75,\
+76, 78, 79, 80, 78, 79, 77, 78, 80, 77,\
+79, 78, 77, 79, 80)
+
+Question 8
+
+You are comparing development times for two programming languages, Language A and Language B. You collect samples of 35 and 30 developers respectively. What is the **upper bound** of the 90% confidence interval for the difference in average development times (Language A minus Language B)? Round your answer to four decimal places.
+
+Question 9
+
+You are comparing wildfire suppression methods, Method A and Method B. Data for burned area (in acres) are given below. Find the **lower bound** of the 90% confidence interval for the difference (Method B minus Method A). Round your answer to four decimal places.
+
+area_A \<- c(120.5, 118.7, 121.0, 119.3, 122.2, 120.1, 118.4, 121.6, 119.9, 120.0,\
+118.3, 119.8, 121.1, 120.2, 119.4, 118.6, 120.3, 121.0, 118.9, 119.1,\
+120.5, 121.4, 118.7, 120.0, 119.3, 121.2, 120.6, 118.9, 119.8, 121.3,\
+119.2, 120.4, 119.6, 120.7, 119.0, 121.1, 118.5, 120.0, 119.5, 120.1,\
+119.7, 120.3)\
+\
+area_B \<- c(135.4, 138.2, 134.6, 137.1, 135.8, 136.3, 137.5, 134.9, 136.0, 137.2,\
+135.9, 136.1, 137.3, 135.7, 136.4, 137.0, 135.6, 137.4, 136.5, 135.3,\
+137.2, 136.8, 135.5, 137.1, 136.2, 135.8, 137.5, 136.7, 137.0, 136.6,\
+137.3, 135.9, 136.9, 137.2, 135.7, 136.3, 137.0, 136.1, 136.8, 137.4,\
+135.8, 136.5, 137.2, 135.6, 136.7, 137.3, 136.4, 137.0, 135.9, 136.2)
+
+Question 10
+
+A movie production company assigns 30 theaters to Strategy A and 40 theaters to Strategy B and records revenue changes. Compute the **standard error** needed to construct a 95% confidence interval for the difference in means. Round to four decimal places.
+
+Question 11
+
+You are comparing frame rates between two video game consoles, Console A and Console B. Data are given below. Find the **upper bound** of the 95% confidence interval for the difference (Console A minus Console B). Round your answer to four decimal places.
+
+fps_A \<- c(59.5, 60.2, 59.8, 60.3, 59.9, 60.1, 59.7, 59.8, 60.4, 60.0,\
+59.6, 60.2, 59.7, 60.1, 59.9, 60.3, 60.4, 59.6, 60.2, 59.5,\
+60.0, 59.9, 60.3, 59.7, 60.1, 60.4, 59.8, 60.2, 59.7, 59.6,\
+60.0, 59.8, 60.3, 59.5, 60.4, 59.7, 59.8, 60.1, 60.2, 59.6,\
+59.9, 60.3, 59.8, 60.0, 59.9, 60.2, 59.6, 60.1, 60.4, 59.7)\
+\
+fps_B \<- c(55.6, 55.3, 56.1, 55.7, 55.4, 56.2, 55.9, 55.8, 55.7, 56.0,\
+55.4, 55.8, 55.9, 56.2, 55.6, 55.7, 55.8, 56.1, 55.5, 55.9,\
+55.6, 55.7, 55.8, 56.0, 55.9, 56.2, 55.6, 55.7, 55.9, 55.8,\
+56.0, 55.6, 55.5, 55.8, 55.9, 55.7, 55.6, 56.1, 55.7, 55.9,\
+55.8, 55.6, 56.0, 55.7, 55.9, 55.8, 55.7, 56.2, 55.6, 55.5,\
+56.1, 55.8)
+
+Question 12
+
+An agricultural researcher assigns 45 farms to Fertilizer A and 55 farms to Fertilizer B and records crop yield increases. Compute the **standard error** needed to construct a 95% confidence interval for the difference in means. Round to four decimal places.
+
+Question 13
+
+An oil company is analyzing the sulfur content (as a percentage) in crude oil from a newly discovered field. The population standard deviation is known to be 0.2. A random sample of 50 specimens yields a sample mean of 1.8%.
+
+Which of the following options gives the correct 95% confidence interval for the true average sulfur content, along with the correct interpretation?
+
+**Answer Choices:**\
+A. The confidence interval is (1.7446, 1.8554). We are 95% confident that the true average sulfur content is somewhere between 1.7446% and 1.8554%.
+
+B. The confidence interval is (1.7446, 1.8554). There is a 95% chance that the true average sulfur content is somewhere between 1.7446% and 1.8554%.
+
+C. The confidence interval is (1.7535, 1.8465). We are 95% confident that the true average sulfur content is somewhere between 1.7535% and 1.8465%.
+
+D. The confidence interval is (1.7535, 1.8465). There is a 95% chance that the true average sulfur content is somewhere between 1.7535% and 1.8465%.
+
+Question 14
+
+A nutritionist collects a random sample of 35 cans of soup and finds a sample mean sodium content of 620 mg with a sample standard deviation of 30 mg.
+
+Which of the following options gives the correct 99% confidence interval for the true average sodium content, along with the correct interpretation?
+
+**Answer Choices:**\
+A. The confidence interval is (606.1645, 633.8355). We are 99% confident that the true average sodium content is between 606.1645 mg and 633.8355 mg.
+
+B. The confidence interval is (606.1645, 633.8355). The probability that the true average sodium content is between 606.1645 mg and 633.8355 mg is 99%.
+
+C. The confidence interval is (606.9382, 633.0618). We are 99% confident that the true average sodium content is between 606.9382 mg and 633.0618 mg.
+
+D. The confidence interval is (606.9382, 633.0618). The probability that the true average sodium content is between 606.9382 mg and 633.0618 mg is 99%.
+
+Question 15
+
+A nuclear energy facility measures radiation levels (in millisieverts per hour) from a new fuel rod. The population standard deviation is known to be 0.15. A sample of 40 rods yields a mean of 2.5.
+
+Which of the following options gives the correct 95% confidence interval for the true mean radiation level, along with the correct interpretation?
+
+**Answer Choices:**\
+A. The confidence interval is (2.4535, 2.5465). We are 95% confident that the true radiation level is somewhere between 2.4535 and 2.5465 millisieverts.
+
+B. The confidence interval is (2.4535, 2.5465). There is a 95% chance that the true radiation level is somewhere between 2.4535 and 2.5465 millisieverts.
+
+C. The confidence interval is (2.4520, 2.5480). We are 95% confident that the true radiation level is somewhere between 2.4520 and 2.5480 millisieverts.
+
+D. The confidence interval is (2.4520, 2.5480). There is a 95% chance that the true radiation level is somewhere between 2.4520 and 2.5480 millisieverts.
+
+Question 16
+
+A tech company tests 40 headphones and finds a sample mean battery life of 12.5 hours with a sample standard deviation of 1.2 hours.
+
+Which of the following options gives the correct 99% confidence interval for the true average battery life, along with the correct interpretation?
+
+**Answer Choices:**\
+A. The confidence interval is (11.9862, 13.0138). We are 99% confident that the true average battery life is between 11.9862 and 13.0138 hours.
+
+B. The confidence interval is (11.9862, 13.0138). The probability that the true battery life is between 11.9862 and 13.0138 hours is 99%.
+
+C. The confidence interval is (12.0113, 12.9888). We are 99% confident that the true average battery life is between 12.0113 and 12.9888 hours.
+
+D. The confidence interval is (12.0113, 12.9888). The probability that the true battery life is between 12.0113 and 12.9888 hours is 99%.
+
+Question 17
+
+A nutritionist samples 12 frozen meals and finds a sample mean sodium content of 620 mg with a sample standard deviation of 50 mg. Assume normality. Find the **upper bound** of the 90% confidence interval for the population mean. Round to four decimal places.
+
+Question 18
+
+A quality control engineer samples 50 cables with known population standard deviation 4.8 kN and sample mean 85.6 kN. Find the **lower bound** of the 95% confidence interval for the population mean. Round to four decimal places.
+
+Question 19
+
+A nutritionist samples 12 frozen meals (mean = 620 mg, standard deviation = 50 mg) and constructs a 90% confidence interval. Enter the **quantile value** used (t or z). Round to two decimal places.
+
+Question 20
+
+A quality control engineer constructs a 95% confidence interval for a mean with known population standard deviation. Enter the **quantile value** used. Round to two decimal places.
+
+Question 21
+
+A researcher samples 8 fish (mean = 2.3 kg, standard deviation = 0.4 kg) and constructs a 95% confidence interval assuming normality. Find the **upper bound**. Round to four decimal places.
+
+Question 22
+
+A car manufacturer samples 40 cars with known population standard deviation 3.2 mpg and sample mean 27.5 mpg. Find the **lower bound** of the 99% confidence interval. Round to four decimal places.
+
+Question 23
+
+A researcher constructs a 95% confidence interval for a mean with sample size 8 and unknown population standard deviation. Enter the **quantile value** used (t). Round to two decimal places.
+
+Question 24
+
+A car manufacturer constructs a 99% confidence interval for a mean with known population standard deviation. Enter the **quantile value** used (z). Round to two decimal places.
+
+Question 25
+
+The mean income for all households in a city is \$85,000 with a standard deviation of \$5,000. A random sample of 40 households is selected. What is the probability that the sample mean income exceeds \$85,800? Round your answer to four decimal places.
+
+Question 26
+
+The average daily water consumption in a town is 250 liters with a standard deviation of 30 liters. A random sample of 36 households is selected. What is the probability that the sample mean exceeds 256 liters? Round your answer to four decimal places.
+
+Question 27
+
+Employee productivity scores are normally distributed with mean 85 and standard deviation 12. A sample of 20 employees has an average score at the 90th percentile of the sampling distribution. What is this average score? Round to four decimal places.
+
+Question 28
+
+Test scores are normally distributed with mean 80 and standard deviation 6. A sample of 30 scores is selected. What is the probability that the sample mean exceeds 82? Round your answer to four decimal places.
+
+Question 29
+
+The lifespan (in hours) of a type of laptop battery follows a normal distribution with mean 500 and standard deviation 40. A sample of 50 batteries is selected.
+
+What is the sampling distribution of the sample mean?
+
+**Answer Choices:**\
+A. Normal with mean 500 and standard deviation 40
+
+B. Normal with mean 500 and standard deviation $\frac{40}{\sqrt{50}}$
+
+C. Normal with mean $\frac{500}{50}$​ and standard deviation 40
+
+D. Normal with mean $\frac{500}{50}\$and standard deviation $\frac{40}{\sqrt{50}}$​
+
+Question 30
+
+Battery life of smartphones is normally distributed with mean 18 hours and standard deviation 3 hours. A sample of 40 phones is selected.
+
+What are the expected value and standard deviation of the sample mean?
+
+**Answer Choices:**\
+A. Mean = 18, Standard deviation = 3
+
+B. Mean = 18, Standard deviation = $\frac{3}{\sqrt{40}}$
+
+C. Mean = $\frac{18}{40}$​, Standard deviation = 3
+
+D. Mean = $\frac{18}{40},\$Standard deviation = $\frac{3}{\sqrt{40}}$
+
+Weekly wages are normally distributed with mean \$750 and standard deviation \$120. A sample of 30 workers has an average wage at the 60th percentile of the sampling distribution. What is this average wage? Round to four decimal places.
+
+Question 31
+
+Apple weights are normally distributed with mean 150 grams and standard deviation 20 grams. A sample of 15 apples is selected. What is the probability that the sample mean is between 145 and 155 grams? Round to four decimal places.
+
+Question 32
+
+Employee salaries are normally distributed with mean \$55,000 and standard deviation \$8,000. A sample of 25 employees is selected.
+
+What is the sampling distribution of the sample mean?
+
+**Answer Choices:**\
+A. Normal with mean 55,000 and standard deviation 8,000
+
+B. Normal with mean 55,000 and standard deviation $\frac{8,000}{\sqrt{25}}$
+
+C. Normal with mean $\frac{55,000}{25}$ and standard deviation 8,000
+
+D. Normal with mean $\frac{55,000}{25}$​ and standard deviation $\frac{8,000}{\sqrt{25}}$​
+
+Laptop weights are normally distributed with mean 2.5 kg and standard deviation 0.4 kg. A sample of 50 laptops is selected.
+
+What are the expected value and standard deviation of the sample mean?
+
+**Answer Choices:**\
+A. Mean = 2.5, Standard deviation = 0.4
+
+B. Mean = 2.5, Standard deviation = $\frac{0.4}{\sqrt{50}}$
+
+C. Mean = $\frac{2.5}{50}$​, Standard deviation = 0.4
+
+D. Mean = $\frac{2.5}{50}$​, Standard deviation = $\frac{0.4}{\sqrt{50}}$
+
+Question 33
+
+A cancer research institute studies the effectiveness of a new screening test. In a trial of 500 patients, 120 tested positive.
+
+Which option gives the 90% confidence interval for the true early detection rate and the correct interpretation?
+
+**Answer Choices:**\
+A. Confidence interval = (0.2086, 0.2714). We are 90% confident that the true early detection rate is between 20.86% and 27.14%.\
+B. Confidence interval = (0.2086, 0.2714). We are 90% confident that the true early detection rate is 0.24.\
+C. Confidence interval = (0.2266, 0.2534). We are 90% confident that the true early detection rate is between 22.66% and 25.34%.\
+D. Confidence interval = (0.2266, 0.2534). We are 90% confident that the true early detection rate is 0.24.
+
+Question 34
+
+A wildlife conservation group studies the prevalence of a parasite in wild deer. Out of 400 sampled deer, 88 are infected.
+
+Which option gives the 90% confidence interval for the true infection rate and the correct interpretation?
+
+**Answer Choices:**\
+A. Confidence interval = (0.1859, 0.2541). We are 90% confident that the true infection rate is between 18.59% and 25.41%.\
+B. Confidence interval = (0.1859, 0.2541). We are 90% confident that the true infection rate is 0.22.\
+C. Confidence interval = (0.2059, 0.2341). We are 90% confident that the true infection rate is between 20.59% and 23.41%.\
+D. Confidence interval = (0.2059, 0.2341). We are 90% confident that the true infection rate is 0.22.
+
+Question 35
+
+A survey estimates the proportion of software developers who prefer Python. Out of 150 respondents, 95 prefer Python. Construct a 95% confidence interval for the true proportion.
+
+Question 36
+
+You test 100 circuit boards, and 85 pass quality control. Construct a 95% confidence interval for the true proportion that passes.
+
+Question 37
+
+A survey estimates the proportion of consumers who believe a recent tax policy will positively impact the economy. Out of 200 respondents, 120 believe it will. Construct a 90% confidence interval for the true proportion.
+
+Question 38
+
+A survey estimates the proportion of households with internet access. Out of 200 households, 150 report having access. Construct a 90% confidence interval for the true proportion.

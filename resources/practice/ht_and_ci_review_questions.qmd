@@ -1,0 +1,27 @@
+---
+title: HT and CI Review Questions
+---
+
+1.  Two alloys are tested for tensile strength. Alloy A (n = 45) has mean 420 MPa and SD = 18 MPa. Alloy B (n = 35) has mean 409 MPa and SD = 16 MPa. Construct a 95% confidence interval for μA − μB.
+
+2.  A particle detector records the energy (MeV) of emitted photons. A sample of 40 measurements yields a mean of 8.2 MeV. The detector's energy-measurement standard deviation is known to be σ = 1.4 MeV. Construct a 95% confidence interval for the true mean photon energy.
+
+3.  A sensor used to measure electron drift velocity is designed to have a mean reading of 2.8×10⁵ m/s. Past calibration shows σ = 0.3×10⁵ m/s. A sample of 36 readings yields a mean of 2.73×10⁵ m/s. Test at α = 0.05 whether the mean differs from the design value.
+
+4.  Two fuel-injector designs are tested. Design A (n = 34) shows mean efficiency 38.6% with SD = 3.1%. Design B (n = 43) shows mean 36.8% with SD = 2.7%. Test at α = 0.05 whether Design A has a higher mean efficiency.
+
+5.  An engineer measures the torque (N·m) produced by a prototype motor using 12 test runs. The sample mean is 52.6 N·m and the sample standard deviation is 4.8 N·m. Construct a 99% confidence interval for the true mean torque.
+
+6.  A system's crash-recovery time is claimed to average 1.8 seconds. A set of 8 trials gives mean = 2.0 s and SD = 0.25 s. Test at α = 0.05 whether the data supports that the true mean recovery time is greater than 1.8 s.
+
+7.  Two types of radiation shielding are tested for absorption rate. Shield X (n = 40) has mean 1.32 cm⁻¹ and SD = 0.18. Shield Y (n = 36) has mean 1.28 cm⁻¹ and SD = 0.03. Construct a 90% confidence interval for μX − μY.
+
+8.  Concrete curing time is expected to average 28 hours. A sample of 32 tests shows a mean of 29.1 hours and a sample SD of 2.7 hours. Test at α = 0.01 whether the true mean curing time is greater than 28 hours.
+
+9.  Two sorting algorithms are benchmarked. Algorithm A (n = 40) has average runtime 55.1 ms and SD = 2.2 ms. Algorithm B (n = 44) has average runtime 50.3 ms and SD = 10.7 ms. Construct a 95% confidence interval for μA -- μB.
+
+10. Compile times (ms) are compared between two compilers. Compiler A: n = 35, mean = 102 ms, SD = 12 ms. Compiler B: n = 41, mean = 95 ms, SD = 20 ms. Test at α = 0.05 whether Compiler A has a higher mean compile time.
+
+11. A software profiler measures the execution time (ms) of an embedded-system task over 33 trials, giving a mean of 12.4 ms and a sample standard deviation of 1.1 ms. Construct a 90% confidence interval for the true mean execution time.
+
+12. Noise levels (mV) are measured for two sensor configurations. Config 1: n = 37, mean = 4.8, SD = 1.5. Config 2: n = 45, mean = 4.2, SD = 0.3. Test at α = 0.10 whether config means differ.

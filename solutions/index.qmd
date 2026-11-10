@@ -1,0 +1,50 @@
+---
+title: "Homework Solutions"
+toc: false
+---
+
+Worked solutions for each homework set. Try the problems first, then use these to check your reasoning and code.
+
+## Module 1: Foundations and Data Exploration
+
+- [Introduction to Statistics](introduction_to_statistics.qmd)
+- [Sampling](sampling.qmd)
+- [Numeric Summaries](numeric_summaries.qmd)
+- [Data Visualization](data_visualization.qmd)
+
+## Module 2: Probability
+
+- [Counting](counting.qmd)
+- [Introduction to Probability](introduction_to_probability.qmd)
+- [Probability Axioms](probability_axioms.qmd)
+- [Conditional Probability](conditional_probability.qmd)
+- [Bayes' Theorem](bayes_theorem.qmd)
+
+## Module 3: Random Variables
+
+- [Random Variables](random_variables.qmd)
+- [Expectation and Variance](expectation_and_variance.qmd)
+- [Transformations](transformations.qmd)
+- [Joint Random Variables](joint_random_variables.qmd)
+
+## Module 4: Distributions and Sampling
+
+- [Discrete Distributions](discrete_distributions.qmd)
+- [Continuous Distributions](continuous_distributions.qmd)
+- [Normal Distribution](normal_distribution.qmd)
+- [Sampling Distributions](sampling_distributions.qmd)
+- [Central Limit Theorem](clt_continuous.qmd)
+- [Central Limit Theorem for Discrete Random Variables](clt_discrete.qmd)
+
+## Module 5: Statistical Inference
+
+- [Maximum Likelihood Estimation](maximum_likelihood_estimation.qmd)
+- [Confidence Interval for a Population Mean](ci_one_population_mean.qmd)
+- [Hypothesis Test for a Population Mean](ht_one_population_mean.qmd)
+- [Confidence Interval for the Difference of Population Means](ci_difference_of_population_means.qmd)
+- [Hypothesis Test for the Difference of Population Means](ht_difference_of_population_means.qmd)
+- [Confidence Interval for a Population Proportion](ci_population_proportion.qmd)
+- [Hypothesis Test for a Population Proportion](ht_population_proportion.qmd)
+- [Confidence Interval for a Paired Mean Difference](ci_population_mean_difference.qmd)
+- [Hypothesis Test for a Paired Mean Difference](ht_population_mean_difference.qmd)
+- [Simple Linear Regression](simple_linear_regression.qmd)

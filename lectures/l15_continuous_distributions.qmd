@@ -1,0 +1,496 @@
+---
+title: "Continuous Distributions"
+format:
+  revealjs:
+    slideNumber: true
+    scrollable: true
+---
+
+```{r}
+suppressWarnings(suppressMessages(library(ggplot2)))
+```
+
+## Uniform Random Variable
+
+::: {.callout title="Definition 15.1"}
+The PDF for a **Uniform** random variable with lower bound $a$ and upper bound $b$ is:
+
+$$
+f_X(x;a,b) = \frac{1}{b-a}, \quad x \in (a, b) \text{ and } 0 \text{ otherwise}
+$$
+
+and the CDF is:
+
+$$
+F_X(x;a,b) = 
+P(X \leq x) =
+\begin{cases}
+0 & x < a \\
+\frac{x-a}{b-a} & a \leq x \leq b \\
+1 & x > b
+\end{cases}
+$$
+
+The mean $\text{E}[X]$ and variance $\text{Var}[X]$ are:
+
+$$
+\begin{align}
+\text{E}[X] &= \frac{a+b}{2} \\
+\text{Var}[X] &= \frac{(b-a)^2}{12}
+\end{align}
+$$
+:::
+
+## Uniform Mean and Variance
+
+The mean of a uniform random variable is derived as follows:
+
+$$
+\text{E}[X] = \int_{a}^{b} x \cdot \frac{1}{b-a} \ dx = \frac{b^2-a^2}{2(b-a)} = \frac{(b-a)(b+a)}{2(b-a)} = \frac{a+b}{2}
+$$
+
+and the variance is derived by first deriving $\text{E}[X^2]$
+
+$$
+\begin{align}
+\text{E}[X^2] &= \int_{a}^{b} x^2 \cdot \frac{1}{b-a} \ dx = \frac{(b-a)(b^2 + ab + a^2)}{3(b-a)} = \frac{b^2 + ab + a^2}{3} \\
+\text{Var}[X] &= \frac{b^2 + ab + a^2}{3} - \frac{(a+b)^2}{4} = \frac{b^2-2ab+a^2}{12} = \frac{(b-a)^2}{12}
+\end{align}
+$$
+
+## Ex: Bus Times
+
+::: {.callout title="Example 15.1"}
+A bus always arrives sometime between 10 and 11 am and it is equally likely to arrive at any time within that range. Let $X$ be the amount of time that passes after 10 am before the bus arrives (in minutes, seconds, etc.).
+
+What are $\text{E}[X]$, $\text{Var}[X]$, $f_X(30;a,b)$, and $P(X \leq 40)$?
+:::
+
+. . .
+
+-   $\text{E}[X] = \frac{0+60}{2} = 30$
+-   $\text{Var}[X] = \frac{(60-0)^2}{12} = 300$
+-   $f_X(30;a=0,b=60) = \frac{1}{60}$
+-   $P(X \leq 40) = \frac{40-0}{60-0} = \frac{2}{3}$
+
+```{r, echo = TRUE}
+a <- 0
+b <- 60
+dunif(30, min = a, max = b)
+punif(40, min = a, max = b)
+```
+
+## Ex: Rod Lengths
+
+::: {.callout title="Example 15.2"}
+A machine that manufactures metal rods produces rods as small as 9.8 cm and as large as 10.2 cm with all lengths in between these two values being equally likely. Let $X$ be the length of a rod produced by this machine.
+
+What are $\text{E}[X]$, $\text{Var}[X]$, $f_X(10.1;a,b)$, and $P(9.9 \leq X \leq 10.1)$?
+:::
+
+. . .
+
+-   $\text{E}[X] = \frac{9.8+10.2}{2} = 10$
+-   $\text{Var}[X] = \frac{(10.2-9.8)^2}{12} \simeq 0.0133$
+-   $f_X(10.1;a=9.8,b=10.2) = \frac{1}{10.2-9.8} = 2.5$
+-   $P(9.9 \leq X \leq 10.1) = \frac{10.1-9.8}{10.2-9.8} - \frac{9.9-9.8}{10.2-9.8} = \frac{1}{2}$
+
+```{r, echo = TRUE}
+a <- 9.8
+b <- 10.2
+dunif(10.1, min = a, max = b)
+punif(10.1, min = a, max = b) - punif(9.9, min = a, max = b)
+```
+
+## Ex: Load Times
+
+::: {.callout title="Example 15.3"}
+Let $X$ be the time that it takes for a webpage to load and assume that it can take anywhere from 2 to 5 seconds for the page to load with any time in there being equally likely.
+
+What are $\text{E}[X]$, $\text{Var}[X]$, $f_X(3;a,b)$, and $P(X > 3)$?
+:::
+
+. . .
+
+YOUR ANSWER HERE
+
+```{r, echo = TRUE}
+# YOUR CODE HERE
+```
+
+## Exponential Random Variable
+
+::: {.callout title="Definition 15.2"}
+An **Exponential distribution** often models the time that passes before an event of interest occurs. The PDF for an exponential random variable with rate parameter $\lambda$ is:
+
+$$
+f_X(x;\lambda) = \lambda e^{-\lambda x}, \quad x \in (0, \infty) \text{ and } 0 \text{ otherwise}
+$$
+
+and the CDF is:
+
+$$
+F_X(x;\lambda) = 
+P(X \leq x) =
+\begin{cases}
+0 & x \leq 0 \\
+1-e^{-\lambda x} & x > 0 \\
+\end{cases}
+$$
+
+The mean $\text{E}[X]$ and variance $\text{Var}[X]$ are:
+
+$$
+\begin{align}
+\text{E}[X] &= \frac{1}{\lambda} \\
+\text{Var}[X] &= \frac{1}{\lambda^2}
+\end{align}
+$$
+:::
+
+## Exponential Random Variable
+
+```{r}
+# Set parameters
+lambda_values <- c(0.5, 1, 2)  # Different rate parameters
+
+# Create a data frame to store the exponential densities
+exp_data <- data.frame()
+
+for (lambda in lambda_values) {
+  x <- seq(0, 5, length.out = 100)  # Range of x-values
+  density <- dexp(x, rate = lambda)
+  exp_data <- rbind(exp_data, data.frame(x = x, density = density, lambda = factor(lambda)))
+}
+
+# Plot the exponential distributions
+ggplot(exp_data, aes(x = x, y = density, color = lambda, group = lambda)) +
+  geom_line(linewidth = 1) +
+  labs(title = "Exponential Distributions with Different Lambda Values",
+       x = "x",
+       y = "Density",
+       color = expression(lambda)) +
+  theme_minimal()
+```
+
+## Exponential Mean and Variance
+
+The mean of an exponential random variable is derived as follows:
+
+$$
+\begin{align}
+\text{E}[X] &= \int_0^\infty x \cdot \lambda e^{-\lambda x} \ dx \\
+&= \left[-x e^{-\lambda x}\right]_0^\infty + \int_0^\infty e^{-\lambda x} & \text{Integration by Parts with } u=x,dv=\lambda e^{-\lambda x} \\
+&= \lim_{x \rightarrow \infty} -xe^{-\lambda x} + \left[-\frac{1}{\lambda} e^{-\lambda x}\right]_0^\infty \\
+&= \lim_{x \rightarrow \infty} e^{-\lambda x} + \lim_{x \rightarrow \infty} -\frac{1}{\lambda} e^{-\lambda x} - \lim_{x \rightarrow 0} -\frac{1}{\lambda} e^{-\lambda x} & \text{L' Hopital's rule} \\
+&= 0 + 0 + \frac{1}{\lambda} = \frac{1}{\lambda}
+\end{align}
+$$
+
+The variance can be derived similarly, first by calculating $\text{E}[X^2]$.
+
+## Ex: Earthquakes
+
+::: {.callout title="Example 15.4"}
+Let $X$ be the time that passes between large earthquakes (in hours, minutes, etc.) and assume that these times are exponentially distributed. Also assume that earthquakes occur at a rate of 2.5 earthquakes per hour.
+
+What are $\text{E}[X]$, $\text{Var}[X]$, $f_X(0.5; \lambda)$, and $P(X > 0.5)$?
+:::
+
+. . .
+
+-   $\text{E}[X] = \frac{1}{2.5} = 0.4$
+-   $\text{Var}[X] = \frac{1}{2.5^2} = 0.16$
+-   $f_X(0.5;\lambda=2.5) = 2.5 \times e^{-2.5\times 0.5} \simeq 0.7163$
+-   $P(X > 0.5) = 1-P(X \leq 0.5) = 1-(1-e^{-2.5\times 0.5}) \simeq 0.2865$
+
+```{r, echo = TRUE}
+lambda <- 2.5
+dexp(0.5, rate = lambda)
+1-pexp(0.5, rate = lambda)
+```
+
+## Ex: Call Center
+
+::: {.callout title="Example 15.5"}
+Let $X$ be the time that passes between phone calls at a call center (in minutes, seconds, etc.) and assume that the call times are exponentially distributed. Furthermore, assume that the call center receives 2 calls every minute.
+
+What are $\text{E}[X]$, $\text{Var}[X]$, $f_X(1; \lambda)$, and $P(X < 0.5)$?
+:::
+
+. . .
+
+-   $\text{E}[X] = \frac{1}{2} = 0.5$
+-   $\text{Var}[X] = \frac{1}{2^2} = 0.25$
+-   $f_X(1;\lambda=2) = 2 \times e^{-2\times 1} \simeq 0.2707$
+-   $P(X < 0.5) = 1-e^{-2\times 0.5} \simeq 0.6321$
+
+```{r, echo = TRUE}
+lambda <- 2
+dexp(1, rate = lambda)
+pexp(0.5, rate = lambda)
+```
+
+## Ex: Customers
+
+::: {.callout title="Example 15.6"}
+Let $X$ be the time that passes before the next customer arrives at a store (in hours, minutes, etc) and assume that these arrival times are exponentially distributed. Furthermore, assume that 12 customers arrive every hour.
+
+What are $\text{E}[X]$, $\text{Var}[X]$, $f_X(0.25; \lambda)$, and $P(X > 0.1)$?
+:::
+
+. . .
+
+YOUR ANSWER HERE
+
+```{r, echo = TRUE}
+# YOUR CODE HERE
+```
+
+## Gamma Random Variable
+
+::: {.callout title="Definition 15.3"}
+A **Gamma distribution** can be used to model the total amount of time that passes before a certain number of events occur where the time between each event is exponentially distributed. If $Y_1, Y_2, \dots, Y_\alpha$ are independent exponential random variables, each with rate $\lambda$, then $X = \sum_{i=1}^{\alpha} Y_i$ is a gamma random variable with PDF:
+
+$$
+f_X(x;\alpha,\lambda) = \frac{\lambda^\alpha}{\Gamma(\alpha)} x^{\alpha-1} e^{-\lambda x}, \quad x \in (0, \infty) \text{ and } 0 \text{ otherwise}.
+$$
+
+Here $\Gamma$ refers to the gamma function (`gamma` in R), defined as $\Gamma(\alpha) = \int_0^\infty t^{\alpha-1} e^{-t} \ dt (= (\alpha-1)!$ for integers).
+
+The mean $\text{E}[X]$ and variance $\text{Var}[X]$ are:
+
+$$
+\begin{align}
+\text{E}[X] &= \frac{\alpha}{\lambda} \\
+\text{Var}[X] &= \frac{\alpha}{\lambda^2}
+\end{align}
+$$
+:::
+
+## Gamma Random Variable
+
+```{r}
+# Set parameters
+shape_values <- c(2, 5)  # Two different shape parameters (k or alpha)
+rate_values <- c(2, 3)   # Two different rate parameters (lambda or beta)
+
+# Create a data frame to store the gamma densities
+gamma_data <- data.frame()
+
+for (shape in shape_values) {
+  for (rate in rate_values) {
+    x <- seq(0, 10, length.out = 200)  # Range of x-values
+    density <- dgamma(x, shape = shape, rate = rate)
+    gamma_data <- rbind(gamma_data, data.frame(x = x, density = density, 
+                                               shape = factor(shape), 
+                                               rate = factor(rate)))
+  }
+}
+
+# Plot the gamma distributions
+ggplot(gamma_data, aes(x = x, y = density, color = interaction(shape, rate), group = interaction(shape, rate))) +
+  geom_line(linewidth = 1) +
+  labs(title = "Gamma Distributions with Different Shape and Rate Parameters",
+       x = "x",
+       y = "Density",
+       color = "Shape, Rate") +
+  theme_minimal()
+```
+
+## Gamma Mean and Variance
+
+The mean of a Gamma random variable is derived as follows:
+
+$$
+\begin{align}
+\text{E}[X] &= \int_0^\infty x \cdot \frac{\lambda^\alpha}{\Gamma(\alpha)} x^{\alpha-1} e^{-\lambda x} \ dx \\
+&= \frac{\lambda^\alpha}{\Gamma(\alpha)} \int_0^\infty x^{\alpha+1-1} e^{-\lambda x} \ dx \\
+&= \frac{\lambda^\alpha}{\Gamma(\alpha)} \frac{\Gamma(\alpha+1)}{\lambda^{\alpha+1}} \int_0^\infty \frac{\lambda^{\alpha+1}}{\Gamma(\alpha+1)} x^{\alpha+1-1} e^{-\lambda x} \ dx \\
+&= \frac{\lambda^\alpha}{\Gamma(\alpha)} \frac{\Gamma(\alpha+1)}{\lambda^{\alpha+1}} = \frac{\alpha}{\lambda} \\
+\end{align}
+$$
+
+The variance can be derived similarly, first by calculating $\text{E}[X^2]$.
+
+## Ex: Call Center
+
+::: {.callout title="Example 15.7"}
+A call center receives 2 calls every minute and these call times are exponentially distributed. Let $X$ be the time that passes before 5 calls are received.
+
+What are $\text{E}[X]$, $\text{Var}[X]$, $f_X(2; \alpha, \lambda)$, and $P(X < 2)$?
+:::
+
+. . .
+
+-   $\text{E}[X] = \frac{5}{2} = 2.5$
+-   $\text{Var}[X] = \frac{5}{2^2} = 1.25$
+-   $f_X(2;\alpha=5, \lambda=2) = \frac{2^5}{\Gamma(5)} 2^{5-1} e^{-2 \times 2} \simeq 0.3907$
+-   $P(X < 2) = \int_0^2 f_X(x; \alpha=5,\lambda=2) \simeq 0.3711$
+
+```{r, echo = TRUE}
+alpha <- 5
+lambda <- 2
+dgamma(2, shape = alpha, rate = lambda)
+pgamma(2, shape = alpha, rate = lambda)
+```
+
+## Ex: Earthquakes
+
+::: {.callout title="Example 15.8"}
+It is believed that 2.5 earthquakes occur every hour and that the time between occurrences is an exponentially distributed random variable. Let $X$ be the time that passes before 10 earthquakes occur.
+
+What are $\text{E}[X]$, $\text{Var}[X]$, $f_X(6; \alpha, \lambda)$, and $P(X > 5)$?
+:::
+
+. . .
+
+-   $\text{E}[X] = \frac{10}{2.5} = 4$
+-   $\text{Var}[X] = \frac{10}{2.5^2} = 1.6$
+-   $f_X(6;\alpha=10, \lambda=2.5) = \frac{2.5^{10}}{\Gamma(10)} 6^{10-1} e^{-2.5 \times 6} \simeq 0.0810$
+-   $P(X > 5) = 1-P(X \leq 5)= 1-\int_0^5 f_X(x; \alpha=10,\lambda=2.5) \simeq 0.2014$
+
+```{r, echo = TRUE}
+alpha <- 10
+lambda <- 2.5
+dgamma(6, shape = alpha, rate = lambda)
+1-pgamma(5, shape = alpha, rate = lambda)
+```
+
+## Ex: Customers
+
+::: {.callout title="Example 15.9"}
+A store gets about 12 customers per hour and it is believed that the times between arrivals are exponentially distributed. Let $X$ be the time that passes before 20 customers arrive.
+
+What are $\text{E}[X]$, $\text{Var}[X]$, $f_X(1.5; \alpha, \lambda)$, and $P(X < 3)$?
+:::
+
+. . .
+
+YOUR ANSWER HERE
+
+```{r, echo = TRUE}
+# YOUR CODE HERE
+```
+
+## Beta Random Variable
+
+::: {.callout title="Definition 15.4"}
+A **Beta distribution** can be used to model proportions. If $Y$ is gamma random variable with shape $\alpha$ and rate $\lambda$ and $Z$ is a gamma random variable with shape $\beta$ and rate $\lambda$, then $X = \frac{Y}{Y+Z}$ is a beta random variable with PDF:
+
+$$
+f_X(x;\alpha,\beta) = \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)} x^{\alpha-1} (1-x)^{\beta-1}, \quad x \in (0, 1) \text{ and } 0 \text{ otherwise}.
+$$
+
+The mean $\text{E}[X]$ and variance $\text{Var}[X]$ are:
+
+$$
+\begin{align}
+\text{E}[X] &= \frac{\alpha}{\alpha+\beta} \\
+\text{Var}[X] &= \frac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}
+\end{align}
+$$
+:::
+
+## Beta Random Variable
+
+```{r}
+# Set parameters
+shape1_values <- c(2, 5)  # Two different alpha values
+shape2_values <- c(3, 4)  # Two different beta values
+
+# Create a data frame to store the beta densities
+beta_data <- data.frame()
+
+for (shape1 in shape1_values) {
+  for (shape2 in shape2_values) {
+    x <- seq(0, 1, length.out = 200)  # Range of x-values
+    density <- dbeta(x, shape1 = shape1, shape2 = shape2)
+    beta_data <- rbind(beta_data, data.frame(x = x, density = density, 
+                                             shape1 = factor(shape1), 
+                                             shape2 = factor(shape2)))
+  }
+}
+
+# Plot the beta distributions
+ggplot(beta_data, aes(x = x, y = density, color = interaction(shape1, shape2), group = interaction(shape1, shape2))) +
+  geom_line(size = 1) +
+  labs(title = "Beta Distributions with Different Shape Parameters",
+       x = "x",
+       y = "Density",
+       color = "Shape1, Shape2") +
+  theme_minimal()
+```
+
+## Beta Mean and Variance
+
+The mean of a Beta random variable is derived as follows:
+
+$$
+\begin{align}
+\text{E}[X] &= \int_0^1 x \cdot \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)} x^{\alpha-1} (1-x)^{\beta-1} \ dx \\
+&= \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)} \int_0^1 x^{\alpha+1-1} (1-x)^{\beta-1} \ dx \\
+&= \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)} \frac{\Gamma(\alpha+1)\Gamma(\beta)}{\Gamma(\alpha+1+\beta)}\int_0^1 \frac{\Gamma(\alpha+1+\beta)}{\Gamma(\alpha+1)\Gamma(\beta)} x^{\alpha+1-1} (1-x)^{\beta-1} \ dx \\
+&= \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)} \frac{\Gamma(\alpha+1)\Gamma(\beta)}{\Gamma(\alpha+1+\beta)} = \frac{\alpha}{\alpha+\beta} \\
+\end{align}
+$$
+
+The variance can be derived similarly, first by calculating $\text{E}[X^2]$.
+
+## Ex: Call Center
+
+::: {.callout title="Example 15.10"}
+Two call centers, A and B, both receive about 4 calls every minute. Assume the times between calls are exponentially distributed. You are 6th in a queue to speak to someone at call center A and your friend is 4th in queue to speak to someone at call center B. Let $X$ be the proportion of time you spend waiting out of the total time you and your friend wait.
+
+What are $\text{E}[X]$, $\text{Var}[X]$, $f_X(0.5; \alpha, \beta)$, and $P(X < 0.5)$?
+:::
+
+. . .
+
+-   $\text{E}[X] = \frac{6}{6+4} = 0.6$
+-   $\text{Var}[X] = \frac{6\times 4}{(6+4)^2 \times (6+4+1)} \simeq 0.0218$
+-   $f_X(0.5;\alpha=6, \beta=4) = \frac{\Gamma(6+4)}{\Gamma(6)\Gamma(4)} 0.5^{6-1} 0.5^{4-1} \simeq 1.9688$
+-   $P(X < 0.5) = \int_0^{0.5} f_X(x; \alpha=6, \beta=4) \simeq 0.2539$
+
+```{r, echo = TRUE}
+alpha <- 6; beta <- 4
+dbeta(0.5, shape1 = alpha, shape2 = beta)
+pbeta(0.5, shape1 = alpha, shape2 = beta)
+```
+
+## Ex: Customers
+
+::: {.callout title="Example 15.11"}
+Two stores, A and B, both receive about 10 customers each hour. Assume the times between arrivals are exponentially distributed. Mohamed is waiting for the 15th customer to arrive and at store A and Keiko is waiting for the 19th customer to arrive at store B. Let $X$ be the proportion of time that Keiko waits out of the total time that both Mohamed and Keiko wait.
+
+What are $\text{E}[X]$, $\text{Var}[X]$, $f_X(0.7; \alpha, \beta)$, and $P(X > 0.5)$?
+:::
+
+. . .
+
+-   $\text{E}[X] = \frac{19}{15+19} \simeq 0.5588$
+-   $\text{Var}[X] = \frac{15\times 19}{(15+19)^2 \times (15+19+1)} \simeq 0.0070$
+-   $f_X(0.7;\alpha=19, \beta=15) = \frac{\Gamma(15+19)}{\Gamma(15)\Gamma(19)} 0.7^{19-1} 0.3^{15-1} \simeq 1.2117$
+-   $P(X > 0.5) = \int_{0.5}^{1} f_X(x; \alpha=19, \beta=15) \simeq 0.7566$
+
+```{r, echo = TRUE}
+alpha <- 19; beta <- 15
+dbeta(0.7, shape1 = alpha, shape2 = beta)
+1-pbeta(0.5, shape1 = alpha, shape2 = beta)
+```
+
+## Ex: Earthquakes
+
+::: {.callout title="Example 15.12"}
+Two countries, A and B, both experience about 5 earthquakes an hour. Assume the times between earthquakes are exponentially distributed. Country A is waiting for their 10th earthquake and country B is waiting for their 12th earthquake. Let $X$ be the proportion of time that country A spends waiting out of the total time that country A and B spend waiting.
+
+What are $\text{E}[X]$, $\text{Var}[X]$, $f_X(0.3; \alpha, \beta)$, and $P(X < 0.6)$?
+:::
+
+. . .
+
+YOUR ANSWER HERE
+
+```{r, echo = TRUE}
+# YOUR CODE HERE
+```

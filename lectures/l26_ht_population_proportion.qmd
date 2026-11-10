@@ -1,0 +1,175 @@
+---
+title: "Hypothesis Test for Population Proportion"
+format:
+  revealjs:
+    slideNumber: true
+    scrollable: true
+---
+
+```{r}
+set.seed(100)
+```
+
+## Hypothesis Test for Population Proportion (Two-Tailed)
+
+::: {.callout title="Theorem 26.1"}
+Let $X_1, X_2, \dots, X_n$ be independent and identically distributed Bernoulli random variables with probability of success $p$. Assume we want to test the hypothesis $H_0: p = p_0$ vs $H_A: p \neq p_0$ and we want the Type-I error rate to be no larger than $\alpha$. Then we would reject $H_0$ when the following was true:
+
+$$
+\frac{\hat{p}-p_0}{\sqrt{\frac{p_0(1-p_0)}{n}}} < z_{\alpha/2} \quad \text{ or } \quad \frac{\hat{p}-p_0}{\sqrt{\frac{p_0(1-p_0)}{n}}} > z_{1-\alpha/2}
+$$
+
+More succinctly, we can reject $H_0$ when $\left|\frac{\hat{p}-p_0}{\sqrt{\frac{p_0(1-p_0)}{n}}} \right| > z_{1-\alpha/2}$.
+:::
+
+## Hypothesis Test for Population Proportion (Left-Tailed)
+
+::: {.callout title="Theorem 26.2"}
+Let $X_1, X_2, \dots, X_n$ be independent and identically distributed Bernoulli random variables with probability of success $p$. Assume we want to test the hypothesis $H_0: p = p_0$ vs $H_A: p < p_0$ and we want the Type-I error rate to be no larger than $\alpha$. Then we would reject $H_0$ when the following was true:
+
+$$
+\frac{\hat{p}-p_0}{\sqrt{\frac{p_0(1-p_0)}{n}}} < z_{\alpha}
+$$
+:::
+
+## Hypothesis Test for Population Proportion (Right-Tailed)
+
+::: {.callout title="Theorem 26.3"}
+Let $X_1, X_2, \dots, X_n$ be independent and identically distributed Bernoulli random variables with probability of success $p$. Assume we want to test the hypothesis $H_0: p = p_0$ vs $H_A: p > p_0$ and we want the Type-I error rate to be no larger than $\alpha$. Then we would reject $H_0$ when the following was true:
+
+$$
+\frac{\hat{p}-p_0}{\sqrt{\frac{p_0(1-p_0)}{n}}} > z_{1-\alpha}
+$$
+:::
+
+## P-Value for Population Proportion (Two-Tailed)
+
+For a two-tailed test involving the proportion ($H_A: p \neq p_0$), the p-value would be computed as follows:
+
+$$
+P\left(\frac{\hat{P}-p}{\sqrt{\frac{p(1-p)}{n}}} \geq \left|\frac{\hat{p}-p}{\sqrt{\frac{p(1-p)}{n}}} \right| \Bigg| p = p_0\right)
+$$
+
+## P-Value for Population Proportion (Left-Tailed)
+
+For a left-tailed test involving the proportion ($H_A: p < p_0$), the p-value would be computed as follows:
+
+$$
+P\left(\frac{\hat{P}-p}{\sqrt{\frac{p(1-p)}{n}}} \leq \frac{\hat{p}-p}{\sqrt{\frac{p(1-p)}{n}}} \Bigg| p = p_0\right)
+$$
+
+## P-Value for Population Proportion (Right-Tailed)
+
+For a right-tailed test involving the proportion ($H_A: p > p_0$), the p-value would be computed as follows:
+
+$$
+P\left(\frac{\hat{P}-p}{\sqrt{\frac{p(1-p)}{n}}} \geq \frac{\hat{p}-p}{\sqrt{\frac{p(1-p)}{n}}} \Bigg| p = p_0\right)
+$$
+
+## Ex: Exam
+
+::: {.callout title="Example 26.1"}
+You administer an exam with 40 questions to a student and record whether they got each question right or wrong. You find that the student got 34 of the questions correct. You want to test if the true probability $p$ of responding correctly to a question is less than 0.9. Conduct a hypothesis test at the 5% significance level.
+:::
+
+. . .
+
+```{r, echo = TRUE}
+n <- 40
+p_hat <- 34/n
+p0 <- 0.9
+alpha <- 0.05
+z_statistic <- (p_hat - p0)/sqrt(p0*(1-p0)/n)
+
+cat("The z-statistic is: ", z_statistic, ", the critical value is: ", qnorm(alpha), ", and the p-value is: ", pnorm(z_statistic), sep = "")
+```
+
+## Ex: Survey
+
+::: {.callout title="Example 26.2"}
+A survey is conducted to estimate the proportion of customers who are satisfied with a new product. Out of 120 respondents, 82 report being satisfied. You want to test if the true proportion $p$ of satisfied customers is different from 0.78. Conduct a hypothesis test at the 10% significance level.
+:::
+
+. . .
+
+```{r, echo = TRUE}
+n <- 120
+p_hat <- 82/n
+p0 <- 0.78
+alpha <- 0.1
+z_statistic <- (p_hat - p0)/sqrt(p0*(1-p0)/n)
+
+cat("The z-statistic is: ", z_statistic, ", the critical value is: ", qnorm(1-alpha/2), ", and the p-value is: ", 2*pnorm(-abs(z_statistic)), sep = "")
+```
+
+## Ex: Light Bulbs
+
+::: {.callout title="Example 26.3"}
+A manufacturer inspects a random sample of 75 light bulbs from a production line and finds that 15 are defective. You want to test if the true proportion $p$ of defective bulbs is greater than 0.1. Conduct a hypothesis test at the 1% significance level.
+:::
+
+. . .
+
+```{r, echo = TRUE}
+n <- 75
+p_hat <- 15/n
+p0 <- 0.1
+alpha <- 0.01
+z_statistic <- (p_hat - p0)/sqrt(p0*(1-p0)/n)
+
+cat("The z-statistic is: ", z_statistic, ", the critical value is: ", qnorm(1-alpha), ", and the p-value is: ", 1-pnorm(z_statistic), sep = "")
+```
+
+## Ex: Charitable Donations
+
+::: {.callout title="Example 26.4"}
+A charity organization surveys 120 randomly selected households and finds that 36 of them have donated to charity in the past year. You want to test if the true proportion $p$ of households that donate is less than 0.4. Conduct a hypothesis test at the 5% significance level.
+:::
+
+. . .
+
+```{r, echo = TRUE}
+n <- 120
+p_hat <- 36/n
+p0 <- 0.4
+alpha <- 0.05
+z_statistic <- (p_hat - p0)/sqrt(p0*(1-p0)/n)
+
+cat("The z-statistic is: ", z_statistic, ", the critical value is: ", qnorm(alpha), ", and the p-value is: ", pnorm(z_statistic), sep = "")
+```
+
+## Ex: Pets
+
+::: {.callout title="Example 26.5"}
+A pet store surveys 150 customers and finds that 45 own at least one pet. You want to test if the true proportion $p$ of customers who own pets is different from 0.35. Conduct a hypothesis test at the 1% significance level.
+:::
+
+. . .
+
+```{r, echo = TRUE}
+n <- 150
+p_hat <- 45/n
+p0 <- 0.35
+alpha <- 0.01
+z_statistic <- (p_hat - p0)/sqrt(p0*(1-p0)/n)
+
+cat("The z-statistic is: ", z_statistic, ", the critical value is: ", qnorm(1-alpha/2), ", and the p-value is: ", 2*pnorm(-abs(z_statistic)), sep = "")
+```
+
+## Ex: Personality Test
+
+::: {.callout title="Example 26.6"}
+A company offering personality tests conducts a survey of 200 individuals and finds that 50 have taken the test. You want to test if the true proportion $p$ of individuals who take the personality test is greater than 0.2. Conduct a hypothesis test at the 5% significance level.
+:::
+
+. . .
+
+```{r, echo = TRUE}
+n <- 200
+p_hat <- 50/n
+p0 <- 0.2
+alpha <- 0.05
+z_statistic <- (p_hat - p0)/sqrt(p0*(1-p0)/n)
+
+cat("The z-statistic is: ", z_statistic, ", the critical value is: ", qnorm(1-alpha), ", and the p-value is: ", 1-pnorm(z_statistic), sep = "")
+```

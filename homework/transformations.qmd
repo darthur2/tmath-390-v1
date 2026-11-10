@@ -1,0 +1,120 @@
+---
+title: "Transformations"
+format: html
+---
+
+## Question 1A (6 points)
+
+Consider a discrete random variable $X$ with the following PMF:
+
+$$
+P_X(x) = 
+\begin{cases}
+0.2 &\text{for } x = -1 \\
+0.5 &\text{for } x = 0 \\
+0.3 &\text{for } x = 1 \\
+0 &\text{otherwise}
+\end{cases}
+$$
+
+We would like to find the PMF of the transformed random variable $Y = g(X) = 2X$. Fill in letters a-f with the numbers that would complete the PMF for $Y$ found below:
+
+$$
+P_Y(y) = 
+\begin{cases}
+a &\text{for } y = b \\
+c &\text{for } y = d \\
+e &\text{for } y = f \\
+0 &\text{otherwise}
+\end{cases}
+$$
+
+## Question 1B (2 points)
+
+```{r, echo = TRUE}
+rPX_31 <- function(n){
+  sample(c(-1, 0, 1), n, TRUE, prob = c(0.2, 0.5, 0.3))
+}
+```
+
+The function `rPX_31` above takes as input a positive integer `n` and returns $n$ random samples of the random variable $X$. Use this function to produce $n = 10000$ random draws of $X$ and then use these draws to obtain draws of $Y$ where $Y = g(X) = 2X$. Then use these samples to compute an estimate of $P(Y = y)$ for each value of $y$.
+
+```{r, echo = TRUE}
+# Put your code here
+```
+
+## Question 2 (5 points)
+
+Consider the same discrete random variable presented in Question 1. Fill in the missing letters a-e with the numbers needed to complete the function for the CDF of $Y$ found below:
+
+$$
+F_Y(y) = 
+\begin{cases}
+0 &\text{for } y < c \\
+a &\text{for } c \leq y < d \\
+b &\text{for } d \leq y < e \\
+1 &\text{for } y \geq e
+\end{cases}
+$$
+
+## Question 3A (5 points)
+
+Consider a continuous random variable $X$ with PDF:
+
+$$
+f_X(x) =
+\begin{cases}
+\frac{3}{14}(x^2 + 1) &\text{for } x \in (0, 2) \\
+0 &\text{otherwise}
+\end{cases}
+$$
+
+We would like to find the PDF of the transformation $Y = g(X) = \sqrt{X}$. Fill in the letters a-e below with the numbers needed to complete the formula for the PDF of $Y$.
+
+$$
+f_Y(y) =
+\begin{cases}
+\frac{a}{b}y(y^c+1) &\text{for } y \in (d, e) \\
+0 &\text{otherwise}
+\end{cases}
+$$
+
+## Question 3B (2 points)
+
+```{r, echo = TRUE}
+rfX_33 <- function(n){
+  u_samps <- runif(n)
+  
+  f_obj <- function(u){
+    f_inner <- function(x){
+      3/14*(1/3*x^3 + x) - u
+    }
+  }
+  
+  sapply(u_samps, function(u){
+    f_obj_u <- f_obj(u)
+    uniroot(f_obj_u, c(0, 2), tol = 10e-10)$root
+  })
+}
+```
+
+The function `rfX_33` above takes as input an integer `n` and return $n$ random draws of the random variable with the PDF given in Question 3A. Use this function produce $n = 10000$ random draws of $X$ and then use these draws to obtain draws of $Y$ where $Y = g(X) = \sqrt{X}$. Create a histogram of the draws of $Y$.
+
+You may use the ggplot2 package or you can use the built-in function `hist` to create the histogram. When using `hist`, you simply need to input the variable (e.g., `hist(Y)`).
+
+```{r, echo = TRUE}
+# Put your code here
+```
+
+## Question 4 (4 points)
+
+Consider the same continuous random variable presented in Question 3A. Fill in the missing letters a-d with the numbers needed to complete the function for the CDF of $Y$ found below:
+
+$$
+F_Y(y) = 
+\begin{cases}
+0 &\text{for } y < 0 \\
+\frac{a}{b}y^c + \frac{3}{14}y^2 &\text{for } 0 \leq y < d \\
+1 &\text{for } y \geq d
+\end{cases}
+$$

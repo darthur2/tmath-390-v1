@@ -1,0 +1,127 @@
+---
+title: Final CI and HT Practice Problems
+---
+
+# Hypothesis Test Decision Tree
+
+1.  Proportion?
+
+    a.  Left-Tailed?
+
+    b.  Right-Tailed?
+
+    c.  Two-Tailed?
+
+2.  Mean?
+
+    a.  One Mean?
+
+        i.  Known $\sigma$?
+
+            1.  Left-Tailed?
+
+            2.  Right-Tailed?
+
+            3.  Two-Tailed?
+
+        ii. Unknown $\sigma$?
+
+            1.  Left-Tailed?
+
+            2.  Right-Tailed?
+
+            3.  Two-Tailed?
+
+    b.  Two Means?
+
+        i.  Paired (Dependent)?
+
+            1.  Left-Tailed?
+
+            2.  Right-Tailed?
+
+            3.  Two-Tailed?
+
+        ii. Independent?
+
+            1.  Equal $\sigma^{2}$
+
+                a.  Left-Tailed?
+
+                b.  Right-Tailed?
+
+                c.  Two-Tailed?
+
+            2.  Unequal $\sigma^{2}$
+
+                a.  Left-Tailed?
+
+                b.  Right-Tailed?
+
+                c.  Two-Tailed?
+
+# Confidence Interval Decision Tree
+
+1.  Proportion?
+
+2.  Mean?
+
+    a.  One Mean?
+
+        i.  Known $\sigma$?
+
+        ii. Unknown $\sigma$?
+
+    b.  Two Means?
+
+        i.  Paired (Dependent)?
+
+        ii. Independent?
+
+            1.  Equal $\sigma^{2}$
+
+            2.  Unequal $\sigma^{2}$
+
+# Problem 1
+
+A study compares the average exam scores of two groups of students, where Group 1 has 50 students and Group 2 has 50 students. The mean score for Group 1 is 75, with a standard deviation of 2, and the mean score for Group 2 is 80, with a standard deviation of 12. Construct a 90% confidence interval for the difference in mean scores between the two groups.
+
+# Problem 2
+
+A hospital claims that the average time for patients to wait in the emergency room is 30 minutes. A random sample of 36 patients has a sample mean wait time of 33 minutes, with a sample standard deviation of 8 minutes. Test the hypothesis at the 1% significance level to determine if the average wait time is significantly different from 30 minutes.
+
+# Problem 3
+
+A manufacturer claims that the average lifetime of its lightbulbs is 1,000 hours. A consumer group tests 40 randomly selected lightbulbs, finding that the sample mean lifetime is 980 hours. The known population variance for the lightbulb lifetime is 400 hours². Test the hypothesis at a 5% significance level to determine if the average lifetime is significantly less than 1,000 hours.
+
+# Problem 4
+
+A company is testing the effectiveness of two different training methods on employee productivity. The first group of 35 employees has a mean productivity score of 85, with a standard deviation of 5. The second group of 40 employees has a mean productivity score of 90, with a standard deviation of 35. Construct a 95% confidence interval for the difference in mean productivity scores between the two groups.
+
+# Problem 5
+
+A political candidate claims that more than 60% of voters in her district support her campaign. A random sample of 500 voters shows that 310 voters support her. Test the hypothesis at a 5% significance level to determine if her claim is justified.
+
+# Problem 6
+
+A researcher wants to estimate the average height of plants grown under controlled conditions. A random sample of 40 plants is measured, yielding a sample mean height of 12.3 inches with a sample standard deviation of 1.2 inches. Construct a 95% confidence interval for the average height of the plants.
+
+# Problem 7
+
+A study is conducted to compare the average cholesterol levels between two age groups: young adults (under 30) and older adults (over 60). A random sample of 40 young adults has a mean cholesterol level of 190 mg/dL with a standard deviation of 20 mg/dL, while a random sample of 40 older adults has a mean cholesterol level of 210 mg/dL with a standard deviation of 25 mg/dL. Test at a 5% significance level to determine if the average cholesterol levels between the two groups are significantly different.
+
+# Problem 8
+
+A company that produces tires claims that the average tread life of its tires is 50,000 miles. A random sample of 100 tires is tested, and the sample mean tread life is 48,000 miles. The population variance is known to be 36,000,000 miles². Construct a 99% confidence interval for the average tread life of the tires.
+
+# Problem 9
+
+A school district wants to assess whether a new curriculum has an effect on student test scores. A sample of 30 students is tested before and after the curriculum is implemented, yielding a mean difference of 3 points, with a standard deviation of 4 points. Construct a 90% confidence interval for the mean difference in test scores.
+
+# Problem 10
+
+A company is testing whether a new drug changes blood pressure levels. The study involves 50 patients who are measured before and after treatment. The mean difference in blood pressure is 5 mmHg, with a standard deviation of 10 mmHg. Test the hypothesis at the 5% significance level to determine if the drug has a significant effect on blood pressure.
+
+# Problem 11
+
+A university is interested in estimating the proportion of students who commute to campus. A random sample of 150 students is surveyed, and 75 of them report that they commute. Construct a 95% confidence interval for the proportion of students who commute.

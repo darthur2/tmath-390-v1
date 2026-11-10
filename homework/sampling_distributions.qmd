@@ -1,0 +1,77 @@
+---
+title: "Sampling Distributions"
+format: html
+---
+
+## Question 1 (4 points)
+
+Let $X_i \sim N(20, 2)$ for $i = 1,2, \dots, 50$ and assume these are independent. What are the following?
+
+-   $\text{E}[20\bar{X} + 4]$
+-   $\text{SD}[30\bar{X} - 5]$
+
+## Question 2A (9 points)
+
+Let $X_i \sim N(10, 3)$ and $Y_i \sim N(20, 4)$ for $i = 1, 2, 3, \dots, 30$ and assume independence between all $X_i$ and $Y_i$. What is the sampling distribution of $\bar{X} + \bar{Y}$? Replace the $a$, $b$ and $c$ in the formula below with the correct values.
+
+$$
+\bar{X} + \bar{Y} \sim N\left(a, \frac{b}{\sqrt{c}} \right)
+$$
+
+Hint: Find the sampling distributions of $\bar{X}$ and $\bar{Y}$ first and then use the theorems regarding the expectation and variance of a linear combination of two independent random variables. Also, be sure to be careful when distinguishing between variance and standard deviation when applying these theorems.
+
+## Question 2B (5 points)
+
+Complete the code block below to simulate draws from the sampling distribution of $\bar{X} + \bar{Y}$ from the previous question. Then compute the mean and standard deviation of the simulated draws and create a histogram of the draws.
+
+```{r, echo = TRUE}
+set.seed(100)
+
+n_draws <- 100000 # Number of draws/simulations
+n <- 30 # Sample size
+xybars <- rep(0, n_draws) # Vector to stores draws for sum of sample means
+
+mu_X <- 10
+mu_Y <- 20
+sigma_X <- 3
+sigma_Y <- 4
+
+for (i in 1:n_draws){
+  x_sample <- rnorm(n, 0, 1) # Replace the 0 and 1 with the appropriate values/variables
+  y_sample <- rnorm(n, 0, 1) # Replace the 0 and 1 with the appropriate values/variables
+  
+  xbar <- mean(x_sample)
+  ybar <- mean(y_sample)
+  xybars[i] <- 0 + 0 # Replace the 0 and 0 with the appropriate variables
+}
+
+mean(xybars)
+sd(xybars)
+
+hist(xybars)
+```
+
+## Question 3 (5 points)
+
+Let $X_i \sim N(180, 10)$ for $i = 1, 2, 3, \dots, 64$. In the code block below, compute the following probabilities:
+
+-   $P(\bar{X} < 179)$
+-   $P(\bar{X} > 182)$
+-   $P(179 < \bar{X} < 182)$
+
+```{r, echo = TRUE}
+# Put your code here
+```
+
+## Question 4 (6 points)
+
+Let $X_i \sim N(10, 2)$ for $i = 1,2,3,\dots, 50$. In the code block below, compute the following percentiles for $\bar{X}$:
+
+-   $85^{th}$ percentile
+-   $20^{th}$ percentile
+-   $1^{st}$ and $3^{rd}$ quartiles
+-   The median
+
+```{r, echo = TRUE}
+# Put your code here
+```

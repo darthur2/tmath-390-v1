@@ -1,0 +1,99 @@
+---
+execute:
+  enabled: false  # TODO: re-enable after datasets are added to data/
+title: "Numeric Summaries"
+format: html
+---
+
+# Diabetes Data Description
+
+Scenario: You are a health analytics consultant that has been asked to perform an exploratory data analysis regarding diabetes. You are given a dataset containing information for 100 randomly sampled patients from all patients at a specific hospital. The dataset includes the following:
+
+-   **Gender**: Their gender (Male or Female)
+-   **Diabetes_Type**: Their type of diabetes
+-   **Age**: Their age (in *whole* years, no decimals)
+-   **Smoking_Status**: Their smoking status (current, former, or never)
+-   **Number_of_Visits**: The number of times they've visited the hospital
+-   **Exercise_Frequency**: How often they exercise
+-   **Fasting_Blood_Sugar**: Their blood sugar level while fasting (mg/dL)
+-   **HbA1c**: Glucose attached to hemoglobin in red blood cells (mmol/mol)
+
+```{r, echo = TRUE}
+suppressWarnings(suppressMessages(library(ggplot2)))
+suppressWarnings(suppressMessages(library(dplyr)))
+
+diabetes_data <- read.csv("../data/diabetes_data.csv") # Fill in the path to the dataset
+attach(diabetes_data)
+```
+
+## Question 1 (4 points)
+
+For the variables listed below, determine if it is a qualitative or a quantitative variable:
+
+-   Gender: [Qualitative]{style="color: red;"}
+-   Age: [Quantitative]{style="color: red;"}
+-   Smoking_Status: [Qualitative]{style="color: red;"}
+-   Fasting_Blood_Sugar: [Quantitative]{style="color: red;"}
+
+## Question 2 (4 points)
+
+For the variables listed below, determine if it is a discrete or continuous variable: If it is qualitative, just put NA in the line provided.
+
+-   Gender: [NA]{style="color: red;"}
+-   Number_of_Visits: [Discrete]{style="color: red;"}
+-   Fasting_Blood_Sugar: [Continuous]{style="color: red;"}
+-   HbA1c: [Continuous]{style="color: red;"}
+
+## Question 3 (2 points)
+
+For the following variables, compute and display an appropriate measure of central tendency.
+
+### Exercise_Frequency
+
+```{r, echo = TRUE}
+table(Exercise_Frequency)
+```
+
+[The mode is an appropriate measure of central tendency for qualitative variables. In this case, there are two modes, "None", and "Rarely". So the answer could be either or both of these.]{style="color: red;"}
+
+### HbA1c
+
+```{r, echo = TRUE}
+mean(HbA1c)
+
+median(HbA1c)
+
+density(HbA1c)$x[which.max(density(HbA1c)$y)]
+```
+
+[The mean, median, or mode could all serve as measures of central tendency for a quantitative variable. Any or all of these would be considered correct.]{style="color: red;"}
+
+## Question 4 (2 points)
+
+For the following variables, compute and display an appropriate measure of variability
+
+### Diabetes_Type
+
+```{r, echo = TRUE}
+table(Diabetes_Type)
+
+table(Diabetes_Type)/length(Diabetes_Type)
+```
+
+[Either the counts or the proportions could serve as measures of variability for a qualitative variable.]{style="color: red;"}
+
+### Age
+
+```{r, echo = TRUE}
+var(Age)
+
+sd(Age)
+
+diff(range(Age))
+
+IQR(Age)
+
+summary(Age)
+```
+
+[Any of the following measures could be used as measures of spread or variability for a quantitative variable: variance, standard deviation, range, IQR, or the five-number summary]{style="color: red;"}

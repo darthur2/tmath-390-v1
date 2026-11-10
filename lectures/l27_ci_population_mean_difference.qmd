@@ -1,0 +1,188 @@
+---
+title: "Confidence Interval for Population Mean Difference"
+format:
+  revealjs:
+    slideNumber: true
+    scrollable: true
+---
+
+```{r}
+set.seed(100)
+```
+
+## CI for Mean Difference
+
+::: {.callout title="Theorem 24.2"}
+Let $(X_{i1}, X_{i2})$ for $i = 1, 2, 3, \dots, n$ be a sequence of independent pairs of normally distributed random variables, (i.e., $\text{Cov}[X_{i1}, X_{i2}] = \sigma_{12}$), with means $\mu_1, \mu_2$ and standard deviations $\sigma_1, \sigma_2$. Let $D_i = X_{i1}-X_{i2}$ be independent differences for each pair with mean $\mu_d = \mu_1 - \mu_2$ and standard deviation $\sigma_d = \sqrt{\sigma_1^2 + \sigma_2^2 - 2\sigma_{12}}$. Then the following is an exact $100\times(1-\alpha)\%$ confidence interval for $\mu_d$ (the mean difference):
+
+$$
+\left(\bar{d} - t_{n-1, 1-\alpha/2} \times \frac{s_d}{\sqrt{n}},\bar{d} + t_{n-1, 1-\alpha/2} \times \frac{s_d}{\sqrt{n}}\right)
+$$
+
+where $\boldsymbol{d} = (d_{i1}, d_{i2}, \dots, d_{in})$ is a vector of observed differences, $\bar{d} = \frac{1}{n} \sum_{i=1}^n d_i$, $s_d = \sqrt{\frac{1}{n-1}\sum_{i=1}^n (d_i-\bar{d})^2}$.
+
+If the underlying random variables are non-normal, but $n$ is sufficiently large, then this is an approximate $100, \times (1-\alpha)\%$ confidence interval for $\mu_d$.
+:::
+
+The proof for this is very similar to that for a confidence interval for a single population mean.
+
+## Ex: Weight Loss
+
+::: {.callout title="Example 24.1"}
+You want to test the effect of a drug on weight loss. You collect the weights (in pounds) for a random sample of 40 participants. You then give the drug to each participant, wait a month, and weigh each participant again and record the change in weight (initial minus final weight). You find the following: $\bar{x}_d = 5, s_d = 3$. Construct a 95% confidence interval for $\mu_d$.
+:::
+
+. . .
+
+```{r, echo = TRUE}
+xbar_d <- 5
+s_d <- 3
+alpha <- 0.05
+n <- 40
+t_quant <- qt(1-alpha/2, n-1)
+
+xbar_d + c(-1, 1)*t_quant*s_d/sqrt(n)
+```
+
+## Ex: Weight Training
+
+::: {.callout title="Example 24.2"}
+You want to test the effectiveness of a new strength training program for high school football players. You collect the bench press max (in pounds) for a random sample of 20 players before the program. After completing the program, you measure their max bench press again and record the change (new max minus initial max). Assume the data are normally distributed. You find the following: $\bar{x}_d = 12, s_d = 8$. Construct a 90% confidence interval for the mean difference.
+:::
+
+. . .
+
+```{r, echo = TRUE}
+xbar_d <- 12
+s_d <- 8
+alpha <- 0.1
+n <- 20
+t_quant <- qt(1-alpha/2, n-1)
+
+xbar_d + c(-1, 1)*t_quant*s_d/sqrt(n)
+```
+
+## Ex: Stocks
+
+::: {.callout title="Example 24.3"}
+You want to test the impact of a financial news alert system on stock trading performance. You track the daily profit/loss (in dollars) of a random sample of 35 traders for a month without using the system. You then have the same traders use the system for another month and record the change in their average daily profit (profit with system minus profit without system). You find the following: $\bar{x}_d = 15, s_d = 40$. Construct a 99% confidence interval for the mean difference, $\mu_d$.
+:::
+
+. . .
+
+```{r, echo = TRUE}
+xbar_d <- 15
+s_d <- 40
+alpha <- 0.01
+n <- 35
+t_quant <- qt(1-alpha/2, n-1)
+
+xbar_d + c(-1, 1)*t_quant*s_d/sqrt(n)
+```
+
+## Ex: Eggs
+
+::: {.callout title="Example 24.4"}
+You are interested in testing if the cost of eggs has changed over time. You collect a random sample of 35 local stores and record their egg prices for both one year ago as well as today. Use the data below to construct a 95% confidence interval for the mean change in egg prices (current minus previous).
+
+```{r, echo = TRUE}
+eggs_prev <- c(3.8, 3.9, 4.1, 3.6, 3.4, 3.1, 2.5, 3.8, 3.7, 3.8, 3, 3.7, 3.3, 3.8, 3.3, 
+               3.1, 3.5, 3.3, 3.8, 4, 4.2, 3.2, 3.9, 3.6, 3.4, 4.2, 3.3, 4.1, 4.1, 3.2, 
+               3.6, 2.8, 3.3, 2.7, 3.5)
+
+eggs_cur <- c(5.9, 6.2, 5.9, 6, 5.7, 4.7, 5.6, 6.1, 5.9, 5.5, 5, 5.6, 5, 5.7, 4.5, 4.8, 
+             6.2, 4.9, 5.2, 5.1, 5.6, 5.3, 6.5, 5.6, 5.5, 6.2, 5.3, 5.7, 6.1, 5.9, 5.7, 
+             5.7, 4.6, 4.4, 5.7)
+```
+:::
+
+. . .
+
+```{r, echo = TRUE}
+d <- eggs_cur - eggs_prev
+s_d <- sd(d)
+xbar_d <- mean(d)
+n <- length(d)
+alpha <- 0.05
+t_quant <- qt(1-alpha/2, n - 1)
+
+xbar_d + c(-1, 1)*t_quant*s_d/sqrt(n)
+```
+
+## Ex: Eggs, Continued
+
+::: {.callout title="Example 24.4 (Continued)"}
+You are interested in testing if the cost of eggs has changed over time. You collect a random sample of 35 local stores and record their egg prices for both one year ago as well as today. Use the data below to construct a 95% confidence interval for the mean change in egg prices (current minus previous).
+
+```{r, echo = TRUE}
+eggs_prev <- c(3.8, 3.9, 4.1, 3.6, 3.4, 3.1, 2.5, 3.8, 3.7, 3.8, 3, 3.7, 3.3, 3.8, 3.3, 
+               3.1, 3.5, 3.3, 3.8, 4, 4.2, 3.2, 3.9, 3.6, 3.4, 4.2, 3.3, 4.1, 4.1, 3.2, 
+               3.6, 2.8, 3.3, 2.7, 3.5)
+
+eggs_cur <- c(5.9, 6.2, 5.9, 6, 5.7, 4.7, 5.6, 6.1, 5.9, 5.5, 5, 5.6, 5, 5.7, 4.5, 4.8, 
+             6.2, 4.9, 5.2, 5.1, 5.6, 5.3, 6.5, 5.6, 5.5, 6.2, 5.3, 5.7, 6.1, 5.9, 5.7, 
+             5.7, 4.6, 4.4, 5.7)
+```
+:::
+
+. . .
+
+```{r, echo = TRUE}
+t.test(eggs_cur, eggs_prev, paired = TRUE, conf.level = 0.95)$conf.int
+```
+
+## Ex: Battery Life
+
+::: {.callout title="Example 24.5"}
+You are analyzing the impact of a new operating system update on laptop battery life. You collect a random sample of 40 laptops and measure their battery life (in hours) before and after the update. Use the data below to construct a 90% confidence interval for the mean difference in battery life (previous minus current).
+
+```{r, echo = TRUE}
+prev_life <- c(12, 12, 12, 12, 12, 12, 12, 13, 14, 12, 11, 13, 11, 13, 9, 13, 13, 14, 
+               12, 13, 13, 10, 12, 12, 13, 11, 11, 13, 12, 12, 11, 12, 12, 13, 11)
+
+cur_life <- c(9, 10, 11, 9, 10, 10, 10, 11, 11, 10, 9, 10, 10, 8, 9, 11, 11, 9, 11, 12, 
+              10, 10, 9, 10, 10, 8, 11, 10, 10, 9, 10, 9, 9, 11, 12)
+```
+:::
+
+. . .
+
+```{r, echo = TRUE}
+t.test(prev_life, cur_life, paired = TRUE, conf.level = 0.9)$conf.int
+```
+
+## Ex: Cuisine
+
+::: {.callout title="Example 24.6"}
+You are studying whether a new cooking technique improves the flavor of an international dish. You recruit a random sample of 20 participants and ask them to rate the dish on a scale from 1 to 10 using the traditional method. You then prepare the dish using the new technique and have the same participants rate it again. Use the data below to construct a 90% confidence interval for the mean difference in ratings (current minus previous). Assume the data are normally distributed.
+
+```{r, echo = TRUE}
+prev_rating <- c(7, 6, 7, 6, 5, 7, 6, 6, 6, 6, 6, 7, 6, 6, 6, 6, 6, 5, 5, 5)
+
+new_rating <- c(9, 9, 9, 9, 8, 8, 8, 8, 8, 8, 8, 8, 9, 8, 9, 8, 8, 7, 8, 8)
+```
+:::
+
+. . .
+
+```{r, echo = TRUE}
+t.test(new_rating, prev_rating, paired = TRUE, conf.level = 0.9)$conf.int
+```
+
+## Ex: Customer Calls
+
+::: {.callout title="Example 24.7"}
+A company wants to estimate the proportion of customer service calls that are resolved within 5 minutes. Out of 150 randomly selected calls, 105 were resolved within this time frame. Construct a 90% confidence interval for the true proportion of quick resolutions.
+:::
+
+. . .
+
+```{r, echo = TRUE}
+n <- 150
+phat <- 105/n
+alpha <- 0.1
+z_quant <- qnorm(1-alpha/2)
+se <- sqrt(phat*(1-phat)/n)
+
+phat + c(-1, 1)*z_quant*se
+```

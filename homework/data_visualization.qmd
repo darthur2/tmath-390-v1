@@ -1,0 +1,90 @@
+---
+execute:
+  enabled: false  # TODO: re-enable after datasets are added to data/
+title: "Data Visualization"
+format: html
+---
+
+# Diabetes Data Description
+
+Scenario: You are a health analytics consultant that has been asked to perform an exploratory data analysis regarding diabetes. You are given a dataset containing information for 100 randomly sampled patients from all patients at a specific hospital. The dataset includes the following:
+
+-   **Gender**: Their gender (Male or Female)
+-   **Diabetes_Type**: Their type of diabetes
+-   **Age**: Their age (in *whole* years, no decimals)
+-   **Smoking_Status**: Their smoking status (current, former, or never)
+-   **Number_of_Visits**: The number of times they've visited the hospital
+-   **Exercise_Frequency**: How often they exercise
+-   **Fasting_Blood_Sugar**: Their blood sugar level while fasting (mg/dL)
+-   **HbA1c**: Glucose attached to hemoglobin in red blood cells (mmol/mol)
+
+```{r, echo = TRUE}
+suppressWarnings(suppressMessages(library(ggplot2)))
+suppressWarnings(suppressMessages(library(dplyr)))
+
+diabetes_data <- read.csv("../data/diabetes_data.csv") # Fill in the path to the dataset
+attach(diabetes_data)
+```
+
+Complete the questions below by filling in the blanks with the appropriate answers or by providing the necessary R code.
+
+## Question 1 (4 points)
+
+Below is a histogram of Fasting_Blood_Sugar.
+
+```{r, echo = TRUE}
+ggplot(diabetes_data, aes(x = Fasting_Blood_Sugar)) +
+  geom_histogram(binwidth = 5, fill = "blue", color = "black") +
+  labs(title = "Histogram of Fasting Blood Sugar",
+       x = "Fasting Blood Sugar (mg/dL)",
+       y = "Frequency")
+```
+
+Using this histogram, what would you say is the skewness of the distribution? \_\_\_\_\_\_\_\_
+
+Based on the skew, would you expect the mean to be less than, greater than, or approximately equal to the median? \_\_\_\_\_\_\_\_
+
+Compute and display the mean and median for Fasting_Blood_Sugar below.
+
+```{r, echo = TRUE}
+# Put your code here
+```
+
+## Question 2 (1 point)
+
+Below is a histogram of Number_of_Visits.
+
+```{r, echo = TRUE}
+ggplot(diabetes_data, aes(x = Number_of_Visits)) +
+  geom_histogram(binwidth = 1, fill = "blue", color = "black") +
+  labs(title = "Histogram of Number of Visits",
+       x = "Number of Visits",
+       y = "Frequency")
+```
+
+Based on the histogram, would you say the distribution is unimodal, bimodal, or multimodal? \_\_\_\_\_\_\_\_
+
+## Question 3 (4 points)
+
+Which visualizations would be appropriate for the following variables? Just provide one answer for each of the following.
+
+-   Smoking_Status: \_\_\_\_\_\_\_\_
+-   Fasting_Blood_Sugar: \_\_\_\_\_\_\_\_
+-   Diabetes_Type: \_\_\_\_\_\_\_\_
+-   Number_of_Visits: \_\_\_\_\_\_\_\_
+
+## Question 4 (2 points)
+
+Produce a visualization for the following variables:
+
+### HbA1c
+
+```{r, echo = TRUE}
+# Put your code here
+```
+
+### Exercise_Frequency
+
+```{r, echo = TRUE}
+# Put your code here
+```

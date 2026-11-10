@@ -1,0 +1,54 @@
+---
+title: "TMath 390"
+subtitle: "Mathematical Statistics with R"
+format: html
+toc: false
+---
+
+::: {.hero}
+# TMath 390: Mathematical Statistics with R
+
+Probability and statistics using exploratory data analysis and interactive computing. Topics include conditional probability, independence, random variables, distribution functions, descriptive statistics, transformations, sampling errors, confidence intervals, least squares, and maximum likelihood.
+:::
+
+## Course information
+
+- **Instructor:** Dr. David Arthur
+- **Email:** [dbarthur@uw.edu](mailto:dbarthur@uw.edu)
+- **Office:** MDS 212-C
+- **Class:** 8:00–9:20 am MWF, JOY 106
+- **Office hours:** MWF 11 am–12 pm, or by appointment
+- **Textbook (optional):** Ramachandran, K. M., & Tsokos, C. P. (2020). *Mathematical Statistics with Applications in R* (3rd ed.). Academic Press.
+
+## Quick links
+
+::: {.grid .column-body}
+::: {.g-col-12 .g-col-md-6}
+
+### Course documents
+
+- [Syllabus](syllabus.qmd)
+- [Course schedule](schedule.qmd)
+- [Learning objectives](objectives.qmd)
+
+:::
+
+::: {.g-col-12 .g-col-md-6}
+
+### Course materials
+
+- [Lecture slides](lectures/index.qmd)
+- [Homework](homework/index.qmd)
+- [Homework solutions](solutions/index.qmd)
+- [Practice and review resources](resources/index.qmd)
+
+:::
+:::
+
+## Modules
+
+1. **Foundations and data exploration** — sampling, numeric summaries, and visualization
+2. **Probability** — counting, axioms, conditional probability, and Bayes' theorem
+3. **Random variables** — expectation, transformations, and joint distributions
+4. **Distributions and sampling** — discrete and continuous distributions and the central limit theorem
+5. **Inference** — maximum likelihood, confidence intervals, hypothesis tests, and regression

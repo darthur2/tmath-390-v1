@@ -1,0 +1,86 @@
+---
+title: "Random Variables"
+format: html
+---
+
+## Question 1A (6 points)
+
+You have a bag with 5 green balls and 6 red balls. You perform an experiment where you sample 5 balls from the bag without replacement. Let $X$ be the random variable corresponding to the number of green balls. Below is the partial LaTeX for the PMF for this random variable. Replace the letters a-f with the appropriate numbers.
+
+$$
+P_X(x) = 
+\begin{cases}
+\frac{\binom{5}{x}\binom{6}{5-x}}{\binom{11}{5}} &\text{for } x \in \{0, 1, 2, 3, 4, 5\} \\
+0 &\text{otherwise}
+\end{cases}
+$$
+
+## Question 1B (5 points)
+
+Now that you have the PMF for $X$, write two functions, one that computes $P_X(x)$, for a given value of $x$ (`PX_11`) and another that computes $F_X(x) = P(X \leq x)$ for a given value of $x$ (`FX_11`). Then use these functions to compute the probability that you draw two or fewer green balls.
+
+Hint: R functions allow for vectorized inputs. This means that entering a vector as input into a function, the function will be applied to each value in the vector and return a vector of the same length. For example, providing the input `0:3` into the function `PX` would calculate `PX` for 0, 1, 2, and 3.
+
+```{r, echo = TRUE}
+PX_11 <- function(x){
+  choose(5, x)*choose(6, 5-x)/choose(11, 5)
+}
+
+FX_11 <- function(x){
+  sum(PX_11(0:x))
+}
+
+cat("Probability of obtaining two or fewer green balls is: ", FX_11(2), "\n")
+```
+
+## Question 2 (5 points)
+
+Let $X$ be a continuous random variable with the following PDF:
+
+$$
+f_X(x) = 
+\begin{cases}
+60 x^3 (1-x)^2 &\text{for } x \in (0, 1) \\
+0 &\text{otherwise}
+\end{cases}
+$$
+
+First, write a function `fX_12` that computes the density for $X$ at a particular value of $x$. Then write a function `FX_12` that uses the `integrate` function in R to compute the CDF for $X$. Then, use `FX_12` to compute the probability that $X$ is less than 0.6.
+
+```{r, echo = TRUE}
+fX_12 <- function(x){
+  60*x^3*(1-x)^2
+}
+
+FX_12 <- function(x){
+  integrate(fX_12, lower = 0, upper = x)$value
+}
+
+cat("The probability that X is less than 0.6 is: ", FX_12(0.6), "\n")
+```
+
+## Question 3 (2 points)
+
+Use the function `FX_11` to compute the following probabilities:
+
+-   $P(X > 3)$
+-   $P(1 \leq X < 4)$
+
+```{r, echo = TRUE}
+cat("The probability that we draw more than 3 green balls is: ", 1-FX_11(3), "\n")
+
+cat("The probability that at least 1 but fewer than 4 green balls is: ", FX_11(3)-FX_11(0), "\n")
+```
+
+## Question 4 (2 points)
+
+Use the function `FX_12` to compute the following probabilities:
+
+-   $P(0.2 < X < 0.6)$
+-   $P(X > 0.3)$
+
+```{r, echo = TRUE}
+cat("The probability that X is between 0.2 and 0.6 is: ", FX_12(0.6)-FX_12(0.2), "\n")
+
+cat("The probability that X is greater than 0.3 is: ", 1-FX_12(0.3), "\n")
+```

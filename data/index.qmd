@@ -1,0 +1,26 @@
+---
+title: "Data"
+toc: false
+---
+
+Course datasets used in lectures, homework, and solutions.
+
+## Available data
+
+- [Q-matrix](q_matrix.csv) — item-to-attribute mapping used in the DINA Bayesian explorer.
+
+## Required datasets
+
+The homework and some lectures reference the following files from the `data/` directory. Add them here to enable the data-dependent exercises.
+
+| File | Used in |
+|------|---------|
+| `diabetes_data.csv` | Introduction to Statistics, Sampling, Numeric Summaries, Data Visualization, Bayes' Theorem, Conditional Probability |
+| `cs_dataset.csv` | Numeric Summaries, Data Visualization, Conditional Probability |
+| `failure_time.csv` | Numeric Summaries, Data Visualization |
+| `study_hours.csv` | Simple Linear Regression |
+| `housing.csv` | Simple Linear Regression |
+
+## Data privacy
+
+Student response data and gradebook files are **not** published with this site. They are stored locally in `private/student_data/` and excluded from version control.

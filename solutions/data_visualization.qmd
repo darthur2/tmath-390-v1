@@ -1,0 +1,140 @@
+---
+execute:
+  enabled: false  # TODO: re-enable after datasets are added to data/
+title: "Data Visualization"
+format: html
+---
+
+# Diabetes Data Description
+
+Scenario: You are a health analytics consultant that has been asked to perform an exploratory data analysis regarding diabetes. You are given a dataset containing information for 100 randomly sampled patients from all patients at a specific hospital. The dataset includes the following:
+
+-   **Gender**: Their gender (Male or Female)
+-   **Diabetes_Type**: Their type of diabetes
+-   **Age**: Their age (in *whole* years, no decimals)
+-   **Smoking_Status**: Their smoking status (current, former, or never)
+-   **Number_of_Visits**: The number of times they've visited the hospital
+-   **Exercise_Frequency**: How often they exercise
+-   **Fasting_Blood_Sugar**: Their blood sugar level while fasting (mg/dL)
+-   **HbA1c**: Glucose attached to hemoglobin in red blood cells (mmol/mol)
+
+```{r, echo = TRUE}
+suppressWarnings(suppressMessages(library(ggplot2)))
+suppressWarnings(suppressMessages(library(dplyr)))
+
+diabetes_data <- read.csv("../data/diabetes_data.csv") # Fill in the path to the dataset
+attach(diabetes_data)
+```
+
+Complete the questions below by filling in the blanks with the appropriate answers or by providing the necessary R code.
+
+## Question 1 (4 points)
+
+Below is a histogram of Fasting_Blood_Sugar.
+
+```{r, echo = TRUE}
+ggplot(diabetes_data, aes(x = Fasting_Blood_Sugar)) +
+  geom_histogram(binwidth = 5, fill = "blue", color = "black") +
+  labs(title = "Histogram of Fasting Blood Sugar",
+       x = "Fasting Blood Sugar (mg/dL)",
+       y = "Frequency")
+```
+
+Using this histogram, what would you say is the skewness of the distribution? [This distribution is mostly symmetric. You could also possibly say there is a *very slight* left-skew. Most people would say it is symmetric, but both of these answers could be considered correct.]{style="color: red;"}
+
+Based on the skew, would you expect the mean to be less than, greater than, or approximately equal to the median? [If you say that the distribution looks symmetric, then you would expect the mean and median to be very close to one another. If you believe there is a very slight left skew, then you would say that the mean is less than the median.]{style="color: red;"}
+
+Compute and display the mean and median for Fasting_Blood_Sugar below.
+
+```{r, echo = TRUE}
+mean(Fasting_Blood_Sugar)
+
+median(Fasting_Blood_Sugar)
+```
+
+[The two are very close to one another because of the symmetry of the distribution. The mean is slightly less than the median indicating that there is a *slight* left skew.]{style="color: red;"}
+
+## Question 2 (1 point)
+
+Below is a histogram of Number_of_Visits.
+
+```{r, echo = TRUE}
+ggplot(diabetes_data, aes(x = Number_of_Visits)) +
+  geom_histogram(binwidth = 1, fill = "blue", color = "black") +
+  labs(title = "Histogram of Number of Visits",
+       x = "Number of Visits",
+       y = "Frequency")
+```
+
+Based on the histogram, would you say the distribution is unimodal, bimodal, or multimodal? [This distribution is multimodal. There appear to be three major peaks.]{style="color: red;"}
+
+## Question 3 (4 points)
+
+Which visualizations would be appropriate for the following variables? Just provide one answer for each of the following.
+
+-   Smoking_Status: [Bar chart (could also say Pie Chart)]{style="color: red;"}
+-   Fasting_Blood_Sugar: [100 observations is somewhere between small and medium in terms of size, so any of the following could be used: Histogram, Box Plot, Dot Chart, or Stem-and-Leaf Plot]{style="color: red;"}
+-   Diabetes_Type: [Bar chart (could also say Pie Chart)]{style="color: red;"}
+-   Number_of_Visits: [100 observations is somewhere between small and medium in terms of size, so any of the following could be used: Histogram, Box Plot, Dot Chart, or Stem-and-Leaf Plot]{style="color: red;"}
+
+## Question 4 (2 points)
+
+Produce a visualization for the following variables:
+
+### HbA1c
+
+[The dataset has 100 observations, which is somewhere between a small and medium sized dataset. Any of the following charts would work alright.]{style="color: red;"}
+
+```{r, echo = TRUE}
+diabetes_data %>% ggplot(aes(x = HbA1c)) +
+  geom_histogram(binwidth = 0.3, fill = "blue", color = "black") +
+  labs(title = "Histogram of HbA1c") +
+  ylab("Frequency")
+```
+
+```{r, echo = TRUE}
+diabetes_data %>% ggplot(aes(x = HbA1c)) +
+  geom_boxplot() +
+  labs(title = "Boxplot of HbA1c") +
+  theme(axis.title.y = element_blank(),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank())
+```
+
+```{r, echo = TRUE}
+diabetes_data %>% ggplot(aes(x = HbA1c)) + 
+  geom_dotplot() +
+  labs(title = "Dot Chart of HbA1c") +
+  theme(axis.title.y = element_blank(),
+      axis.text.y = element_blank(),
+      axis.ticks.y = element_blank())
+```
+
+```{r, echo = TRUE}
+stem(HbA1c, scale = 2)
+```
+
+### Exercise_Frequency
+
+[Either a bar chart of a pie chart could be used, although it is recommended that one use a bar chart.]{style="color: red;"}
+
+```{r, echo = TRUE}
+diabetes_data %>% ggplot(aes(x = Exercise_Frequency)) + 
+  geom_bar() +
+  xlab("Exercise Frequency") +
+  labs(title = "Bar Chart of Exercise Frequency") +
+  ylab("Frequency")
+```
+
+```{r, echo = TRUE}
+diabetes_data %>% ggplot(aes(x = factor(1), fill = factor(Exercise_Frequency))) + 
+  geom_bar(width = 1) + coord_polar(theta = "y") + 
+  labs(title = "Pie Chart of Exercise Frequency") +
+  theme(axis.title.y = element_blank(),
+      axis.text.y = element_blank(),
+      axis.ticks.y = element_blank(),
+      axis.title.x = element_blank(),
+      axis.text.x = element_blank(),
+      axis.ticks.x = element_blank()) +
+  scale_fill_discrete(name = "Exercise Frequency")
+```
