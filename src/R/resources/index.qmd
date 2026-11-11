@@ -1,0 +1,18 @@
+---
+title: "Resources"
+toc: false
+---
+
+## Practice and review
+
+- [Confidence Interval Practice (slides)](practice/confidence_interval_practice.qmd)
+- [Confidence Interval Questions](practice/confidence_interval_questions.qmd)
+- [Final CI and HT Practice Problems](practice/final_ci_and_ht_practice_problems.qmd)
+- [HT and CI Review Questions](practice/ht_and_ci_review_questions.qmd)
+- [Midterm Exam Review A](reviews/midterm_exam_review_a.qmd)
+- [Midterm Exam Review B](reviews/midterm_exam_review_b.qmd)
+- [Midterm Exam Review Questions](reviews/midterm_exam_review_questions.qmd)
+
+## R resources
+
+The course uses R and RStudio. See the optional textbook or your lecture notes for a refresher.

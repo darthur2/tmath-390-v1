@@ -2,9 +2,11 @@
 _site/
 .quarto/
 _freeze/
+/.quarto/
+**/*.quarto_ipynb
 
-# Local/private course materials
-private/
+# Private/local course materials
+docs/
 
 # R session artifacts
 .Rhistory
@@ -16,6 +18,3 @@ private/
 .DS_Store
 Thumbs.db
 *.swp
-
-/.quarto/
-**/*.quarto_ipynb
