@@ -35,9 +35,6 @@ serves it directly; no build step runs on GitHub.
 │       ├── _quarto.yml      # site configuration and navigation
 │       ├── .nojekyll        # copied to site/.nojekyll
 │       ├── index.qmd        # course landing page
-│       ├── syllabus.qmd
-│       ├── schedule.qmd
-│       ├── objectives.qmd
 │       ├── assets/          # styles and lecture images
 │       ├── lectures/        # Reveal.js lecture sources
 │       ├── homework/        # homework sources

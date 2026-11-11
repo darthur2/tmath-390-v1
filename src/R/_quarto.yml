@@ -14,10 +14,6 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - href: syllabus.qmd
-        text: Syllabus
-      - href: schedule.qmd
-        text: Schedule
       - href: lectures/index.qmd
         text: Lectures
       - href: homework/index.qmd
@@ -26,9 +22,6 @@ website:
         text: Solutions
       - href: resources/index.qmd
         text: Resources
-    right:
-      - text: Learning Objectives
-        href: objectives.qmd
   page-footer:
     left: "TMath 390 · Mathematical Statistics with R"
     right: "University of Washington Tacoma"
