@@ -20,8 +20,6 @@ website:
         text: Homework
       - href: solutions/index.qmd
         text: Solutions
-      - href: resources/index.qmd
-        text: Resources
   page-footer:
     left: "TMath 390 · Mathematical Statistics with R"
     right: "University of Washington Tacoma"

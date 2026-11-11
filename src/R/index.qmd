@@ -16,7 +16,6 @@ Probability and statistics using exploratory data analysis and interactive compu
 - [Lecture slides](lectures/index.qmd)
 - [Homework](homework/index.qmd)
 - [Homework solutions](solutions/index.qmd)
-- [Practice and review resources](resources/index.qmd)
 
 ## Modules
 

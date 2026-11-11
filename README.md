@@ -38,9 +38,7 @@ serves it directly; no build step runs on GitHub.
 │       ├── assets/          # styles and lecture images
 │       ├── lectures/        # Reveal.js lecture sources
 │       ├── homework/        # homework sources
-│       ├── solutions/       # worked solution sources
-│       ├── resources/       # practice and review sources
-│       └── tools/           # standalone R scripts
+│       └── solutions/       # worked solution sources
 ├── site/                    # rendered site published by GitHub Pages
 └── docs/                    # private, gitignored course materials
 ```
