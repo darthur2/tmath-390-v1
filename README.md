@@ -78,6 +78,7 @@ The rendered HTML in `site/` is committed and published with GitHub Pages:
 2. Commit the updated `site/` directory along with any source changes.
 3. Push to GitHub.
 
-In the repository settings, configure **Pages → Build and deployment → Deploy
-from a branch → `main` → `/site`**. The site is plain static HTML plus its
-supporting assets, so GitHub does not need Quarto, R, or a custom workflow.
+The workflow in `.github/workflows/pages.yml` uploads `site/` directly as the
+Pages artifact. It does not run Quarto or R; it only publishes the committed
+static files. GitHub Pages should be configured with **Build and deployment →
+Source → GitHub Actions**.
