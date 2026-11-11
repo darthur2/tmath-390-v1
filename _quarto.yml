@@ -1,7 +1,8 @@
 project:
   type: website
-  output-dir: _site
+  output-dir: docs
   resources:
+    - .nojekyll
     - resources/downloads/**
     - data/*.csv
     - apps/**
@@ -37,7 +38,7 @@ website:
 format:
   html:
     theme: cosmo
-    css: assets/styles.scss
+    css: assets/styles.css
     toc: true
     toc-depth: 2
     code-copy: true

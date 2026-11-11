@@ -1,0 +1,1353 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.11.9">
+
+  <title>TMath 390 – Hypothesis Test for Population Mean</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-00ad5a49dff614330cd349bcec985ec3.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Hypothesis Test for Population Mean</h1>
+
+<div class="quarto-title-authors">
+</div>
+
+</section>
+<section id="hypothesis-test-and-type-i-error" class="slide level2">
+<h2>Hypothesis Test and Type-I Error</h2>
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Definition 25.1</strong></p>
+</div>
+<div class="callout-content">
+<p>A <strong>hypothesis test</strong> is used to test the plausibility of a <strong>null hypothesis</strong> about a parameter <span class="math inline">\(\boldsymbol{\theta}\)</span>, <span class="math inline">\(H_0: \boldsymbol{\theta} \in \Theta_0\)</span>, vs an <strong>alternative hypothesis</strong>, <span class="math inline">\(H_A: \boldsymbol{\theta} \notin \Theta_0\)</span>, using a test statistic <span class="math inline">\(T(\boldsymbol{X})\)</span>. If the distribution of <span class="math inline">\(T(\boldsymbol{X})\)</span> under the null hypothesis is known, then we can define a <strong>rejection region</strong> <span class="math inline">\(R\)</span> such that:</p>
+<p><span class="math display">\[P(T(\boldsymbol{X}) \in R | \boldsymbol{\theta} \in \Theta_0) = \alpha\]</span></p>
+<p>where <span class="math inline">\(\alpha \in (0, 1)\)</span> is the <strong>Type-I Error</strong> or <strong>significance level</strong>, the probability of rejecting the null hypothesis when the null hypothesis is true.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="p-value" class="slide level2">
+<h2>P-Value</h2>
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Definition 25.2</strong></p>
+</div>
+<div class="callout-content">
+<p>A <strong>p-value</strong> is the probability of observing a test statistic <span class="math inline">\(T(\boldsymbol{X})\)</span> as extreme or more extreme than the observed value <span class="math inline">\(T(\boldsymbol{x})\)</span>, given that the null hypothesis is true. The following shows how to calculate p-values for different types of alternative hypotheses:</p>
+<p><span class="math display">\[
+\begin{align}
+H_A: \mu \neq \mu_0 &amp;\Rightarrow P\left(T(\boldsymbol{X}) \geq |T(\boldsymbol{x})| \Big| \boldsymbol{\theta} \in \Theta_0 \right) = \text{p} \\ \\
+H_A: \mu &lt; \mu_0 &amp;\Rightarrow P\left(T(\boldsymbol{X}) \leq T(\boldsymbol{x}) \Big| \boldsymbol{\theta} \in \Theta_0 \right) = \text{p}\\ \\
+H_A: \mu &gt; \mu_0 &amp;\Rightarrow P\left(T(\boldsymbol{X}) \geq T(\boldsymbol{x}) \Big| \boldsymbol{\theta} \in \Theta_0 \right) = \text{p}
+\end{align}
+\]</span></p>
+</div>
+</div>
+</div>
+<p>If <span class="math inline">\(\text{p} &lt; \alpha\)</span>, then this implies that <span class="math inline">\(T(\boldsymbol{x}) \in R\)</span> and we would reject the null hypothesis. In other words, “if <span class="math inline">\(\text{p}\)</span> is low, reject the null” or “if <span class="math inline">\(\text{p}\)</span> is low, the null must go”.</p>
+</section>
+<section id="hypothesis-test-for-population-mean-two-tailed-known-variance" class="slide level2">
+<h2>Hypothesis Test for Population Mean (Two-Tailed, Known Variance)</h2>
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Theorem 25.1</strong></p>
+</div>
+<div class="callout-content">
+<p>Let <span class="math inline">\(X_1, X_2, \dots, X_n\)</span> be independent and identically distributed normal random variables with unknown mean <span class="math inline">\(\mu\)</span> and known standard deviation <span class="math inline">\(\sigma\)</span>. Assume we want to test the hypothesis <span class="math inline">\(H_0: \mu = \mu_0\)</span> vs <span class="math inline">\(H_A: \mu \neq \mu_0\)</span> and we want the Type-I error rate to be no larger than <span class="math inline">\(\alpha\)</span>. Then we would reject <span class="math inline">\(H_0\)</span> when the following was true:</p>
+<p><span class="math display">\[
+\frac{\bar{x}-\mu_0}{\sigma/\sqrt{n}} &lt; z_{\alpha/2} \quad \text{ or } \quad \frac{\bar{x}-\mu_0}{\sigma/\sqrt{n}} &gt; z_{1-\alpha/2}
+\]</span></p>
+<p>More succinctly, we can reject <span class="math inline">\(H_0\)</span> when <span class="math inline">\(\left|\frac{\bar{x}-\mu_0}{\sigma/\sqrt{n}} \right| &gt; z_{1-\alpha/2}\)</span></p>
+</div>
+</div>
+</div>
+<p>If the underlying distribution is unknown, we can still apply this if <span class="math inline">\(n \geq 30\)</span>.</p>
+</section>
+<section id="hypothesis-test-for-population-mean-two-tailed-known-variance-proof" class="slide level2">
+<h2>Hypothesis Test for Population Mean (Two-Tailed, Known Variance, Proof)</h2>
+<p>Under the null hypothesis, <span class="math inline">\(X_1, X_2, \dots, X_n\)</span> are distributed normally with mean <span class="math inline">\(\mu = \mu_0\)</span> and standard deviation <span class="math inline">\(\sigma\)</span>. Then <span class="math inline">\(\frac{\bar{X}-\mu}{\sigma/\sqrt{n}} \sim N(0, 1)\)</span>. Thus, if the null hypothesis is true, the probability of rejecting the null using this rejection region is:</p>
+<p><span class="math display">\[
+P\left(\frac{\bar{X}-\mu_0}{\sigma/\sqrt{n}} &lt; z_{\alpha/2}\right) + P\left(\frac{\bar{X}-\mu_0}{\sigma/\sqrt{n}} &gt; z_{1-\alpha/2}\right) = P\left(\left|\frac{\bar{X}-\mu_0}{\sigma/\sqrt{n}} \right| &gt; z_{1-\alpha/2}\right) = \alpha
+\]</span></p>
+<p>If the underlying distribution is unknown, we can still apply this if <span class="math inline">\(n \geq 30\)</span>.</p>
+</section>
+<section id="hypothesis-test-for-population-mean-left-tailed-known-variance" class="slide level2">
+<h2>Hypothesis Test for Population Mean (Left-Tailed, Known Variance)</h2>
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Theorem 25.2</strong></p>
+</div>
+<div class="callout-content">
+<p>Let <span class="math inline">\(X_1, X_2, \dots, X_n\)</span> be independent and identically distributed normal random variables with unknown mean <span class="math inline">\(\mu\)</span> and known standard deviation <span class="math inline">\(\sigma\)</span>. Assume we want to test the hypothesis <span class="math inline">\(H_0: \mu = \mu_0\)</span> vs <span class="math inline">\(H_A: \mu &lt; \mu_0\)</span> and we want the Type-I error rate to be no larger than <span class="math inline">\(\alpha\)</span>. Then we would reject <span class="math inline">\(H_0\)</span> when the following was true:</p>
+<p><span class="math display">\[
+\frac{\bar{x}-\mu_0}{\sigma/\sqrt{n}} &lt; z_{\alpha}
+\]</span></p>
+</div>
+</div>
+</div>
+<p>Again, under the null hypothesis, we have that <span class="math inline">\(\frac{\bar{X}-\mu_0}{\sigma/\sqrt{n}} \sim N(0, 1)\)</span>. Thus, if the null is true, the probability of rejecting it would be:</p>
+<p><span class="math display">\[
+P\left(\frac{\bar{X}-\mu_0}{\sigma/\sqrt{n}} &lt; z_{\alpha}\right) = \alpha
+\]</span></p>
+<p>If the underlying distribution is unknown, we can still apply this if <span class="math inline">\(n \geq 30\)</span>.</p>
+</section>
+<section id="hypothesis-test-for-population-mean-right-tailed-known-variance" class="slide level2">
+<h2>Hypothesis Test for Population Mean (Right-Tailed, Known Variance)</h2>
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Theorem 25.3</strong></p>
+</div>
+<div class="callout-content">
+<p>Let <span class="math inline">\(X_1, X_2, \dots, X_n\)</span> be independent and identically distributed normal random variables with unknown mean <span class="math inline">\(\mu\)</span> and known standard deviation <span class="math inline">\(\sigma\)</span>. Assume we want to test the hypothesis <span class="math inline">\(H_0: \mu = \mu_0\)</span> vs <span class="math inline">\(H_A: \mu &gt; \mu_0\)</span> and we want the Type-I error rate to be no larger than <span class="math inline">\(\alpha\)</span>. Then we would reject <span class="math inline">\(H_0\)</span> when the following was true:</p>
+<p><span class="math display">\[
+\frac{\bar{x}-\mu_0}{\sigma/\sqrt{n}} &gt; z_{1-\alpha}
+\]</span></p>
+</div>
+</div>
+</div>
+<p>Again, under the null hypothesis, we have that <span class="math inline">\(\frac{\bar{X}-\mu_0}{\sigma/\sqrt{n}} \sim N(0, 1)\)</span>. Thus, if the null is true, the probability of rejecting it would be:</p>
+<p><span class="math display">\[
+P\left(\frac{\bar{X}-\mu_0}{\sigma/\sqrt{n}} &gt; z_{1-\alpha}\right) = \alpha
+\]</span></p>
+<p>If the underlying distribution is unknown, we can still apply this if <span class="math inline">\(n \geq 30\)</span>.</p>
+</section>
+<section id="p-value-for-population-mean-two-tailed-known-variance" class="slide level2">
+<h2>P-Value for Population Mean (Two-Tailed, Known Variance)</h2>
+<p>For a two-tailed test involving the population mean with known variance (<span class="math inline">\(H_A: \mu \neq \mu_0\)</span>), the p-value would be computed as follows:</p>
+<p><span class="math display">\[
+P\left(\frac{\bar{X}-\mu}{\sigma/\sqrt{n}} \geq \left|\frac{\bar{x}-\mu}{\sigma/\sqrt{n}} \right| \Bigg| \mu = \mu_0\right)
+\]</span></p>
+<p>In words, this is literally the probability of getting a test-statistic as larger or larger than what we observed, assuming the null hypothesis is true.</p>
+</section>
+<section id="p-value-for-population-mean-left-tailed-known-variance" class="slide level2">
+<h2>P-Value for Population Mean (Left-Tailed, Known Variance)</h2>
+<p>For a left-tailed test involving the population mean with known variance (<span class="math inline">\(H_A: \mu &lt; \mu_0\)</span>), the p-value would be computed as follows:</p>
+<p><span class="math display">\[
+P\left(\frac{\bar{X}-\mu}{\sigma/\sqrt{n}} \leq \frac{\bar{x}-\mu}{\sigma/\sqrt{n}} \Bigg| \mu = \mu_0\right)
+\]</span></p>
+</section>
+<section id="p-value-for-population-mean-right-tailed-known-variance" class="slide level2">
+<h2>P-Value for Population Mean (Right-Tailed, Known Variance)</h2>
+<p>For a right-tailed test involving the population mean with known variance. (<span class="math inline">\(H_A: \mu &gt; \mu_0\)</span>), the p-value would be computed as follows:</p>
+<p><span class="math display">\[
+P\left(\frac{\bar{X}-\mu}{\sigma/\sqrt{n}} \geq \frac{\bar{x}-\mu}{\sigma/\sqrt{n}} \Bigg| \mu = \mu_0\right)
+\]</span></p>
+</section>
+<section id="hypothesis-test-for-population-mean-two-tailed-unknown-variance" class="slide level2">
+<h2>Hypothesis Test for Population Mean (Two-Tailed, Unknown Variance)</h2>
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Theorem 25.4</strong></p>
+</div>
+<div class="callout-content">
+<p>Let <span class="math inline">\(X_1, X_2, \dots, X_n\)</span> be independent and identically distributed normal random variables with unknown mean <span class="math inline">\(\mu\)</span> and unknown standard deviation <span class="math inline">\(\sigma\)</span>. Assume we want to test the hypothesis <span class="math inline">\(H_0: \mu = \mu_0\)</span> vs <span class="math inline">\(H_A: \mu \neq \mu_0\)</span> and we want the Type-I error rate to be no larger than <span class="math inline">\(\alpha\)</span>. Then we would reject <span class="math inline">\(H_0\)</span> when the following was true:</p>
+<p><span class="math display">\[
+\frac{\bar{x}-\mu_0}{s/\sqrt{n}} &lt; t_{n-1, \alpha/2} \quad \text{ or } \quad \frac{\bar{x}-\mu_0}{s/\sqrt{n}} &gt; t_{n-1, 1-\alpha/2}
+\]</span></p>
+<p>More succinctly, we can reject <span class="math inline">\(H_0\)</span> when <span class="math inline">\(\left|\frac{\bar{x}-\mu_0}{s/\sqrt{n}} \right| &gt; t_{n-1, 1-\alpha/2}\)</span></p>
+</div>
+</div>
+</div>
+<p>The proofs for this are very similar to the case when the standard deviation is known. If the underlying distribution is unknown, we can still apply this if <span class="math inline">\(n \geq 30\)</span>.</p>
+</section>
+<section id="hypothesis-test-for-population-mean-left-tailed-unknown-variance" class="slide level2">
+<h2>Hypothesis Test for Population Mean (Left-Tailed, Unknown Variance)</h2>
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Theorem 25.5</strong></p>
+</div>
+<div class="callout-content">
+<p>Let <span class="math inline">\(X_1, X_2, \dots, X_n\)</span> be independent and identically distributed normal random variables with unknown mean <span class="math inline">\(\mu\)</span> and unknown standard deviation <span class="math inline">\(\sigma\)</span>. Assume we want to test the hypothesis <span class="math inline">\(H_0: \mu = \mu_0\)</span> vs <span class="math inline">\(H_A: \mu &lt; \mu_0\)</span> and we want the Type-I error rate to be no larger than <span class="math inline">\(\alpha\)</span>. Then we would reject <span class="math inline">\(H_0\)</span> when the following was true:</p>
+<p><span class="math display">\[
+\frac{\bar{x}-\mu_0}{s/\sqrt{n}} &lt; t_{n-1,\alpha}
+\]</span></p>
+</div>
+</div>
+</div>
+<p>The proof is similar to the case where the variance is known. If the underlying distribution is unknown, we can still apply this if <span class="math inline">\(n \geq 30\)</span>.</p>
+</section>
+<section id="hypothesis-test-for-population-mean-right-tailed-unknown-variance" class="slide level2">
+<h2>Hypothesis Test for Population Mean (Right-Tailed, Unknown Variance)</h2>
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Theorem 25.6</strong></p>
+</div>
+<div class="callout-content">
+<p>Let <span class="math inline">\(X_1, X_2, \dots, X_n\)</span> be independent and identically distributed normal random variables with unknown mean <span class="math inline">\(\mu\)</span> and unknown standard deviation <span class="math inline">\(\sigma\)</span>. Assume we want to test the hypothesis <span class="math inline">\(H_0: \mu = \mu_0\)</span> vs <span class="math inline">\(H_A: \mu &gt; \mu_0\)</span> and we want the Type-I error rate to be no larger than <span class="math inline">\(\alpha\)</span>. Then we would reject <span class="math inline">\(H_0\)</span> when the following was true:</p>
+<p><span class="math display">\[
+\frac{\bar{x}-\mu_0}{s/\sqrt{n}} &gt; t_{n-1,1-\alpha}
+\]</span></p>
+</div>
+</div>
+</div>
+<p>The proof is similar to the case where the variance is known. If the underlying distribution is unknown, we can still apply this if <span class="math inline">\(n \geq 30\)</span>.</p>
+</section>
+<section id="p-value-for-population-mean-two-tailed-unknown-variance" class="slide level2">
+<h2>P-Value for Population Mean (Two-Tailed, Unknown Variance)</h2>
+<p>For a two-tailed test involving the population mean with unknown variance (<span class="math inline">\(H_A: \mu \neq \mu_0\)</span>), the p-value would be computed as follows:</p>
+<p><span class="math display">\[
+P\left(\frac{\bar{X}-\mu}{S/\sqrt{n}} \geq \left|\frac{\bar{x}-\mu}{s/\sqrt{n}} \right| \Bigg| \mu = \mu_0\right)
+\]</span></p>
+</section>
+<section id="p-value-for-population-mean-left-tailed-unknown-variance" class="slide level2">
+<h2>P-Value for Population Mean (Left-Tailed, Unknown Variance)</h2>
+<p>For a left-tailed test involving the population mean with unknown variance (<span class="math inline">\(H_A: \mu &lt; \mu_0\)</span>), the p-value would be computed as follows:</p>
+<p><span class="math display">\[
+P\left(\frac{\bar{X}-\mu}{S/\sqrt{n}} \leq \frac{\bar{x}-\mu}{s/\sqrt{n}} \Bigg| \mu = \mu_0\right)
+\]</span></p>
+</section>
+<section id="p-value-for-population-mean-right-tailed-unknown-variance" class="slide level2">
+<h2>P-Value for Population Mean (Right-Tailed, Unknown Variance)</h2>
+<p>For a left-tailed test involving the population mean with unknown variance (<span class="math inline">\(H_A: \mu &gt; \mu_0\)</span>), the p-value would be computed as follows:</p>
+<p><span class="math display">\[
+P\left(\frac{\bar{X}-\mu}{S/\sqrt{n}} \geq \frac{\bar{x}-\mu}{s/\sqrt{n}} \Bigg| \mu = \mu_0\right)
+\]</span></p>
+</section>
+<section id="ex-batteries-1" class="slide level2">
+<h2>Ex: Batteries (1)</h2>
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Example 25.1</strong></p>
+</div>
+<div class="callout-content">
+<p>Historically, the average weight for a certain type of battery has been 51 grams, but it believed that the weight has increased. A random sample of 40 batteries is selected, and their average weight is found to be 51.5 grams. It is known that the weight of these batteries follows a normal distribution with a standard deviation of 1.8 grams.</p>
+<p>Assume a significance level of <span class="math inline">\(\alpha = 0.05\)</span>. What test-statistic would we use for this test and what critical value is used to define the rejection region?</p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="math inline">\(H_0: \mu = 51\)</span></li>
+<li><span class="math inline">\(H_A: \mu &gt; 51\)</span></li>
+</ul>
+<p>This test would use a z-statistic since <span class="math inline">\(\sigma\)</span> is known</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb1-2"><a aria-label="2"></a></span>
+<span id="cb1-3"><a aria-label="3"></a><span class="fu">cat</span>(<span class="st">"The critical value is: "</span>, <span class="fu">qnorm</span>(<span class="dv">1</span><span class="sc">-</span>alpha))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The critical value is:  1.644854</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="ex-drug-recovery-1" class="slide level2">
+<h2>Ex: Drug Recovery (1)</h2>
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Example 25.2</strong></p>
+</div>
+<div class="callout-content">
+<p>In the past, the mean recovery time for a certain drug was 14 days. It is believed that the mean recovery time is different now. A random sample of 35 patients who took the drug had a mean recovery time of 13.5 days with a sample standard deviation of 2.5 days.</p>
+<p>Assume a significance level of <span class="math inline">\(\alpha = 0.01\)</span>. What test-statistic would we use for this test and what critical value is used to define the rejection region?</p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="math inline">\(H_0: \mu = 14\)</span></li>
+<li><span class="math inline">\(H_A: \mu \neq 14\)</span></li>
+</ul>
+<p>This test would use a t-statistic since <span class="math inline">\(\sigma\)</span> is unknown.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a>n <span class="ot">&lt;-</span> <span class="dv">35</span></span>
+<span id="cb3-2"><a aria-label="2"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.01</span></span>
+<span id="cb3-3"><a aria-label="3"></a></span>
+<span id="cb3-4"><a aria-label="4"></a><span class="fu">cat</span>(<span class="st">"The critical value is: "</span>, <span class="fu">qt</span>(<span class="dv">1</span><span class="sc">-</span>alpha<span class="sc">/</span><span class="dv">2</span>, n<span class="dv">-1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The critical value is:  2.728394</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="ex-sugar-1" class="slide level2">
+<h2>Ex: Sugar (1)</h2>
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Example 25.3</strong></p>
+</div>
+<div class="callout-content">
+<p>In the past, the average sugar content for a fruit drink was 18 grams per bottle. It is believed the sugar content has decreased. A random sample of 50 bottles is tested, and the average sugar content is found to be 17.2 grams per bottle. Previous studies have shown that the population standard deviation is 3.2 grams.</p>
+<p>Assume a significance level of <span class="math inline">\(\alpha = 0.1\)</span>. What test-statistic would we use for this test and what critical value is used to define the rejection region?</p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="math inline">\(H_0: \mu = 18\)</span></li>
+<li><span class="math inline">\(H_A: \mu &lt; 18\)</span></li>
+</ul>
+<p>This test would use a z-statistic since <span class="math inline">\(\sigma\)</span> is known</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.1</span></span>
+<span id="cb5-2"><a aria-label="2"></a></span>
+<span id="cb5-3"><a aria-label="3"></a><span class="fu">cat</span>(<span class="st">"The critical value is: "</span>, <span class="fu">qnorm</span>(alpha))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The critical value is:  -1.281552</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="ex-batteries-2" class="slide level2">
+<h2>Ex: Batteries (2)</h2>
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Example 25.4</strong></p>
+</div>
+<div class="callout-content">
+<p>Historically, the average weight for a certain type of battery has been 51 grams, but it is believed that the weight has increased. A random sample of 40 batteries is selected, and their average weight is found to be 51.5 grams. It is known that the weight of these batteries follows a normal distribution with a standard deviation of 1.8 grams.</p>
+<p>Using a significance level of <span class="math inline">\(\alpha = 0.05\)</span>, test the hypothesis that the true average weight has increased from 51 grams.</p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="math inline">\(H_0: \mu = 51\)</span></li>
+<li><span class="math inline">\(H_A: \mu &gt; 51\)</span></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a>n <span class="ot">&lt;-</span> <span class="dv">40</span></span>
+<span id="cb7-2"><a aria-label="2"></a>sigma <span class="ot">&lt;-</span> <span class="fl">1.8</span></span>
+<span id="cb7-3"><a aria-label="3"></a>mu_0 <span class="ot">&lt;-</span> <span class="dv">51</span></span>
+<span id="cb7-4"><a aria-label="4"></a>xbar <span class="ot">&lt;-</span> <span class="fl">51.5</span></span>
+<span id="cb7-5"><a aria-label="5"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb7-6"><a aria-label="6"></a>z_statistic <span class="ot">&lt;-</span> (xbar<span class="sc">-</span>mu_0)<span class="sc">/</span>(sigma<span class="sc">/</span><span class="fu">sqrt</span>(n))</span>
+<span id="cb7-7"><a aria-label="7"></a></span>
+<span id="cb7-8"><a aria-label="8"></a><span class="fu">cat</span>(<span class="st">"The z-statistic is: "</span>, z_statistic, <span class="st">", the critical value is: "</span>, <span class="fu">qnorm</span>(<span class="dv">1</span><span class="sc">-</span>alpha), <span class="st">", and the p-value is: "</span>, <span class="dv">1</span><span class="sc">-</span><span class="fu">pnorm</span>(z_statistic), <span class="at">sep =</span> <span class="st">""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The z-statistic is: 1.756821, the critical value is: 1.644854, and the p-value is: 0.03947417</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="ex-drug-recovery-2" class="slide level2">
+<h2>Ex: Drug Recovery (2)</h2>
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Example 25.5</strong></p>
+</div>
+<div class="callout-content">
+<p>In the past, the mean recovery time for a certain drug was 14 days. It is believed that the mean recovery time is different now. A random sample of 35 patients who took the drug had a mean recovery time of 13.5 days with a sample standard deviation of 2.5 days.</p>
+<p>Using a significance level of <span class="math inline">\(\alpha = 0.01\)</span>, test the hypothesis that the true mean recovery time is different from 13.5 days.</p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="math inline">\(H_0: \mu = 14\)</span></li>
+<li><span class="math inline">\(H_A: \mu \neq 14\)</span></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-label="1"></a>n <span class="ot">&lt;-</span> <span class="dv">35</span></span>
+<span id="cb9-2"><a aria-label="2"></a>s <span class="ot">&lt;-</span> <span class="fl">2.5</span></span>
+<span id="cb9-3"><a aria-label="3"></a>mu_0 <span class="ot">&lt;-</span> <span class="dv">14</span></span>
+<span id="cb9-4"><a aria-label="4"></a>xbar <span class="ot">&lt;-</span> <span class="fl">13.5</span></span>
+<span id="cb9-5"><a aria-label="5"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.01</span></span>
+<span id="cb9-6"><a aria-label="6"></a>t_statistic <span class="ot">&lt;-</span> (xbar<span class="sc">-</span>mu_0)<span class="sc">/</span>(s<span class="sc">/</span><span class="fu">sqrt</span>(n))</span>
+<span id="cb9-7"><a aria-label="7"></a></span>
+<span id="cb9-8"><a aria-label="8"></a><span class="fu">cat</span>(<span class="st">"The t-statistic is: "</span>, t_statistic, <span class="st">", the critical value is: "</span>, <span class="fu">qt</span>(<span class="dv">1</span><span class="sc">-</span>alpha<span class="sc">/</span><span class="dv">2</span>, n<span class="dv">-1</span>), <span class="st">", and the p-value is: "</span>, <span class="dv">2</span><span class="sc">*</span><span class="fu">pt</span>(<span class="sc">-</span><span class="fu">abs</span>(t_statistic), n<span class="dv">-1</span>), <span class="at">sep =</span> <span class="st">""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The t-statistic is: -1.183216, the critical value is: 2.728394, and the p-value is: 0.2449311</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="ex-sugar-2" class="slide level2">
+<h2>Ex: Sugar (2)</h2>
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Example 25.6</strong></p>
+</div>
+<div class="callout-content">
+<p>In the past, the average sugar content for a fruit drink was 18 grams per bottle. It is believed that this has decreased. A random sample of 50 bottles is tested, and the average sugar content is found to be 17.2 grams per bottle. Previous studies have shown that the population standard deviation is 3.2 grams.</p>
+<p>Using a significance level of <span class="math inline">\(\alpha = 0.1\)</span>, test the hypothesis that the true average sugar content has decreased from 18 grams.</p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="math inline">\(H_0: \mu = 18\)</span></li>
+<li><span class="math inline">\(H_A: \mu &lt; 18\)</span></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-label="1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb11-2"><a aria-label="2"></a>sigma <span class="ot">&lt;-</span> <span class="fl">3.2</span></span>
+<span id="cb11-3"><a aria-label="3"></a>mu_0 <span class="ot">&lt;-</span> <span class="dv">18</span></span>
+<span id="cb11-4"><a aria-label="4"></a>xbar <span class="ot">&lt;-</span> <span class="fl">17.2</span></span>
+<span id="cb11-5"><a aria-label="5"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.1</span></span>
+<span id="cb11-6"><a aria-label="6"></a>z_statistic <span class="ot">&lt;-</span> (xbar<span class="sc">-</span>mu_0)<span class="sc">/</span>(sigma<span class="sc">/</span><span class="fu">sqrt</span>(n))</span>
+<span id="cb11-7"><a aria-label="7"></a></span>
+<span id="cb11-8"><a aria-label="8"></a><span class="fu">cat</span>(<span class="st">"The z-statistic is: "</span>, z_statistic, <span class="st">", the critical value is: "</span>, <span class="fu">qnorm</span>(alpha), <span class="st">", and the p-value is: "</span>, <span class="fu">pnorm</span>(z_statistic), <span class="at">sep =</span> <span class="st">""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The z-statistic is: -1.767767, the critical value is: -1.281552, and the p-value is: 0.03854994</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="ex-commute" class="slide level2">
+<h2>Ex: Commute</h2>
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Example 25.7</strong></p>
+</div>
+<div class="callout-content">
+<p>A city planner states that the average commute time is in a city 32 minutes, but you believe that it is larger than that. You collect a random sample of 40 commute times and find the sample mean is 32.8 minutes with a sample standard deviation of 6.8 minutes.</p>
+<p>Using a significance level of <span class="math inline">\(\alpha = 0.05\)</span>, test the hypothesis that the true average commute time is greater than 32 minutes.</p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="math inline">\(H_0: \mu = 32\)</span></li>
+<li><span class="math inline">\(H_A: \mu &gt; 32\)</span></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-label="1"></a>n <span class="ot">&lt;-</span> <span class="dv">40</span></span>
+<span id="cb13-2"><a aria-label="2"></a>s <span class="ot">&lt;-</span> <span class="fl">6.8</span></span>
+<span id="cb13-3"><a aria-label="3"></a>mu_0 <span class="ot">&lt;-</span> <span class="dv">32</span></span>
+<span id="cb13-4"><a aria-label="4"></a>xbar <span class="ot">&lt;-</span> <span class="fl">32.8</span></span>
+<span id="cb13-5"><a aria-label="5"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb13-6"><a aria-label="6"></a>t_statistic <span class="ot">&lt;-</span> (xbar<span class="sc">-</span>mu_0)<span class="sc">/</span>(s<span class="sc">/</span><span class="fu">sqrt</span>(n))</span>
+<span id="cb13-7"><a aria-label="7"></a></span>
+<span id="cb13-8"><a aria-label="8"></a><span class="fu">cat</span>(<span class="st">"The t-statistic is: "</span>, t_statistic, <span class="st">", the critical value is: "</span>, <span class="fu">qt</span>(<span class="dv">1</span><span class="sc">-</span>alpha, n<span class="dv">-1</span>), <span class="st">", and the p-value is: "</span>, <span class="dv">1</span><span class="sc">-</span><span class="fu">pt</span>(t_statistic, n<span class="dv">-1</span>), <span class="at">sep =</span> <span class="st">""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The t-statistic is: 0.7440653, the critical value is: 1.684875, and the p-value is: 0.2306484</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="ex-fuel" class="slide level2">
+<h2>Ex: Fuel</h2>
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Example 25.8</strong></p>
+</div>
+<div class="callout-content">
+<p>An airline believes that the average fuel consumption for a flight is 3800 gallons. However, they’ve been told there is a chance it is different than this and they’d like to test that. From historical data, the standard deviation of fuel consumption is known to be 250 gallons per flight. A random sample of 36 flights is selected. The mean fuel consumption is found to be 3900 gallons.</p>
+<p>Using a significance level of <span class="math inline">\(\alpha = 0.01\)</span>, test the hypothesis that the true mean fuel consumption is different from 3800 gallons.</p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="math inline">\(H_0: \mu = 3800\)</span></li>
+<li><span class="math inline">\(H_A: \mu \neq 3800\)</span></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a aria-label="1"></a>n <span class="ot">&lt;-</span> <span class="dv">36</span></span>
+<span id="cb15-2"><a aria-label="2"></a>sigma <span class="ot">&lt;-</span> <span class="dv">250</span></span>
+<span id="cb15-3"><a aria-label="3"></a>mu_0 <span class="ot">&lt;-</span> <span class="dv">3800</span></span>
+<span id="cb15-4"><a aria-label="4"></a>xbar <span class="ot">&lt;-</span> <span class="dv">3900</span></span>
+<span id="cb15-5"><a aria-label="5"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.01</span></span>
+<span id="cb15-6"><a aria-label="6"></a>z_statistic <span class="ot">&lt;-</span> (xbar<span class="sc">-</span>mu_0)<span class="sc">/</span>(sigma<span class="sc">/</span><span class="fu">sqrt</span>(n))</span>
+<span id="cb15-7"><a aria-label="7"></a></span>
+<span id="cb15-8"><a aria-label="8"></a><span class="fu">cat</span>(<span class="st">"The z-statistic is: "</span>, z_statistic, <span class="st">", the critical value is: "</span>, <span class="fu">qnorm</span>(<span class="dv">1</span><span class="sc">-</span>alpha<span class="sc">/</span><span class="dv">2</span>), <span class="st">", and the p-value is: "</span>, <span class="dv">2</span><span class="sc">*</span><span class="fu">pnorm</span>(<span class="sc">-</span><span class="fu">abs</span>(z_statistic)), <span class="at">sep =</span> <span class="st">""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The z-statistic is: 2.4, the critical value is: 2.575829, and the p-value is: 0.01639507</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="ex-sleep" class="slide level2">
+<h2>Ex: Sleep</h2>
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Example 25.9</strong></p>
+</div>
+<div class="callout-content">
+<p>A university claims that the average student sleeps 7 hours a night. You believe students get less sleep on average. A random sample of 50 students is surveyed, and their average sleep duration is found to be 6.7 hours per night with a sample standard deviation of 1.2 hours.</p>
+<p>Using a significance level of <span class="math inline">\(\alpha = 0.05\)</span>, test the hypothesis that the true average sleep duration is less than 7 hours.</p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li><span class="math inline">\(H_0: \mu = 7\)</span></li>
+<li><span class="math inline">\(H_A: \mu &lt; 7\)</span></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-label="1"></a>n <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb17-2"><a aria-label="2"></a>s <span class="ot">&lt;-</span> <span class="fl">1.2</span></span>
+<span id="cb17-3"><a aria-label="3"></a>mu_0 <span class="ot">&lt;-</span> <span class="dv">7</span></span>
+<span id="cb17-4"><a aria-label="4"></a>xbar <span class="ot">&lt;-</span> <span class="fl">6.7</span></span>
+<span id="cb17-5"><a aria-label="5"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb17-6"><a aria-label="6"></a>t_statistic <span class="ot">&lt;-</span> (xbar<span class="sc">-</span>mu_0)<span class="sc">/</span>(s<span class="sc">/</span><span class="fu">sqrt</span>(n))</span>
+<span id="cb17-7"><a aria-label="7"></a></span>
+<span id="cb17-8"><a aria-label="8"></a><span class="fu">cat</span>(<span class="st">"The t-statistic is: "</span>, t_statistic, <span class="st">", the critical value is: "</span>, <span class="fu">qt</span>(alpha, n<span class="dv">-1</span>), <span class="st">", and the p-value is: "</span>, <span class="fu">pt</span>(t_statistic, n<span class="dv">-1</span>), <span class="at">sep =</span> <span class="st">""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The t-statistic is: -1.767767, the critical value is: -1.676551, and the p-value is: 0.04166308</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="ex-fertilizer" class="slide level2">
+<h2>Ex: Fertilizer</h2>
+<p>Given a set of observations with unknown mean and unknown standard deviation, we can use the <code>t.test</code> function in R to perform a hypothesis test for the population mean.</p>
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Example 25.10</strong></p>
+</div>
+<div class="callout-content">
+<p>A researcher is studying the effects of a new fertilizer on plant growth. They believe that before using this fertilizer that the average growth was 22 centimeters. However, they believe that it is greater now that they are using this new fertilizer. They measure the height (in cm) of 10 randomly selected plants after four weeks of growth:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-label="1"></a>growth <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">22.4</span>, <span class="fl">21.8</span>, <span class="fl">23.1</span>, <span class="fl">24.0</span>, <span class="fl">22.7</span>, <span class="fl">23.5</span>, <span class="fl">21.9</span>, <span class="fl">22.6</span>, <span class="fl">23.3</span>, <span class="fl">22.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The researcher assumes that plant heights follow a normal distribution. Using a significance level of <span class="math inline">\(\alpha = 0.05\)</span>, perform a hypothesis test to test the hypothesis that the average growth has increased.</p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a aria-label="1"></a>n <span class="ot">&lt;-</span> <span class="fu">length</span>(growth)</span>
+<span id="cb20-2"><a aria-label="2"></a>t_statistic <span class="ot">&lt;-</span> (<span class="fu">mean</span>(growth)<span class="sc">-</span><span class="dv">22</span>)<span class="sc">/</span>(<span class="fu">sd</span>(growth)<span class="sc">/</span><span class="fu">sqrt</span>(n))</span>
+<span id="cb20-3"><a aria-label="3"></a></span>
+<span id="cb20-4"><a aria-label="4"></a><span class="fu">cat</span>(<span class="st">"The t-statistic is: "</span>, t_statistic, <span class="st">", the critical value is: "</span>, <span class="fu">qt</span>(<span class="dv">1</span><span class="fl">-0.05</span>, n<span class="dv">-1</span>), <span class="st">", and the p-value is: "</span>, <span class="dv">1</span><span class="sc">-</span><span class="fu">pt</span>(t_statistic, n<span class="dv">-1</span>), <span class="at">sep =</span> <span class="st">""</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>The t-statistic is: 3.223151, the critical value is: 1.833113, and the p-value is: 0.005218276</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="ex-fertilizer-continued" class="slide level2">
+<h2>Ex: Fertilizer, Continued</h2>
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Example 25.10 (Continued)</strong></p>
+</div>
+<div class="callout-content">
+<p>A researcher is studying the effects of a new fertilizer on plant growth. They believe that before using this fertilizer that the average growth was 22 centimeters. However, they believe that it is greater now that they are using this new fertilizer. They measure the height (in cm) of 10 randomly selected plants after four weeks of growth:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a aria-label="1"></a>growth <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">22.4</span>, <span class="fl">21.8</span>, <span class="fl">23.1</span>, <span class="fl">24.0</span>, <span class="fl">22.7</span>, <span class="fl">23.5</span>, <span class="fl">21.9</span>, <span class="fl">22.6</span>, <span class="fl">23.3</span>, <span class="fl">22.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The researcher assumes that plant heights follow a normal distribution. Using a significance level of <span class="math inline">\(\alpha = 0.05\)</span>, perform a hypothesis test to test the hypothesis that the average growth has increased.</p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-label="1"></a><span class="fu">t.test</span>(growth, <span class="at">alternative =</span> <span class="st">"greater"</span>, <span class="at">mu =</span> <span class="dv">22</span>, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  growth
+t = 3.2232, df = 9, p-value = 0.005218
+alternative hypothesis: true mean is greater than 22
+95 percent confidence interval:
+ 22.31914      Inf
+sample estimates:
+mean of x 
+    22.74 </code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="ex-break-times" class="slide level2">
+<h2>Ex: Break Times</h2>
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Example 25.11</strong></p>
+</div>
+<div class="callout-content">
+<p>A company claims the average time (in minutes) that employees spend on breaks is 17 minutes, but you believe it is less than that. A random sample of 35 employees is selected, and the following break times are recorded:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a aria-label="1"></a>breaks <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">12</span>, <span class="dv">15</span>, <span class="dv">18</span>, <span class="dv">14</span>, <span class="dv">16</span>, <span class="dv">20</span>, <span class="dv">19</span>, <span class="dv">14</span>, <span class="dv">13</span>, <span class="dv">17</span>, <span class="dv">18</span>, <span class="dv">16</span>, <span class="dv">19</span>, <span class="dv">21</span>, <span class="dv">15</span>, <span class="dv">13</span>, <span class="dv">14</span>,</span>
+<span id="cb25-2"><a aria-label="2"></a>            <span class="dv">16</span>, <span class="dv">17</span>, <span class="dv">18</span>, <span class="dv">22</span>, <span class="dv">23</span>, <span class="dv">19</span>, <span class="dv">15</span>, <span class="dv">14</span>, <span class="dv">12</span>, <span class="dv">16</span>, <span class="dv">18</span>, <span class="dv">19</span>, <span class="dv">17</span>, <span class="dv">20</span>, <span class="dv">21</span>, <span class="dv">15</span>, <span class="dv">14</span>, <span class="dv">13</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Using a significance level of <span class="math inline">\(\alpha = 0.01\)</span>, perform a hypothesis test to test the hypothesis that the average break time is less than 17 minutes.</p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a aria-label="1"></a><span class="fu">t.test</span>(breaks, <span class="at">alternative =</span> <span class="st">"less"</span>, <span class="at">mu =</span> <span class="dv">17</span>, <span class="at">conf.level =</span> <span class="fl">0.99</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  breaks
+t = -0.69466, df = 34, p-value = 0.246
+alternative hypothesis: true mean is less than 17
+99 percent confidence interval:
+   -Inf 17.862
+sample estimates:
+mean of x 
+ 16.65714 </code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="ex-heart-rates" class="slide level2">
+<h2>Ex: Heart Rates</h2>
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Example 25.12</strong></p>
+</div>
+<div class="callout-content">
+<p>Historical data at a hospital suggests that the average heart rate (in beats per minute) of patients recovering from a certain surgery is 75. However, it is believed that it might be different now. A random sample of 12 patients is selected, and their recorded heart rates are:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a aria-label="1"></a>rates <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">72</span>, <span class="dv">75</span>, <span class="dv">78</span>, <span class="dv">80</span>, <span class="dv">76</span>, <span class="dv">79</span>, <span class="dv">81</span>, <span class="dv">74</span>, <span class="dv">77</span>, <span class="dv">73</span>, <span class="dv">76</span>, <span class="dv">78</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>It is assumed that the heart rates follow a normal distribution. Using a significance level of <span class="math inline">\(\alpha = 0.1\)</span>, perform a hypothesis test to test the hypothesis that average heart rate is different from what it was.</p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a aria-label="1"></a><span class="fu">t.test</span>(rates, <span class="at">alternative =</span> <span class="st">"two.sided"</span>, <span class="at">mu =</span> <span class="dv">75</span>, <span class="at">conf.level =</span> <span class="fl">0.9</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  rates
+t = 1.9741, df = 11, p-value = 0.07402
+alternative hypothesis: true mean is not equal to 75
+90 percent confidence interval:
+ 75.14292 78.02375
+sample estimates:
+mean of x 
+ 76.58333 </code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="ex-exam-scores" class="slide level2">
+<h2>Ex: Exam Scores</h2>
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Example 25.13</strong></p>
+</div>
+<div class="callout-content">
+<p>A professor is analyzing the scores of students on a recent statistics exam. A random sample of 40 student scores is obtained:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a aria-label="1"></a>scores <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">72</span>, <span class="dv">85</span>, <span class="dv">90</span>, <span class="dv">78</span>, <span class="dv">81</span>, <span class="dv">76</span>, <span class="dv">84</span>, <span class="dv">89</span>, <span class="dv">91</span>, <span class="dv">95</span>, <span class="dv">87</span>, <span class="dv">73</span>, <span class="dv">88</span>, <span class="dv">77</span>, <span class="dv">82</span>, <span class="dv">86</span>, <span class="dv">80</span>, </span>
+<span id="cb31-2"><a aria-label="2"></a>            <span class="dv">83</span>, <span class="dv">85</span>, <span class="dv">79</span>, <span class="dv">94</span>, <span class="dv">92</span>, <span class="dv">75</span>, <span class="dv">78</span>, <span class="dv">82</span>, <span class="dv">84</span>, <span class="dv">90</span>, <span class="dv">88</span>, <span class="dv">87</span>, <span class="dv">85</span>, <span class="dv">81</span>, <span class="dv">79</span>, <span class="dv">77</span>, <span class="dv">86</span>,</span>
+<span id="cb31-3"><a aria-label="3"></a>            <span class="dv">92</span>, <span class="dv">89</span>, <span class="dv">90</span>, <span class="dv">91</span>, <span class="dv">80</span>, <span class="dv">83</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The past average score was 85, but the professor believes it has decreased since then. Using a significance level of <span class="math inline">\(\alpha = 0.05\)</span>, perform a hypothesis test to test that the average score has decreased.</p>
+</div>
+</div>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a aria-label="1"></a><span class="fu">t.test</span>(scores, <span class="at">alternative =</span> <span class="st">"less"</span>, <span class="at">mu =</span> <span class="dv">85</span>, <span class="at">conf.level =</span> <span class="fl">0.95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  scores
+t = -0.96547, df = 39, p-value = 0.1701
+alternative hypothesis: true mean is less than 85
+95 percent confidence interval:
+     -Inf 85.67062
+sample estimates:
+mean of x 
+     84.1 </code></pre>
+</div>
+</div>
+
+
+</div>
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"\u003ci class=\"fas fa-gear\">\u003c/i>","content":"\u003cul class=\"slide-menu-items\">\n\u003cli class=\"slide-tool-item active\" data-item=\"0\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\">\u003ckbd>f\u003c/kbd> Fullscreen\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"1\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\">\u003ckbd>s\u003c/kbd> Speaker View\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"2\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\">\u003ckbd>o\u003c/kbd> Slide Overview\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"3\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\">\u003ckbd>e\u003c/kbd> PDF Export Mode\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"4\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\">\u003ckbd>r\u003c/kbd> Scroll View Mode\u003c/a>\u003c/li>\n\u003cli class=\"slide-tool-item\" data-item=\"5\">\u003ca href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\">\u003ckbd>?\u003c/kbd> Keyboard Help\u003c/a>\u003c/li>\n\u003c/ul>"}],"openButton":true,"openButtonLabel":"Slide menu"},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+          window.quartoDecorateExternalLinks = function (root) {
+         var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+              if (!link.classList.contains('no-external-icon')) {
+              }
+            }
+          }
+          };
+          window.quartoDecorateExternalLinks(window.document);
+        // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+        // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+        const hideOnEscAndFocusOut = {
+          name: 'hideOnEscAndFocusOut',
+          defaultValue: true,
+          fn(instance) {
+            const dismiss = () => {
+              // A show scheduled by the trigger delay would otherwise reopen it
+              instance.clearDelayTimeouts();
+              instance.hide();
+            };
+            const onKeyDown = (event) => {
+              if (event.key !== 'Escape') {
+                return;
+              }
+              // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+              // except an open reveal.js slide menu, which Esc should close too.
+              // The menu handles keys only when its keyboard option is on.
+              const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+                window.Reveal.getConfig().menu?.keyboard !== false;
+              if (!menuHandlesEsc) {
+                event.stopPropagation();
+              }
+              if (instance.popper.contains(window.document.activeElement)) {
+                // Disabled while refocusing so the focus trigger does not reopen it
+                instance.disable();
+                instance.reference.focus();
+                instance.enable();
+              }
+              dismiss();
+            };
+            const onFocusOut = (event) => {
+              const target = event.relatedTarget;
+              if (target && !instance.reference.contains(target) &&
+                  !instance.popper.contains(target)) {
+                dismiss();
+              }
+            };
+            // On the trigger too: a click trigger (code-annotations: select) has no
+            // blur handling. Attached for the instance's lifetime so leaving the
+            // trigger also cancels a show still pending on the trigger delay.
+            instance.reference.addEventListener('focusout', onFocusOut);
+            return {
+              onShow() {
+                window.document.addEventListener('keydown', onKeyDown, true);
+                instance.popper.addEventListener('focusout', onFocusOut);
+              },
+              onHide() {
+                window.document.removeEventListener('keydown', onKeyDown, true);
+                instance.popper.removeEventListener('focusout', onFocusOut);
+              },
+              onDestroy() {
+                instance.reference.removeEventListener('focusout', onFocusOut);
+              },
+            };
+          },
+        };
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+            plugins: [hideOnEscAndFocusOut],
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

@@ -1,13 +1,17 @@
-/*-- scss:defaults --*/
+body {
+  color: #222222;
+}
 
-$primary: #4b2e83;
-$link-color: #4b2e83;
-$body-color: #222222;
+a {
+  color: #4b2e83;
+}
 
-/*-- scss:rules --*/
+a:hover {
+  color: #3a2266;
+}
 
 .navbar {
-  border-bottom: 3px solid $primary;
+  border-bottom: 3px solid #4b2e83;
 }
 
 .hero {
@@ -15,7 +19,7 @@ $body-color: #222222;
   margin-bottom: 2rem;
   border-radius: 0.5rem;
   background: linear-gradient(135deg, #f4f1fa 0%, #ffffff 100%);
-  border-left: 6px solid $primary;
+  border-left: 6px solid #4b2e83;
 }
 
 .hero h1 {
