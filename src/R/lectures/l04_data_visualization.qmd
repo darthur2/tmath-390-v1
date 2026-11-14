@@ -1,6 +1,4 @@
 ---
-execute:
-  enabled: false  # TODO: re-enable after datasets are added to data/
 title: "Data Visualization"
 format:
   revealjs:
@@ -9,504 +7,579 @@ format:
 ---
 
 ```{r}
-suppressWarnings(suppressMessages(library(dplyr)))
-suppressWarnings(suppressMessages(library(ggplot2)))
+#| echo: false
+#| message: false
+library(tidyverse)
+
+videos <- read_csv("../../../data/content_creation/content_creation.csv", show_col_types = FALSE) |>
+  select(-starts_with("latent")) |>
+  mutate(
+    platform = factor(platform),
+    topic = factor(topic),
+    video_format = factor(video_format),
+    thumbnail_style = factor(thumbnail_style),
+    production_effort = factor(production_effort, levels = c("low", "medium", "high")),
+    posting_day_of_week = factor(
+      posting_day_of_week,
+      levels = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
+    ),
+    posting_time_local = factor(
+      posting_time_local,
+      levels = c("overnight", "morning", "afternoon", "evening")
+    ),
+    paid_promotion = factor(paid_promotion)
+  )
 ```
 
-## Data Distribution
+## The Content Creation Dataset
 
-::: {.callout title="Definition 4.1"}
-The **distribution** of a variable refers to which values a variable can take and how often (frequency) it takes on those values.
+We will visualize the same 346 short-form videos used in the numeric summaries lecture. The dataset includes categorical variables such as platform and video format, and quantitative variables such as views, watch time, and audience size.
+
+## Definitions: Distribution and Frequency Tables
+
+::: {.callout title="Definitions"}
+The **distribution** of a variable describes which values the variable takes and how often it takes them.
+
+A **frequency table** shows ranges of values of a variable and how many observations fall within each range.
 :::
 
-## Frequency Table
+## Example: Frequency Table and Histogram for Views
 
-One way to investigate the distribution of the data is using a **frequency table**.
-
-::: {.callout title="Definition 4.2"}
-A **frequency table** shows the ranges of values of a variable and how many observations fall within those ranges.
-:::
-
-## Ex: CS Data Age Dist
-
-::: {.callout title="Example 4.1"}
-Create a frequency table and display the results for age in the CS dataset.
-:::
-
-. . .
-
-```{r, echo = TRUE}
-cs_dataset <- read.csv("../data/cs_dataset.csv")
-attach(cs_dataset)
-
-age_binned <- cut(Age, 8)
-table(age_binned)
-```
+First, bin the view counts and count how many videos fall in each bin:
 
 ```{r}
-barplot(table(age_binned), space = 0,
-        xlab = "Age Bins", ylab = "Frequency",
-        xaxt = "n",
-        main = "Age Frequency Distribution")
-
-axis(side = 1, labels = FALSE)
-text(x = 1:length(table(age_binned)),
-     y = par("usr")[3] - 0.45,
-     labels = names(table(age_binned)),
-     xpd = NA,
-     srt = 35,
-     adj = 1.2,
-     cex = 1)
+#| echo: true
+videos |>
+  mutate(views_bin = cut(views_first_7_days, breaks = 10)) |>
+  count(views_bin)
 ```
 
-## Ex: CS Data Income Dist
-
-::: {.callout title="Example 4.2"}
-Create a frequency table and display the results for income in the CS dataset.
-:::
-
-. . .
-
-```{r, echo = TRUE}
-income_binned <- cut(Income/1000, 10) # Income in Thousands
-table(income_binned)
-```
+Then display the distribution with a histogram:
 
 ```{r}
-barplot(table(income_binned), space = 0,
-        xlab = "Income Bins", ylab = "Frequency",
-        xaxt = "n",
-        main = "Income Frequency Distribution")
-
-axis(side = 1, labels = FALSE)
-text(x = 1:length(table(income_binned)),
-     y = par("usr")[3] - 0.45,
-     labels = names(table(income_binned)),
-     xpd = NA,
-     srt = 35,
-     adj = 1.2,
-     cex = 1)
-```
-
-## Ex: Failure Data Age Dist
-
-::: {.callout title="Example 4.3"}
-Create a frequency table and display the results for failure time in the failure time dataset.
-:::
-
-. . .
-
-```{r, echo = TRUE}
-failure <- read.csv("../data/failure_time.csv")
-attach(failure)
-
-# YOUR CODE HERE (call variable ft_binned and use 8 bins)
-```
-
-```{r}
-ft_binned <- cut(FailureTime, 8)
-
-barplot(table(ft_binned), space = 0,
-        xlab = "Failure Time Bins", ylab = "Frequency",
-        xaxt = "n",
-        main = "Failure Time Frequency Distribution")
-
-axis(side = 1, labels = FALSE)
-text(x = 1:length(table(ft_binned)),
-     y = par("usr")[3] - 0.45,
-     labels = names(table(ft_binned)),
-     xpd = NA,
-     srt = 35,
-     adj = 1.2,
-     cex = 1)
-```
-
-## Ex: Failure Data Time Dist
-
-::: {.callout title="Example 4.4"}
-Create a frequency table and display the results for engine temperature in the failure time dataset.
-:::
-
-. . .
-
-```{r, echo = TRUE}
-# YOUR CODE HERE (call variable temp_binned and use 10 bins)
-```
-
-```{r}
-temp_binned <- cut(EngineTemp, 10)
-
-barplot(table(temp_binned), space = 0,
-        xlab = "Temperature Bins", ylab = "Frequency",
-        xaxt = "n",
-        main = "Temperature Frequency Distribution")
-
-axis(side = 1, labels = FALSE)
-text(x = 1:length(table(temp_binned)),
-     y = par("usr")[3] - 0.45,
-     labels = names(table(temp_binned)),
-     xpd = NA,
-     srt = 35,
-     adj = 1.2,
-     cex = 1)
-```
-
-## Visual Descriptions
-
-Two key features to describe a distribution visually are its **skew** and **modality**.
-
-## Skew
-
-::: {.callout title="Definition 4.3"}
-**Skew** is a measure of the asymmetry of a distribution.
-:::
-
-```{r}
-par(mfrow = c(1, 3))
-curve(dbeta(x, 2, 5), main = "Right (Positive) Skewed Distribution",
-      xlab = "X", ylab = "Frequency")
-curve(dbeta(x, 5, 5), main = "Normal (Symmetric) Distribution",
-      xlab = "X", ylab = "Frequency")
-curve(dbeta(x, 5, 2), main = "Left (Negative) Skewed Distribution",
-      xlab = "X", ylab = "Frequency")
-par(mfrow = c(1, 1))
-```
-
-## Skew, Mean, and Median
-
-The mean is more affected by skew than the median. In general, the mean will be pulled in the direction of the skew.
-
-You can use the relative position of the mean and median to obtain insights into whether the data are skewed:
-
--   If the mean is larger than the median, the data are skewed to the right
--   If the mean is smaller than the median, the data are skewed to the left
--   If the mean and median about the same, the data are more symmetric
-
-## Ex: CS Data Skew
-
-::: {.callout title="Example 4.5"}
-Compute the mean and median for income and SAT score. What do these potentially say about the skew of these distributions?
-:::
-
-. . .
-
-```{r, echo = TRUE}
-mean(Income)
-median(Income)
-
-mean(SAT)
-median(SAT)
-```
-
-## Ex: Failure Data Skew
-
-::: {.callout title="Example 4.6"}
-Compute the mean and median for failure time and shaft diameter. What do these potentially say about the skew of these distributions?
-:::
-
-. . .
-
-```{r, echo = TRUE}
-# YOUR CODE HERE
-```
-
-## Skew and Numeric Summaries
-
-When data are symmetric, it is common to use the mean and variance/standard deviation as measures of central tendency and variability, respectively.
-
-When data are skewed, the median and five-number summary give more informative descriptions of the central tendency and variability (spread) of the data, respectively.
-
-## Ex: Identifying Skew
-
-::: {.callout title="Example 4.7"}
-Consider the visualization below. How would you describe the skew of this distribution? What is the relationship between the mean and the median in these data?
-
-![Histogram of data with most of the observations clustered to the left and some to the right](../assets/images/skew_example_1.png){width="331"}
-:::
-
-. . .
-
-This distribution is ***right-skewed***. The mean of the data will be pulled in the direction of the skew, meaning the mean will be greater than the median.
-
-## Ex: Identifying Skew
-
-::: {.callout title="Example 4.8"}
-Consider the visualization below. How would you describe the skew of this distribution? What is the relationship between the mean and the median in these data?
-
-![Histogram of data with most of the observations clustered to the right and some to the left](../assets/images/skew_example_2.png){width="336"}
-:::
-
-. . .
-
-This distribution is ***YOUR ANSWER***. Why?
-
-## Modality
-
-::: {.callout title="Definition 4.4"}
-**Modality** refers to the number of peaks of a distribution.
-:::
-
-When the data are multimodal, single measures of centrality and variability will be misleading.
-
-```{r}
-set.seed(100)
-
-unimodal <- rnorm(1000)
-bimodal <- rnorm(2000, rep(c(-2, 2), each = 1000))
-multimodal <- rnorm(4000, rep(c(-8, -2, 2, 8), each = 1000))
-
-par(mfrow = c(1, 3))
-hist(unimodal, main = "Unimodal", xlab = "X")
-hist(bimodal, main = "Bimodal", xlab = "X")
-hist(multimodal, main = "Multimodal", xlab = "X")
-par(mfrow = c(1, 1))
-```
-
-## Ex: Identifying Modality
-
-::: {.callout title="Example 4.9"}
-Consider the visualization below. Select the option that correctly describes the modality of the distribution.
-
-![Histogram where bars rise until hitting a peak in the center and then fall again](../assets/images/modality_example_1.png){width="338"}
-:::
-
-. . .
-
-This is a ***unimodal*** distribution (one peak).
-
-## Ex: Identifying Modality
-
-::: {.callout title="Example 4.10"}
-Consider the visualization below. Select the option that correctly describes the modality of the distribution.
-
-![Histogram where bars rise and then fall and then rise and then fall again](../assets/images/modality_example_2.png){width="336"}
-:::
-
-. . .
-
-This is a ***YOUR ANSWER***. Why?
-
-## Pie Charts
-
-::: {.callout title="Definition 4.5"}
-A **pie chart** is a type of graph in which a circle is divided into sectors that each represent a proportion of the whole.
-
-These can be used to visualize qualitative data of any size.
-:::
-
-## Ex: CS Data Pie Chart
-
-::: {.callout title="Example 4.11"}
-Use a pie chart to create a visualization for ethnicity in the CS dataset.
-:::
-
-. . .
-
-```{r, echo = TRUE}
-#| out-width: "75%"
-#| fig-align: center
-
-ethnic_table <- table(Ethnicity)
-ethnic_data <- data.frame(Ethnicity = names(ethnic_table), Count = as.numeric(ethnic_table))
-
-ggplot(ethnic_data, aes(x = "", y = Count, fill = Ethnicity)) +
-  geom_bar(stat = "identity", width = 1) +
-  coord_polar("y") +
-  labs(title = "Pie Chart of Ethnicity") +
-  theme_void()
-```
-
-## Ex: Failure Data Pie Chart
-
-::: {.callout title="Example 4.12"}
-Use a pie chart to create a visualization of lubricant in the failure time dataset.
-:::
-
-. . .
-
-```{r, echo = TRUE}
-#| out-width: "75%"
-#| fig-align: center
-
-# YOUR CODE HERE
-```
-
-## Bar Charts
-
-::: {.callout title="Definition 4.5"}
-A **bar chart** can also be used to visualize qualitative data. It shows the count or proportion of observations in each category as a bar.
-
-These can be used to visualize qualitative data of any size.
-:::
-
-## Ex: CS Data Bar Chart
-
-::: {.callout title="Example 4.13"}
-Use a bar chart to create a visualization for ethnicity in the CS dataset.
-:::
-
-```{r, echo = TRUE}
-#| out-width: "70%"
-#| fig-align: center
-
-ethnic_table <- table(Ethnicity)
-ethnic_data <- data.frame(Ethnicity = names(ethnic_table), Count = as.numeric(ethnic_table))
-ethnic_data$Ethnicity <- ordered(ethnic_data$Ethnicity, levels = c("White", "Asian", "Hispanic/Latino", "Other", "African American/Black", "American Indian/Alaska Native"))
-
-ggplot(ethnic_data, aes(x = Ethnicity, y = Count)) +
-  geom_bar(stat = "identity") +
-  labs(title = "Bar Chart of Ethnicity", x = "Ethnicity", y = "Count") +
-  theme_minimal() +
-  scale_x_discrete(labels = c("AA/Black", "AI/AN", "Asian", "Hisp/Lat", "Other", "White"))
-```
-
-## Ex: Failure Data Bar Chart
-
-::: {.callout title="Example 4.13"}
-Use a bar chart to create a visualization of material in the failure time dataset.
-:::
-
-```{r, echo = TRUE}
-#| out-width: "70%"
-#| fig-align: center
-
-# YOUR CODE HERE
-```
-
-## Histograms
-
-::: {.callout title="Definition 4.6"}
-**Histograms** are useful for quantitative data when you wish to view the overall shape of the data for a large number of observations and you do not wish to identify specific parts of the distribution or outliers.
-:::
-
-## Ex: CS Data Histogram
-
-::: {.callout title="Example 4.14"}
-Create a histogram to visualize income in the CS dataset.
-:::
-
-. . .
-
-```{r, echo = TRUE}
-#| out-width: "70%"
-#| fig-align: center
-
-ggplot(cs_dataset, aes(x = Income)) +
-  geom_histogram(binwidth = 10000, fill = "steelblue", color = "white") +
-  labs(title = "Histogram of Income", x = "Income", y = "Frequency") +
+#| echo: true
+#| fig-width: 8
+#| fig-height: 4.5
+#| out-width: "80%"
+ggplot(videos, aes(x = views_first_7_days)) +
+  geom_histogram(bins = 20, fill = "steelblue", color = "white") +
+  scale_x_continuous(labels = scales::comma) +
+  labs(x = "First-week views", y = "Frequency") +
   theme_minimal()
 ```
 
-## Ex: Failure Data Histogram
+## Example: Frequency Table and Histogram for Watch Time
 
-::: {.callout title="Example 4.15"}
-Create a histogram to visualize shaft diameter in the failure time dataset.
-:::
-
-. . .
-
-```{r, echo = TRUE}
-#| out-width: "70%"
-#| fig-align: center
-
-# YOUR CODE HERE
+```{r}
+#| echo: true
+videos |>
+  mutate(watch_bin = cut(average_watch_time_seconds, breaks = 10)) |>
+  count(watch_bin)
 ```
 
-## Box Plots
+```{r}
+#| echo: true
+#| fig-width: 8
+#| fig-height: 4.5
+#| out-width: "80%"
+ggplot(videos, aes(x = average_watch_time_seconds)) +
+  geom_histogram(bins = 20, fill = "steelblue", color = "white") +
+  labs(x = "Average watch time (seconds)", y = "Frequency") +
+  theme_minimal()
+```
 
-::: {.callout title="Definition 4.7"}
-Finally, **box plots** are another way to visualize quantitative data that specifically shows different parts of the five-number summary (as well as outliers)
+## Practice: Audience Size Distribution
+
+Create a frequency table and histogram for `creator_audience_size`.
+
+::: {.fragment}
+::: {.callout title="Solution"}
+```{r}
+#| fig-width: 8
+#| fig-height: 4.5
+#| out-width: "80%"
+videos |>
+  mutate(audience_bin = cut(creator_audience_size, breaks = 10)) |>
+  count(audience_bin)
+
+ggplot(videos, aes(x = creator_audience_size)) +
+  geom_histogram(bins = 25, fill = "steelblue", color = "white") +
+  scale_x_continuous(labels = scales::comma) +
+  labs(x = "Creator audience size", y = "Frequency") +
+  theme_minimal()
+```
+
+The distribution is strongly right-skewed, with most creators having relatively small audiences and a few having very large audiences.
+:::
 :::
 
-## Ex: CS Data Box Plot
+## Definitions: Skew
 
-::: {.callout title="Example 4.16"}
-Create a box plot for income using the CS dataset.
+::: {.callout title="Definition"}
+**Skew** describes the asymmetry of a distribution.
+
+- A **right-skewed** distribution has a long tail on the right.
+- A **left-skewed** distribution has a long tail on the left.
+- A **symmetric** distribution has no strong tail in either direction.
 :::
 
-. . .
+## Example: A Strongly Right-Skewed Distribution
 
-```{r, echo = TRUE}
-#| out-width: "75%"
-#| fig-align: center
+Comments are strongly right-skewed: most videos receive relatively few comments, while a few receive many.
 
-ggplot(cs_dataset, aes(x = Income)) +
+```{r}
+#| echo: true
+#| fig-width: 8
+#| fig-height: 4.5
+#| out-width: "80%"
+ggplot(videos, aes(x = comments_first_7_days)) +
+  geom_histogram(bins = 30, fill = "steelblue", color = "white") +
+  labs(x = "First-week comments", y = "Frequency") +
+  theme_minimal()
+```
+
+```{r}
+#| echo: true
+videos |>
+  summarise(
+    mean_comments = mean(comments_first_7_days),
+    median_comments = median(comments_first_7_days)
+  )
+```
+
+The mean is much larger than the median because the long right tail pulls the mean upward.
+
+## Example: A Nearly Symmetric Distribution
+
+First-week views are much closer to symmetric, although there is still a mild right tail.
+
+```{r}
+#| echo: true
+#| fig-width: 8
+#| fig-height: 4.5
+#| out-width: "80%"
+ggplot(videos, aes(x = views_first_7_days)) +
+  geom_histogram(bins = 25, fill = "steelblue", color = "white") +
+  scale_x_continuous(labels = scales::comma) +
+  labs(x = "First-week views", y = "Frequency") +
+  theme_minimal()
+```
+
+```{r}
+#| echo: true
+videos |>
+  summarise(
+    mean_views = mean(views_first_7_days),
+    median_views = median(views_first_7_days)
+  )
+```
+
+The mean and median are close because the distribution is much more balanced.
+
+## Practice: Describing Skew
+
+Create a histogram for `shares_first_7_days`, then compute the mean and median. Describe the skew and explain how the mean and median compare.
+
+::: {.fragment}
+::: {.callout title="Solution"}
+```{r}
+#| fig-width: 8
+#| fig-height: 4.5
+#| out-width: "80%"
+ggplot(videos, aes(x = shares_first_7_days)) +
+  geom_histogram(bins = 30, fill = "steelblue", color = "white") +
+  labs(x = "First-week shares", y = "Frequency") +
+  theme_minimal()
+
+videos |>
+  summarise(
+    mean_shares = mean(shares_first_7_days),
+    median_shares = median(shares_first_7_days)
+  )
+```
+
+The distribution is strongly right-skewed. The mean is much larger than the median because a few videos have very large share counts.
+:::
+:::
+
+## Definitions: Modality
+
+::: {.callout title="Definition"}
+**Modality** is the number of peaks in a distribution.
+
+- **Unimodal:** one peak.
+- **Bimodal:** two peaks.
+- **Multimodal:** more than two peaks.
+
+When data are multimodal, a single measure of center or spread may hide important group structure.
+:::
+
+## Example: A Multimodal Distribution
+
+Title length has several peaks. Many titles are short and punchy, while others are longer and more descriptive, so there is no single typical title length.
+
+```{r}
+#| echo: true
+#| fig-width: 8
+#| fig-height: 4.5
+#| out-width: "80%"
+ggplot(videos, aes(x = title_length_words)) +
+  geom_histogram(bins = 25, fill = "steelblue", color = "white") +
+  labs(x = "Title length (words)", y = "Frequency") +
+  theme_minimal()
+```
+
+## Example: A Unimodal Distribution
+
+First-week views have one main peak, so the distribution is unimodal.
+
+```{r}
+#| echo: true
+#| fig-width: 8
+#| fig-height: 4.5
+#| out-width: "80%"
+ggplot(videos, aes(x = views_first_7_days)) +
+  geom_histogram(bins = 25, fill = "steelblue", color = "white") +
+  scale_x_continuous(labels = scales::comma) +
+  labs(x = "First-week views", y = "Frequency") +
+  theme_minimal()
+```
+
+## Practice: Describing Modality
+
+Create a histogram for `average_watch_time_seconds`. Is the distribution unimodal, bimodal, or multimodal?
+
+::: {.fragment}
+::: {.callout title="Solution"}
+```{r}
+#| fig-width: 8
+#| fig-height: 4.5
+#| out-width: "80%"
+ggplot(videos, aes(x = average_watch_time_seconds)) +
+  geom_histogram(bins = 25, fill = "steelblue", color = "white") +
+  labs(x = "Average watch time (seconds)", y = "Frequency") +
+  theme_minimal()
+```
+
+The distribution is unimodal, with a long right tail.
+:::
+:::
+
+## Definitions: Bar Charts
+
+::: {.callout title="Definition"}
+A **bar chart** displays a categorical variable by using bars whose lengths represent the proportion of observations in each category.
+:::
+
+## Example: Platform Proportions
+
+```{r}
+#| echo: true
+#| fig-width: 8
+#| fig-height: 4.5
+#| out-width: "80%"
+videos |>
+  count(platform) |>
+  mutate(proportion = n / sum(n)) |>
+  ggplot(aes(x = platform, y = proportion)) +
+  geom_col(fill = "steelblue") +
+  scale_y_continuous(labels = scales::percent) +
+  labs(x = "Platform", y = "Proportion") +
+  theme_minimal()
+```
+
+## Example: Video Format Proportions
+
+```{r}
+#| echo: true
+#| fig-width: 8
+#| fig-height: 4.5
+#| out-width: "80%"
+videos |>
+  count(video_format) |>
+  mutate(proportion = n / sum(n)) |>
+  ggplot(aes(x = fct_reorder(video_format, proportion), y = proportion)) +
+  geom_col(fill = "steelblue") +
+  coord_flip() +
+  scale_y_continuous(labels = scales::percent) +
+  labs(x = NULL, y = "Proportion") +
+  theme_minimal()
+```
+
+## Practice: Bar Chart
+
+Create a bar chart showing the proportion of videos in each `topic`.
+
+::: {.fragment}
+::: {.callout title="Solution"}
+```{r}
+#| fig-width: 8
+#| fig-height: 4.5
+#| out-width: "80%"
+videos |>
+  count(topic) |>
+  mutate(proportion = n / sum(n)) |>
+  ggplot(aes(x = fct_reorder(topic, proportion), y = proportion)) +
+  geom_col(fill = "steelblue") +
+  coord_flip() +
+  scale_y_continuous(labels = scales::percent) +
+  labs(x = NULL, y = "Proportion") +
+  theme_minimal()
+```
+:::
+:::
+
+## Definitions: Histograms
+
+::: {.callout title="Definition"}
+A **histogram** displays the distribution of a quantitative variable by grouping values into bins and showing the frequency or proportion of observations in each bin.
+:::
+
+## Example: Histogram of Views
+
+```{r}
+#| echo: true
+#| fig-width: 8
+#| fig-height: 4.5
+#| out-width: "80%"
+ggplot(videos, aes(x = views_first_7_days)) +
+  geom_histogram(bins = 25, fill = "steelblue", color = "white") +
+  scale_x_continuous(labels = scales::comma) +
+  labs(x = "First-week views", y = "Frequency") +
+  theme_minimal()
+```
+
+## Example: Histogram of Audience Size
+
+```{r}
+#| echo: true
+#| fig-width: 8
+#| fig-height: 4.5
+#| out-width: "80%"
+ggplot(videos, aes(x = creator_audience_size)) +
+  geom_histogram(bins = 25, fill = "steelblue", color = "white") +
+  scale_x_continuous(labels = scales::comma) +
+  labs(x = "Creator audience size", y = "Frequency") +
+  theme_minimal()
+```
+
+## Practice: Histogram
+
+Create a histogram for `comments_first_7_days`.
+
+::: {.fragment}
+::: {.callout title="Solution"}
+```{r}
+#| fig-width: 8
+#| fig-height: 4.5
+#| out-width: "80%"
+ggplot(videos, aes(x = comments_first_7_days)) +
+  geom_histogram(bins = 30, fill = "steelblue", color = "white") +
+  labs(x = "First-week comments", y = "Frequency") +
+  theme_minimal()
+```
+
+The histogram shows a strong right skew with a long tail of videos that received many comments.
+:::
+:::
+
+## Definitions: Box Plots
+
+::: {.callout title="Definition"}
+A **box plot** displays the five-number summary of a quantitative variable: the minimum, first quartile, median, third quartile, and maximum. It also marks observations that are flagged as outliers.
+:::
+
+## Example: Box Plot of Views
+
+```{r}
+#| echo: true
+#| fig-width: 8
+#| fig-height: 4.5
+#| out-width: "80%"
+ggplot(videos, aes(y = views_first_7_days, x = "")) +
   geom_boxplot(fill = "lightblue", color = "black") +
-  labs(title = "Box Plot of Income", x = "Income") +
+  scale_y_continuous(labels = scales::comma) +
+  labs(x = NULL, y = "First-week views") +
   theme_minimal()
 ```
 
-## Ex: Failure Data Box Plot
+## Example: Box Plot of Watch Time
 
-::: {.callout title="Example 4.17"}
-Create a box plot for failure time in the failure time dataset.
-:::
-
-. . .
-
-```{r, echo = TRUE}
-#| out-width: "75%"
-#| fig-align: center
-
-# YOUR CODE HERE
+```{r}
+#| echo: true
+#| fig-width: 8
+#| fig-height: 4.5
+#| out-width: "80%"
+ggplot(videos, aes(y = average_watch_time_seconds, x = "")) +
+  geom_boxplot(fill = "lightblue", color = "black") +
+  labs(x = NULL, y = "Average watch time (seconds)") +
+  theme_minimal()
 ```
 
-## Ex: Large Data Visual
+## Practice: Box Plot
 
-::: {.callout title="Example 4.18"}
-Use the following description to identify the visualization:
+Create a box plot for `creator_audience_size`.
 
-This visualization is used to visualize the distribution of quantitative data when seeing individual outliers as points isn't needed.
+::: {.fragment}
+::: {.callout title="Solution"}
+```{r}
+#| fig-width: 8
+#| fig-height: 4.5
+#| out-width: "80%"
+ggplot(videos, aes(y = creator_audience_size, x = "")) +
+  geom_boxplot(fill = "lightblue", color = "black") +
+  scale_y_continuous(labels = scales::comma) +
+  labs(x = NULL, y = "Creator audience size") +
+  theme_minimal()
+```
+
+The box plot shows many high outliers, which is consistent with the strong right skew of audience size.
+:::
 :::
 
-. . .
+## Bivariate Relationships
 
-This best describes a ***histogram***. Histograms are especially useful for visualizing data distributions for large datasets without seeing individual data points or outliers.
+A **bivariate relationship** describes how two variables vary together.
 
-## Ex: Categorical Visual
+- When both variables are quantitative, a **scatterplot** displays the relationship.
+- When one variable is categorical and the other is quantitative, **side-by-side box plots** compare the quantitative distribution across categories.
 
-::: {.callout title="Example 4.19"}
-Use the following description to identify the visualization:
+## Definitions: Scatterplots
 
-This visualization uses bars to represent categorical data, where the length of each bar corresponds to the count or percentage of observations in each category.
+::: {.callout title="Definition"}
+A **scatterplot** displays one quantitative variable on the horizontal axis and another quantitative variable on the vertical axis. Each point represents one observation, making it possible to see the direction, strength, and shape of a relationship.
 :::
 
-. . .
+## Example: Video Length and Watch Time
 
-This best describes a ***bar chart***. Bar charts are used for categorical data where each category has its own bar showing the count or proportion of observations in that category.
+Longer videos tend to have longer average watch times.
 
-## Ex: Seeing Outliers
+```{r}
+#| echo: true
+#| fig-width: 8
+#| fig-height: 4.5
+#| out-width: "80%"
+ggplot(videos, aes(x = video_length_seconds, y = average_watch_time_seconds)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Video length (seconds)", y = "Average watch time (seconds)") +
+  theme_minimal()
+```
 
-::: {.callout title="Example 4.20"}
-Use the following description to identify the visualization:
+The points show a strong positive linear relationship.
 
-This visualization works well with small and large datasets, and is designed specifically to visualize the five-number summary including outliers.
+## Example: Video Length and Percentage Viewed
+
+A longer video does not necessarily keep a larger percentage of its viewers.
+
+```{r}
+#| echo: true
+#| fig-width: 8
+#| fig-height: 4.5
+#| out-width: "80%"
+ggplot(videos, aes(x = video_length_seconds, y = average_percentage_viewed)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Video length (seconds)", y = "Average percentage viewed") +
+  theme_minimal()
+```
+
+The relationship is much weaker, so the points do not follow a clear upward or downward pattern.
+
+## Practice: Scatterplot
+
+Create a scatterplot of `views_first_7_days` versus `likes_first_7_days` and compute their correlation.
+
+::: {.fragment}
+::: {.callout title="Solution"}
+```{r}
+#| fig-width: 8
+#| fig-height: 4.5
+#| out-width: "80%"
+ggplot(videos, aes(x = views_first_7_days, y = likes_first_7_days)) +
+  geom_point(alpha = 0.5) +
+  scale_x_continuous(labels = scales::comma) +
+  scale_y_continuous(labels = scales::comma) +
+  labs(x = "First-week views", y = "First-week likes") +
+  theme_minimal()
+
+videos |>
+  summarise(r = cor(views_first_7_days, likes_first_7_days))
+```
+
+The scatterplot shows a strong positive relationship, and the correlation is about 0.65.
+:::
 :::
 
-. . .
+## Definitions: Side-by-Side Box Plots
 
-This best describes a ***YOUR ANSWER***. Why?
-
-## Ex: Departments
-
-::: {.callout title="Example 4.21"}
-A company has surveyed its employees about their department, and the results are as follows: Sales (45), Marketing (30), HR (15), and IT (25). The data is categorical, and you want to compare the frequency of each department.
-
-Which visualization would best display this data?
+::: {.callout title="Definition"}
+**Side-by-side box plots** compare the distribution of a quantitative variable across the categories of a categorical variable. Each category gets its own box plot, making it easy to compare centers, spreads, and outliers.
 :::
 
-. . .
+## Example: Watch Time by Platform
 
-Using a ***YOUR ANSWER*** would work best for these data. Why?
+```{r}
+#| echo: true
+#| fig-width: 8
+#| fig-height: 4.5
+#| out-width: "80%"
+ggplot(videos, aes(x = platform, y = average_watch_time_seconds)) +
+  geom_boxplot(fill = "lightblue", color = "black") +
+  labs(x = "Platform", y = "Average watch time (seconds)") +
+  theme_minimal()
+```
 
-## Ex: Energy Consumption
+## Example: Views by Video Format
 
-::: {.callout title="Example 4.22"}
-You have a large dataset containing monthly household energy consumption (in kWh) for 10,000 households. You would like to visualize the overall shape of the distribution and are not concerned with seeing specific observations, values, or identifying outliers.
+```{r}
+#| echo: true
+#| fig-width: 8
+#| fig-height: 4.5
+#| out-width: "80%"
+ggplot(videos, aes(x = video_format, y = views_first_7_days)) +
+  geom_boxplot(fill = "lightblue", color = "black") +
+  scale_y_continuous(labels = scales::comma) +
+  labs(x = "Video format", y = "First-week views") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 25, hjust = 1))
+```
 
-Which visualization would best display this data?
+## Practice: Side-by-Side Box Plots
+
+Create side-by-side box plots of `creator_audience_size` by `production_effort`.
+
+::: {.fragment}
+::: {.callout title="Solution"}
+```{r}
+#| fig-width: 8
+#| fig-height: 4.5
+#| out-width: "80%"
+ggplot(videos, aes(x = production_effort, y = creator_audience_size)) +
+  geom_boxplot(fill = "lightblue", color = "black") +
+  scale_y_continuous(labels = scales::comma) +
+  labs(x = "Production effort", y = "Creator audience size") +
+  theme_minimal()
+```
+
+The groups have similar medians, but all groups contain high outliers and the distributions are right-skewed.
+:::
 :::
 
-. . .
+## Practice: Choosing a Visualization
 
-Using a ***YOUR ANSWER*** would work best for these data. Why?
+Match each question to the most appropriate visualization:
+
+1. How are videos distributed across platforms?
+2. What is the distribution of first-week views?
+3. Do first-week views differ by platform?
+4. Is there a relationship between video length and average watch time?
+5. Do comment counts differ by video format?
+
+::: {.fragment}
+::: {.callout title="Solution"}
+1. Bar chart of platform proportions.
+2. Histogram of first-week views.
+3. Side-by-side box plots of views by platform.
+4. Scatterplot of watch time versus video length.
+5. Side-by-side box plots of comments by video format.
+:::
+:::

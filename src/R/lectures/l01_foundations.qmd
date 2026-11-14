@@ -6,156 +6,90 @@ format:
     scrollable: true
 ---
 
-## What is Statistics?
+## The Content Creation Dataset
 
-::: {.callout title="Definition 1.1"}
-The field of **statistics** is concerned with the scientific study of collecting, organizing, analyzing, and drawing conclusions from data.
+Throughout these lectures we will use a sample of **346 short-form videos** posted on YouTube, TikTok, and Instagram Reels. For each video, the dataset records:
+
+- **Categorical variables:** platform, topic, video format, thumbnail style, production effort, posting day, posting time, and whether paid promotion was used.
+- **Quantitative variables:** creator audience size, creator tenure, posting frequency, video length, title length, impressions, views, watch time, percentage viewed, likes, comments, shares, and subscribers gained.
+
+There are no missing values. The dataset is a sample, so we will use it to learn about the larger population of short-form videos.
+
+## Definitions: Populations and Samples
+
+::: {.callout title="Definitions"}
+**Statistics** is the field concerned with collecting, organizing, analyzing, and drawing conclusions from data.
+
+A **population** is the complete collection of all objects or measurements of interest.
+
+A **sample** is a subset of data selected from a population.
+
+A **parameter** is a numerical summary of a population. Parameters are often denoted by Greek letters, such as $\mu$ for a population mean and $p$ for a population proportion.
+
+A **statistic** is a numerical summary computed from a sample. Statistics are often denoted by Latin letters, such as $\bar{x}$ for a sample mean and $\hat{p}$ for a sample proportion.
 :::
 
-## Population
+## Example: Average Views
 
-::: {.callout title="Definition 1.2"}
-A **population** is the collection or set of all objects or measurements that are of interest to the collector.
+Suppose we want to study the average number of first-week views for all short-form videos posted on YouTube, TikTok, and Instagram Reels. We collect data on 346 videos and compute the average number of first-week views for those 346 videos.
+
+- The **population** is all short-form videos posted on these three platforms.
+- The **sample** is the 346 videos in our dataset.
+- The **parameter** is the average first-week views for all videos in the population, denoted $\mu$.
+- The **statistic** is the average first-week views for the 346 sampled videos, denoted $\bar{x}$.
+
+## Example: Paid Promotion
+
+Suppose we want to know what proportion of all short-form videos use paid promotion. In our sample, 35 of the 346 videos used paid promotion, so the sample proportion is $35/346 \approx 0.101$.
+
+- The **population** is all short-form videos posted on these three platforms.
+- The **sample** is the 346 videos in our dataset.
+- The **parameter** is the proportion of all videos in the population that use paid promotion, denoted $p$.
+- The **statistic** is the proportion of sampled videos that use paid promotion, denoted $\hat{p} \approx 0.101$.
+
+## Practice: Average Watch Time
+
+A marketing team wants to study the average first-week watch time for all short-form videos on these platforms. They collect the 346 videos in our dataset and compute the average watch time of those videos.
+
+Identify the population, sample, population parameter, and sample statistic, including the appropriate symbols.
+
+::: {.fragment}
+::: {.callout title="Solution"}
+- **Population:** all short-form videos posted on YouTube, TikTok, and Instagram Reels.
+- **Sample:** the 346 videos in the dataset.
+- **Parameter:** the average first-week watch time for all videos in the population, denoted $\mu$.
+- **Statistic:** the average first-week watch time for the 346 sampled videos, denoted $\bar{x}$.
+:::
 :::
 
-. . .
+## Definitions: Descriptive Statistics and Inference
 
-## Parameter
+::: {.callout title="Definitions"}
+**Descriptive statistics** organize, describe, summarize, and display data.
 
-::: {.callout title="Definition 1.3"}
-A **parameter** is any quantity of a statistical population that summarizes or describes an aspect of the population. These are often denoted as Greek letters or Latin letters without diacritics (e.g., $\hat{}$, $\tilde{}$, $\bar{}$, etc.)
+**Statistical inference** is an estimate, prediction, decision, or generalization about a population based on information from a sample.
 :::
 
-. . .
+## Example: Describing the Sample
 
-Some examples of population parameters are:
+An analyst reports that the average first-week watch time in the sample of 346 videos is about **21.1 seconds** and that the median is **18 seconds**.
 
--   The population mean $\mu$
--   The population proportion $p$
--   The population variance $\sigma^2$
--   The population standard deviation $\sigma$
+This is an example of **descriptive statistics**. The analyst is summarizing the sample and is not making a claim about all short-form videos.
 
-## Sample
+## Example: Generalizing Beyond the Sample
 
-::: {.callout title="Definition 1.4"}
-The **sample** is a subset of data selected from a population. The size of a sample is the number of elements in it.
+An analyst finds that **10.1%** of the sampled videos used paid promotion and concludes that roughly **10% of all short-form videos on these platforms** use paid promotion.
+
+This is an example of **statistical inference**. The analyst uses a sample statistic to make a generalization about the population.
+
+## Practice: Descriptive or Inferential?
+
+A researcher finds that 95% of the sampled videos have an average percentage viewed between 5% and 20%, then concludes that the average percentage viewed for all short-form videos on these platforms is likely between 5% and 20%.
+
+Is this descriptive statistics or statistical inference?
+
+::: {.fragment}
+::: {.callout title="Solution"}
+This is **statistical inference**. The researcher uses a summary of the sample to make a claim about the entire population of short-form videos.
 :::
-
-## Statistic
-
-::: {.callout title="Definition 1.5"}
-A **statistic** is any quantity computed from values in a sample which is considered for a statistical purpose. These are often denoted as Latin letters and sometimes include diacritics.
 :::
-
-. . .
-
-Some examples of sample statistics are:
-
--   The sample mean $\bar{x}$
--   The sample proportion $\hat{p}$
--   The sample variance $s^2$
--   The sample standard deviation $s$
-
-## Ex: Adult Heights
-
-::: {.callout title="Example 1.1"}
-A researcher wants to study the average height of all adult males in a city. She measures the height of 200 randomly selected adult males and computes the mean of these 200 heights.
-:::
-
-. . .
-
-The population is ***all adult males in the city***. The sample is the ***200 randomly selected adult males***. The population parameter is the ***average height of all adult males in the city,*** $\mu$. The sample statistic is the ***average height of the 200 random selected males,*** $\bar{x}$.
-
-## Ex: Groceries
-
-::: {.callout title="Example 1.2"}
-A survey is conducted to find out the proportion of families in a specific town that spend more than \$1000 a month on groceries. Data is collected from 150 randomly selected families and it is found that 60% of these families spend more than \$1000 a month on groceries.
-:::
-
-. . .
-
-The population is ***all families in the specific town***. The sample is the ***150 randomly selected families in the town***. The parameter is the ***proportion of all families in the town that spend more than \$1000 a month on groceries,*** $p$. The statistic is the ***proportion of the 150 families that spend more than \$1000 a month on groceries,*** $\hat{p}$.
-
-## Ex: Dog Weights
-
-::: {.callout title="Example 1.3"}
-A researcher wants to study the average weight of a certain breed of dog. She calculates the mean weight from a sample of 200 randomly selected dogs of that breed.
-
-In this example, what are the population and sample and what are the population parameter and sample statistic, along with their appropriate symbols?
-:::
-
-. . .
-
-The population is ***YOUR ANSWER***. The sample is the ***YOUR ANSWER***. The parameter is the ***YOUR ANSWER,*** $\text{symbol here}$. The statistic is the ***YOUR ANSWER,*** $\text{symbol here}$.
-
-## Ex: Diabetes Prevalence
-
-::: {.callout title="Example 1.4"}
-A health organization studies the prevalence of diabetes among adults aged 40-60 in a city. They calculate the proportion of diabetes cases from a sample of 300 individuals in this age group.
-
-In this example, what are the population and sample and what are the population parameter and sample statistic, along with their appropriate symbols?
-:::
-
-. . .
-
-The population is ***YOUR ANSWER***. The sample is the ***YOUR ANSWER***. The parameter is the ***YOUR ANSWER,*** $\text{symbol here}$. The statistic is the ***YOUR ANSWER,*** $\text{symbol here}$.
-
-## Descriptive Statistics
-
-::: {.callout title="Definition 1.6"}
-**Descriptive statistics** are statistics that assist us in organizing, describing, summarizing, and displaying experimental or observational data.
-:::
-
-## Statistical Inference
-
-::: {.callout title="Definition 1.7"}
-A **statistical inference** is an estimate, a prediction, a decision, or a generalization about the population based on information contained in a sample.
-:::
-
-## Ex: Athlete Heights
-
-::: {.callout title="Example 1.5"}
-A researcher collects a random sample of 30 athletes from a specific country. They report that the sample mean height ($\bar{x}$) of 30 athletes in a country is 170 cm.
-
-Is this an example of descriptive statistics or statistical inference?
-:::
-
-. . .
-
-This is an example of descriptive statistics.
-
-## Ex: Defective Parts
-
-::: {.callout title="Example 1.6"}
-A worker takes a random sample of 50 parts manufactured at a specific location. They find that the sample proportion ($\hat{p}$) of defective parts 5% and state that they expect that 5% of all parts are likely defective.
-
-Is this an example of descriptive statistics or statistical inference?
-:::
-
-. . .
-
-This is an example of statistical inference.
-
-## Ex: Cell Toxicity
-
-::: {.callout title="Example 1.7"}
-A research scientist collects a random sample of 100 cells from a particular tissue sample and measures the toxicity level for each cell. They find that 95% of toxicity levels are between 30 and 50 ppm and conclude that toxicity levels for all cells likely fall within this range.
-
-Is this an example of descriptive statistics or statistical inference?
-:::
-
-. . .
-
-This is an example of ***YOUR ANSWER***.
-
-## Ex: Bridge Strength
-
-::: {.callout title="Example 1.8"}
-An engineer is testing the strength of a material used in bridge construction. They produce 50 batches of this material and test how much weight each batch of material can hold before breaking. They report that the average weight held by the material before breaking is 200 pounds.
-
-Is this an example of descriptive statistics or statistical inference?
-:::
-
-. . .
-
-This is an example of ***YOUR ANSWER***.

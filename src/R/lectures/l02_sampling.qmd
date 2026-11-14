@@ -6,150 +6,68 @@ format:
     scrollable: true
 ---
 
-## Simple Random Sample
+## Definitions: Simple Random and Systematic Sampling
 
-::: {.callout title="Definition 2.1"}
-A sample selected in such a way that every element of the population has an equal chance of being chosen is called a **simple random sample**.
+::: {.callout title="Definitions"}
+A **simple random sample** is a sample selected in such a way that every element of the population has an equal chance of being chosen.
+
+A **systematic sample** is a sample in which every $K^{th}$ element in the sampling frame (the list of population elements) is selected after a suitable random start for the first element.
 :::
 
-. . .
+## Example: Simple Random Sample
 
-::: {.callout title="Example 2.1"}
-A teacher wants to survey 10 students out of a class of 50 about their study habits. She writes each student's name on a piece of paper, puts the slips in a hat, and randomly draws 10 names.
+An analyst has a database containing 10,000 short-form videos. They assign each video a unique number from 1 to 10,000 and use a random number generator to select 346 of those numbers. Every video in the database has the same chance of being selected.
+
+This is a **simple random sample**.
+
+## Example: Systematic Sample
+
+A platform provides an analyst with a list of videos in chronological order. The analyst randomly chooses one of the first 29 videos as a starting point, then selects every 29th video after that until 346 videos have been selected.
+
+This is a **systematic sample**. The random start helps avoid a predictable pattern in the selection.
+
+## Practice: Every Tenth Video
+
+A research assistant watches a live feed of newly posted videos. They randomly choose one of the first 10 videos, then select every 10th video after that for review.
+
+What type of sampling method is this?
+
+::: {.fragment}
+::: {.callout title="Solution"}
+This is a **systematic sample**. After a random start, the assistant selects every $K^{th}$ video, where $K = 10$.
+:::
 :::
 
-## Systematic Sample
+## Definitions: Stratified, Cluster, and Multistage Sampling
 
-::: {.callout title="Definition 2.2"}
-A **systematic sample** is a sample in which every $K^{th}$ element in the sampling frame is selected after a suitable random start for the first element.
+::: {.callout title="Definitions"}
+A **stratified sample** is obtained by dividing the population into nonoverlapping groups called strata, then randomly selecting a proportional number of elements from each stratum.
+
+In **cluster sampling**, the sampling unit is a group of elements called a cluster. Clusters are usually natural groups, and entire selected clusters are included in the sample.
+
+**Multistage sampling** collects information from the whole sample and then collects additional data, either at the same time or later, from subsamples.
 :::
 
-. . .
+## Example: Stratified Sample
 
-::: {.callout title="Example 2.2"}
-A company wants to inspect the quality of items in a production line. They decide to inspect every 10th item after the first item is chosen randomly. If the first randomly selected item is the 4th, they inspect items 4, 14, 24, and so on.
+An analyst wants to ensure that each platform is represented in the sample. They divide all videos into three strata: YouTube, TikTok, and Instagram Reels. Then they randomly select videos from each stratum in proportion to its size in the population, roughly 41% YouTube, 36% TikTok, and 23% Instagram Reels.
+
+This is a **stratified sample**.
+
+## Example: Cluster Sample
+
+An analyst randomly selects 20 creators from a large list of creators and then includes **every video** posted by those 20 creators in the sample.
+
+This is a **cluster sample**. The creators are the clusters, and all videos within each selected cluster are included.
+
+## Practice: Platforms, Creators, and Videos
+
+A national study selects 2 platforms at random. Within each selected platform, the researchers randomly choose 15 creators. Finally, they randomly select 5 videos from each selected creator.
+
+What type of sampling method is this?
+
+::: {.fragment}
+::: {.callout title="Solution"}
+This is **multistage sampling**. The researchers sample in stages: platforms, then creators within platforms, then videos within creators.
 :::
-
-## Stratified Sample
-
-::: {.callout title="Definition 2.3"}
-A sample is obtained by dividing the population into nonoverlapping groups, called strata, based on some factors. A proportional number of elements are then randomly selected from each stratum. This is called a **stratified sample**.
 :::
-
-. . .
-
-::: {.callout title="Example 2.3"}
-A company wants to survey employee satisfaction. To ensure representation across job roles, the employees are divided into strata based on roles: managers, technical staff, administrative staff, and customer service representatives. The survey then selects 10 employees randomly from each of these predefined groups.
-:::
-
-## Cluster Sample
-
-::: {.callout title="Definition 2.4"}
-In **cluster sampling**, the sampling unit contains groups of elements called clusters instead of individual elements of the population. A cluster is an intact group naturally available in the field.
-:::
-
-. . .
-
-::: {.callout title="Example 2.4"}
-A city wants to survey households about public transportation. There are 15 neighborhoods (clusters) in the city. Five neighborhoods are randomly selected, and all households within those neighborhoods are surveyed.
-:::
-
-## Multistage Sample
-
-::: {.callout title="Definition 2.5"}
-**Multistage sampling** involves collecting information from the whole sample, followed by additional data collection either at the same time or later from subsamples.
-:::
-
-. . .
-
-::: {.callout title="Example 2.5"}
-A national survey aims to assess high school students' opinions on standardized testing. First, researchers randomly select 10 states from across the country. Within each selected state, they randomly choose 5 school districts. Next, they randomly select 3 high schools within each of those districts. Finally, within each selected high school, 30 students are randomly surveyed.
-:::
-
-## Ex: Equal Chance Selection
-
-::: {.callout title="Example 2.6"}
-In which type of sampling method does every individual of the population have an equal chance of being selected?
-:::
-
-. . .
-
-This refers to ***simple random sampling***. Every individual in a simple random sample has an equal chance of being selected.
-
-## Ex: Selection from Hierarchies
-
-::: {.callout title="Example 2.6"}
-Which type of sampling method is often used to sample from populations that have natural hierarchies?
-:::
-
-. . .
-
-Sampling from populations with natural hierarchies often involves ***multistage sampling***. At each step of the process, you sample from one level of the hierarchy.
-
-## Ex: Group Selection
-
-::: {.callout title="Example 2.7"}
-Which type of sampling method randomly selects entire groups of individuals to be part of the sample rather than selecting the individuals directly?
-:::
-
-. . .
-
-This refers to ***cluster sampling***. In cluster sampling, entire groups, or clusters, are randomly selected and every individual in the group/cluster is included in the sample.
-
-## Ex: Subgroup Selection
-
-::: {.callout title="Example 2.8"}
-Which type of sampling method divides the population into distinct subgroups and randomly selects a fixed number of individuals from each subgroup?
-:::
-
-. . .
-
-This refers to ***stratified sampling***. Researchers create or define subgroups of the population. They then select a certain number of individuals within each subgroup.
-
-## Ex: City Survey
-
-::: {.callout title="Example 2.9"}
-A researcher randomly selects 10 neighborhoods in a city and then surveys every household in those neighborhoods.
-
-What type of sampling is this?
-:::
-
-. . .
-
-This is an example of ***YOUR ANSWER***. Why?
-
-## Ex: Polling Agency
-
-::: {.callout title="Example 2.10"}
-A polling agency divides the population into males and females, then randomly selects a fixed number of individuals from each group to survey.
-
-What type of sampling is this?
-:::
-
-. . .
-
-This is an example of ***YOUR ANSWER***. Why?
-
-## Ex: Rose Bushes
-
-::: {.callout title="Example 2.11"}
-A researcher needs to know how many rose flowers are afflicted with a certain disease. They randomly select 10 rose bushes from a flower garden with many rose bushes. They then look through every flower on each bush and record whether or not that flower has the disease.
-
-What type of sampling is this?
-:::
-
-. . .
-
-This is an example of ***YOUR ANSWER***. Why?
-
-## Ex: Food Preferences
-
-::: {.callout title="Example 2.12"}
-You are interested in understanding food choice preferences for customers at a certain restaurant. You stand outside the door and talk to every 5th customer that comes out of the restaurant.
-
-What type of sampling is this?
-:::
-
-. . .
-
-This is an example of ***YOUR ANSWER***. Why?

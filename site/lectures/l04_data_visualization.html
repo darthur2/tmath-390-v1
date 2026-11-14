@@ -205,588 +205,643 @@
 </div>
 
 </section>
-<section id="data-distribution" class="slide level2">
-<h2>Data Distribution</h2>
+<section id="the-content-creation-dataset" class="slide level2">
+<h2>The Content Creation Dataset</h2>
+<p>We will visualize the same 346 short-form videos used in the numeric summaries lecture. The dataset includes categorical variables such as platform and video format, and quantitative variables such as views, watch time, and audience size.</p>
+</section>
+<section id="definitions-distribution-and-frequency-tables" class="slide level2">
+<h2>Definitions: Distribution and Frequency Tables</h2>
 <div class="callout callout-none no-icon callout-titled callout-style-simple">
 <div class="callout-body">
 <div class="callout-title">
-<p><strong>Definition 4.1</strong></p>
+<p><strong>Definitions</strong></p>
 </div>
 <div class="callout-content">
-<p>The <strong>distribution</strong> of a variable refers to which values a variable can take and how often (frequency) it takes on those values.</p>
+<p>The <strong>distribution</strong> of a variable describes which values the variable takes and how often it takes them.</p>
+<p>A <strong>frequency table</strong> shows ranges of values of a variable and how many observations fall within each range.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="frequency-table" class="slide level2">
-<h2>Frequency Table</h2>
-<p>One way to investigate the distribution of the data is using a <strong>frequency table</strong>.</p>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Definition 4.2</strong></p>
-</div>
-<div class="callout-content">
-<p>A <strong>frequency table</strong> shows the ranges of values of a variable and how many observations fall within those ranges.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="ex-cs-data-age-dist" class="slide level2">
-<h2>Ex: CS Data Age Dist</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 4.1</strong></p>
-</div>
-<div class="callout-content">
-<p>Create a frequency table and display the results for age in the CS dataset.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
+<section id="example-frequency-table-and-histogram-for-views" class="slide level2">
+<h2>Example: Frequency Table and Histogram for Views</h2>
+<p>First, bin the view counts and count how many videos fall in each bin:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a>cs_dataset <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/cs_dataset.csv"</span>)</span>
-<span id="cb1-2"><a aria-label="2"></a><span class="fu">attach</span>(cs_dataset)</span>
-<span id="cb1-3"><a aria-label="3"></a></span>
-<span id="cb1-4"><a aria-label="4"></a>age_binned <span class="ot">&lt;-</span> <span class="fu">cut</span>(Age, <span class="dv">8</span>)</span>
-<span id="cb1-5"><a aria-label="5"></a><span class="fu">table</span>(age_binned)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a>videos <span class="sc">|&gt;</span></span>
+<span id="cb1-2"><a aria-label="2"></a>  <span class="fu">mutate</span>(<span class="at">views_bin =</span> <span class="fu">cut</span>(views_first_7_days, <span class="at">breaks =</span> <span class="dv">10</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb1-3"><a aria-label="3"></a>  <span class="fu">count</span>(views_bin)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 2
+   views_bin               n
+   &lt;fct&gt;               &lt;int&gt;
+ 1 (8.96e+03,1.36e+04]     8
+ 2 (1.36e+04,1.82e+04]    27
+ 3 (1.82e+04,2.28e+04]    76
+ 4 (2.28e+04,2.74e+04]    75
+ 5 (2.74e+04,3.2e+04]     76
+ 6 (3.2e+04,3.66e+04]     43
+ 7 (3.66e+04,4.11e+04]    21
+ 8 (4.11e+04,4.57e+04]    13
+ 9 (4.57e+04,5.03e+04]     5
+10 (5.03e+04,5.5e+04]      2</code></pre>
 </div>
 </div>
-</section>
-<section id="ex-cs-data-income-dist" class="slide level2">
-<h2>Ex: CS Data Income Dist</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 4.2</strong></p>
-</div>
-<div class="callout-content">
-<p>Create a frequency table and display the results for income in the CS dataset.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
+<p>Then display the distribution with a histogram:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-label="1"></a>income_binned <span class="ot">&lt;-</span> <span class="fu">cut</span>(Income<span class="sc">/</span><span class="dv">1000</span>, <span class="dv">10</span>) <span class="co"># Income in Thousands</span></span>
-<span id="cb2-2"><a aria-label="2"></a><span class="fu">table</span>(income_binned)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a><span class="fu">ggplot</span>(videos, <span class="fu">aes</span>(<span class="at">x =</span> views_first_7_days)) <span class="sc">+</span></span>
+<span id="cb3-2"><a aria-label="2"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb3-3"><a aria-label="3"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>comma) <span class="sc">+</span></span>
+<span id="cb3-4"><a aria-label="4"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"First-week views"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
+<span id="cb3-5"><a aria-label="5"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
 </div>
-</div>
-</section>
-<section id="ex-failure-data-age-dist" class="slide level2">
-<h2>Ex: Failure Data Age Dist</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 4.3</strong></p>
-</div>
-<div class="callout-content">
-<p>Create a frequency table and display the results for failure time in the failure time dataset.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
+<img data-src="l04_data_visualization_files/figure-revealjs/unnamed-chunk-3-1.png" style="width:80.0%" class="r-stretch"></section>
+<section id="example-frequency-table-and-histogram-for-watch-time" class="slide level2">
+<h2>Example: Frequency Table and Histogram for Watch Time</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a>failure <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/failure_time.csv"</span>)</span>
-<span id="cb3-2"><a aria-label="2"></a><span class="fu">attach</span>(failure)</span>
-<span id="cb3-3"><a aria-label="3"></a></span>
-<span id="cb3-4"><a aria-label="4"></a><span class="co"># YOUR CODE HERE (call variable ft_binned and use 8 bins)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-label="1"></a>videos <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a aria-label="2"></a>  <span class="fu">mutate</span>(<span class="at">watch_bin =</span> <span class="fu">cut</span>(average_watch_time_seconds, <span class="at">breaks =</span> <span class="dv">10</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a aria-label="3"></a>  <span class="fu">count</span>(watch_bin)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9 × 2
+  watch_bin       n
+  &lt;fct&gt;       &lt;int&gt;
+1 (1.69,13]     114
+2 (13,24.3]     128
+3 (24.3,35.5]    60
+4 (35.5,46.7]    24
+5 (46.7,58]      10
+6 (58,69.2]       6
+7 (69.2,80.4]     2
+8 (80.4,91.6]     1
+9 (103,114]       1</code></pre>
 </div>
 </div>
-</section>
-<section id="ex-failure-data-time-dist" class="slide level2">
-<h2>Ex: Failure Data Time Dist</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 4.4</strong></p>
-</div>
-<div class="callout-content">
-<p>Create a frequency table and display the results for engine temperature in the failure time dataset.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE (call variable temp_binned and use 10 bins)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-label="1"></a><span class="fu">ggplot</span>(videos, <span class="fu">aes</span>(<span class="at">x =</span> average_watch_time_seconds)) <span class="sc">+</span></span>
+<span id="cb6-2"><a aria-label="2"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb6-3"><a aria-label="3"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Average watch time (seconds)"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
+<span id="cb6-4"><a aria-label="4"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
 </div>
-</div>
-</section>
-<section id="visual-descriptions" class="slide level2">
-<h2>Visual Descriptions</h2>
-<p>Two key features to describe a distribution visually are its <strong>skew</strong> and <strong>modality</strong>.</p>
-</section>
-<section id="skew" class="slide level2">
-<h2>Skew</h2>
+<img data-src="l04_data_visualization_files/figure-revealjs/unnamed-chunk-5-1.png" style="width:80.0%" class="r-stretch"></section>
+<section id="practice-audience-size-distribution" class="slide level2">
+<h2>Practice: Audience Size Distribution</h2>
+<p>Create a frequency table and histogram for <code>creator_audience_size</code>.</p>
+<div class="fragment">
 <div class="callout callout-none no-icon callout-titled callout-style-simple">
 <div class="callout-body">
 <div class="callout-title">
-<p><strong>Definition 4.3</strong></p>
+<p><strong>Solution</strong></p>
 </div>
 <div class="callout-content">
-<p><strong>Skew</strong> is a measure of the asymmetry of a distribution.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 9 × 2
+  audience_bin            n
+  &lt;fct&gt;               &lt;int&gt;
+1 (-98.5,3.39e+04]      177
+2 (3.39e+04,6.75e+04]    90
+3 (6.75e+04,1.01e+05]    41
+4 (1.01e+05,1.35e+05]    15
+5 (1.35e+05,1.69e+05]     9
+6 (1.69e+05,2.02e+05]     8
+7 (2.02e+05,2.36e+05]     2
+8 (2.36e+05,2.69e+05]     3
+9 (3.03e+05,3.37e+05]     1</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="l04_data_visualization_files/figure-revealjs/unnamed-chunk-6-1.png" style="width:80.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The distribution is strongly right-skewed, with most creators having relatively small audiences and a few having very large audiences.</p>
+</div>
 </div>
 </div>
 </div>
 </section>
-<section id="skew-mean-and-median" class="slide level2">
-<h2>Skew, Mean, and Median</h2>
-<p>The mean is more affected by skew than the median. In general, the mean will be pulled in the direction of the skew.</p>
-<p>You can use the relative position of the mean and median to obtain insights into whether the data are skewed:</p>
+<section id="definitions-skew" class="slide level2">
+<h2>Definitions: Skew</h2>
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Definition</strong></p>
+</div>
+<div class="callout-content">
+<p><strong>Skew</strong> describes the asymmetry of a distribution.</p>
 <ul>
-<li>If the mean is larger than the median, the data are skewed to the right</li>
-<li>If the mean is smaller than the median, the data are skewed to the left</li>
-<li>If the mean and median about the same, the data are more symmetric</li>
+<li>A <strong>right-skewed</strong> distribution has a long tail on the right.</li>
+<li>A <strong>left-skewed</strong> distribution has a long tail on the left.</li>
+<li>A <strong>symmetric</strong> distribution has no strong tail in either direction.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="example-a-strongly-right-skewed-distribution" class="slide level2">
+<h2>Example: A Strongly Right-Skewed Distribution</h2>
+<p>Comments are strongly right-skewed: most videos receive relatively few comments, while a few receive many.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-label="1"></a><span class="fu">ggplot</span>(videos, <span class="fu">aes</span>(<span class="at">x =</span> comments_first_7_days)) <span class="sc">+</span></span>
+<span id="cb8-2"><a aria-label="2"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb8-3"><a aria-label="3"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"First-week comments"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
+<span id="cb8-4"><a aria-label="4"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+</div>
+<img data-src="l04_data_visualization_files/figure-revealjs/unnamed-chunk-7-1.png" style="width:80.0%" class="r-stretch"><div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-label="1"></a>videos <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a aria-label="2"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb9-3"><a aria-label="3"></a>    <span class="at">mean_comments =</span> <span class="fu">mean</span>(comments_first_7_days),</span>
+<span id="cb9-4"><a aria-label="4"></a>    <span class="at">median_comments =</span> <span class="fu">median</span>(comments_first_7_days)</span>
+<span id="cb9-5"><a aria-label="5"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  mean_comments median_comments
+          &lt;dbl&gt;           &lt;dbl&gt;
+1          90.0              27</code></pre>
+</div>
+</div>
+<p>The mean is much larger than the median because the long right tail pulls the mean upward.</p>
+</section>
+<section id="example-a-nearly-symmetric-distribution" class="slide level2">
+<h2>Example: A Nearly Symmetric Distribution</h2>
+<p>First-week views are much closer to symmetric, although there is still a mild right tail.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-label="1"></a><span class="fu">ggplot</span>(videos, <span class="fu">aes</span>(<span class="at">x =</span> views_first_7_days)) <span class="sc">+</span></span>
+<span id="cb11-2"><a aria-label="2"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">25</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb11-3"><a aria-label="3"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>comma) <span class="sc">+</span></span>
+<span id="cb11-4"><a aria-label="4"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"First-week views"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
+<span id="cb11-5"><a aria-label="5"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+</div>
+<img data-src="l04_data_visualization_files/figure-revealjs/unnamed-chunk-9-1.png" style="width:80.0%" class="r-stretch"><div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-label="1"></a>videos <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a aria-label="2"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb12-3"><a aria-label="3"></a>    <span class="at">mean_views =</span> <span class="fu">mean</span>(views_first_7_days),</span>
+<span id="cb12-4"><a aria-label="4"></a>    <span class="at">median_views =</span> <span class="fu">median</span>(views_first_7_days)</span>
+<span id="cb12-5"><a aria-label="5"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  mean_views median_views
+       &lt;dbl&gt;        &lt;dbl&gt;
+1     27335.        26692</code></pre>
+</div>
+</div>
+<p>The mean and median are close because the distribution is much more balanced.</p>
+</section>
+<section id="practice-describing-skew" class="slide level2">
+<h2>Practice: Describing Skew</h2>
+<p>Create a histogram for <code>shares_first_7_days</code>, then compute the mean and median. Describe the skew and explain how the mean and median compare.</p>
+<div class="fragment">
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Solution</strong></p>
+</div>
+<div class="callout-content">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="l04_data_visualization_files/figure-revealjs/unnamed-chunk-11-1.png" style="width:80.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  mean_shares median_shares
+        &lt;dbl&gt;         &lt;dbl&gt;
+1        302.           135</code></pre>
+</div>
+</div>
+<p>The distribution is strongly right-skewed. The mean is much larger than the median because a few videos have very large share counts.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="definitions-modality" class="slide level2">
+<h2>Definitions: Modality</h2>
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Definition</strong></p>
+</div>
+<div class="callout-content">
+<p><strong>Modality</strong> is the number of peaks in a distribution.</p>
+<ul>
+<li><strong>Unimodal:</strong> one peak.</li>
+<li><strong>Bimodal:</strong> two peaks.</li>
+<li><strong>Multimodal:</strong> more than two peaks.</li>
+</ul>
+<p>When data are multimodal, a single measure of center or spread may hide important group structure.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="example-a-multimodal-distribution" class="slide level2">
+<h2>Example: A Multimodal Distribution</h2>
+<p>Title length has several peaks. Many titles are short and punchy, while others are longer and more descriptive, so there is no single typical title length.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a aria-label="1"></a><span class="fu">ggplot</span>(videos, <span class="fu">aes</span>(<span class="at">x =</span> title_length_words)) <span class="sc">+</span></span>
+<span id="cb15-2"><a aria-label="2"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">25</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb15-3"><a aria-label="3"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Title length (words)"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
+<span id="cb15-4"><a aria-label="4"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+</div>
+<img data-src="l04_data_visualization_files/figure-revealjs/unnamed-chunk-12-1.png" style="width:80.0%" class="r-stretch"></section>
+<section id="example-a-unimodal-distribution" class="slide level2">
+<h2>Example: A Unimodal Distribution</h2>
+<p>First-week views have one main peak, so the distribution is unimodal.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a aria-label="1"></a><span class="fu">ggplot</span>(videos, <span class="fu">aes</span>(<span class="at">x =</span> views_first_7_days)) <span class="sc">+</span></span>
+<span id="cb16-2"><a aria-label="2"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">25</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb16-3"><a aria-label="3"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>comma) <span class="sc">+</span></span>
+<span id="cb16-4"><a aria-label="4"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"First-week views"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
+<span id="cb16-5"><a aria-label="5"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+</div>
+<img data-src="l04_data_visualization_files/figure-revealjs/unnamed-chunk-13-1.png" style="width:80.0%" class="r-stretch"></section>
+<section id="practice-describing-modality" class="slide level2">
+<h2>Practice: Describing Modality</h2>
+<p>Create a histogram for <code>average_watch_time_seconds</code>. Is the distribution unimodal, bimodal, or multimodal?</p>
+<div class="fragment">
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Solution</strong></p>
+</div>
+<div class="callout-content">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="l04_data_visualization_files/figure-revealjs/unnamed-chunk-14-1.png" style="width:80.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The distribution is unimodal, with a long right tail.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="definitions-bar-charts" class="slide level2">
+<h2>Definitions: Bar Charts</h2>
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Definition</strong></p>
+</div>
+<div class="callout-content">
+<p>A <strong>bar chart</strong> displays a categorical variable by using bars whose lengths represent the proportion of observations in each category.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="example-platform-proportions" class="slide level2">
+<h2>Example: Platform Proportions</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-label="1"></a>videos <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a aria-label="2"></a>  <span class="fu">count</span>(platform) <span class="sc">|&gt;</span></span>
+<span id="cb17-3"><a aria-label="3"></a>  <span class="fu">mutate</span>(<span class="at">proportion =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n)) <span class="sc">|&gt;</span></span>
+<span id="cb17-4"><a aria-label="4"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> platform, <span class="at">y =</span> proportion)) <span class="sc">+</span></span>
+<span id="cb17-5"><a aria-label="5"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb17-6"><a aria-label="6"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
+<span id="cb17-7"><a aria-label="7"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Platform"</span>, <span class="at">y =</span> <span class="st">"Proportion"</span>) <span class="sc">+</span></span>
+<span id="cb17-8"><a aria-label="8"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+</div>
+<img data-src="l04_data_visualization_files/figure-revealjs/unnamed-chunk-15-1.png" style="width:80.0%" class="r-stretch"></section>
+<section id="example-video-format-proportions" class="slide level2">
+<h2>Example: Video Format Proportions</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a aria-label="1"></a>videos <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a aria-label="2"></a>  <span class="fu">count</span>(video_format) <span class="sc">|&gt;</span></span>
+<span id="cb18-3"><a aria-label="3"></a>  <span class="fu">mutate</span>(<span class="at">proportion =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n)) <span class="sc">|&gt;</span></span>
+<span id="cb18-4"><a aria-label="4"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">fct_reorder</span>(video_format, proportion), <span class="at">y =</span> proportion)) <span class="sc">+</span></span>
+<span id="cb18-5"><a aria-label="5"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb18-6"><a aria-label="6"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb18-7"><a aria-label="7"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
+<span id="cb18-8"><a aria-label="8"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Proportion"</span>) <span class="sc">+</span></span>
+<span id="cb18-9"><a aria-label="9"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+</div>
+<img data-src="l04_data_visualization_files/figure-revealjs/unnamed-chunk-16-1.png" style="width:80.0%" class="r-stretch"></section>
+<section id="practice-bar-chart" class="slide level2">
+<h2>Practice: Bar Chart</h2>
+<p>Create a bar chart showing the proportion of videos in each <code>topic</code>.</p>
+<div class="fragment">
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Solution</strong></p>
+</div>
+<div class="callout-content">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="l04_data_visualization_files/figure-revealjs/unnamed-chunk-17-1.png" style="width:80.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="definitions-histograms" class="slide level2">
+<h2>Definitions: Histograms</h2>
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Definition</strong></p>
+</div>
+<div class="callout-content">
+<p>A <strong>histogram</strong> displays the distribution of a quantitative variable by grouping values into bins and showing the frequency or proportion of observations in each bin.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="example-histogram-of-views" class="slide level2">
+<h2>Example: Histogram of Views</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-label="1"></a><span class="fu">ggplot</span>(videos, <span class="fu">aes</span>(<span class="at">x =</span> views_first_7_days)) <span class="sc">+</span></span>
+<span id="cb19-2"><a aria-label="2"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">25</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb19-3"><a aria-label="3"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>comma) <span class="sc">+</span></span>
+<span id="cb19-4"><a aria-label="4"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"First-week views"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
+<span id="cb19-5"><a aria-label="5"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+</div>
+<img data-src="l04_data_visualization_files/figure-revealjs/unnamed-chunk-18-1.png" style="width:80.0%" class="r-stretch"></section>
+<section id="example-histogram-of-audience-size" class="slide level2">
+<h2>Example: Histogram of Audience Size</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a aria-label="1"></a><span class="fu">ggplot</span>(videos, <span class="fu">aes</span>(<span class="at">x =</span> creator_audience_size)) <span class="sc">+</span></span>
+<span id="cb20-2"><a aria-label="2"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">25</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb20-3"><a aria-label="3"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>comma) <span class="sc">+</span></span>
+<span id="cb20-4"><a aria-label="4"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Creator audience size"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
+<span id="cb20-5"><a aria-label="5"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+</div>
+<img data-src="l04_data_visualization_files/figure-revealjs/unnamed-chunk-19-1.png" style="width:80.0%" class="r-stretch"></section>
+<section id="practice-histogram" class="slide level2">
+<h2>Practice: Histogram</h2>
+<p>Create a histogram for <code>comments_first_7_days</code>.</p>
+<div class="fragment">
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Solution</strong></p>
+</div>
+<div class="callout-content">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="l04_data_visualization_files/figure-revealjs/unnamed-chunk-20-1.png" style="width:80.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The histogram shows a strong right skew with a long tail of videos that received many comments.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="definitions-box-plots" class="slide level2">
+<h2>Definitions: Box Plots</h2>
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Definition</strong></p>
+</div>
+<div class="callout-content">
+<p>A <strong>box plot</strong> displays the five-number summary of a quantitative variable: the minimum, first quartile, median, third quartile, and maximum. It also marks observations that are flagged as outliers.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="example-box-plot-of-views" class="slide level2">
+<h2>Example: Box Plot of Views</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-label="1"></a><span class="fu">ggplot</span>(videos, <span class="fu">aes</span>(<span class="at">y =</span> views_first_7_days, <span class="at">x =</span> <span class="st">""</span>)) <span class="sc">+</span></span>
+<span id="cb21-2"><a aria-label="2"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"lightblue"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb21-3"><a aria-label="3"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>comma) <span class="sc">+</span></span>
+<span id="cb21-4"><a aria-label="4"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"First-week views"</span>) <span class="sc">+</span></span>
+<span id="cb21-5"><a aria-label="5"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+</div>
+<img data-src="l04_data_visualization_files/figure-revealjs/unnamed-chunk-21-1.png" style="width:80.0%" class="r-stretch"></section>
+<section id="example-box-plot-of-watch-time" class="slide level2">
+<h2>Example: Box Plot of Watch Time</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a aria-label="1"></a><span class="fu">ggplot</span>(videos, <span class="fu">aes</span>(<span class="at">y =</span> average_watch_time_seconds, <span class="at">x =</span> <span class="st">""</span>)) <span class="sc">+</span></span>
+<span id="cb22-2"><a aria-label="2"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"lightblue"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb22-3"><a aria-label="3"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Average watch time (seconds)"</span>) <span class="sc">+</span></span>
+<span id="cb22-4"><a aria-label="4"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+</div>
+<img data-src="l04_data_visualization_files/figure-revealjs/unnamed-chunk-22-1.png" style="width:80.0%" class="r-stretch"></section>
+<section id="practice-box-plot" class="slide level2">
+<h2>Practice: Box Plot</h2>
+<p>Create a box plot for <code>creator_audience_size</code>.</p>
+<div class="fragment">
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Solution</strong></p>
+</div>
+<div class="callout-content">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="l04_data_visualization_files/figure-revealjs/unnamed-chunk-23-1.png" style="width:80.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The box plot shows many high outliers, which is consistent with the strong right skew of audience size.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="bivariate-relationships" class="slide level2">
+<h2>Bivariate Relationships</h2>
+<p>A <strong>bivariate relationship</strong> describes how two variables vary together.</p>
+<ul>
+<li>When both variables are quantitative, a <strong>scatterplot</strong> displays the relationship.</li>
+<li>When one variable is categorical and the other is quantitative, <strong>side-by-side box plots</strong> compare the quantitative distribution across categories.</li>
 </ul>
 </section>
-<section id="ex-cs-data-skew" class="slide level2">
-<h2>Ex: CS Data Skew</h2>
+<section id="definitions-scatterplots" class="slide level2">
+<h2>Definitions: Scatterplots</h2>
 <div class="callout callout-none no-icon callout-titled callout-style-simple">
 <div class="callout-body">
 <div class="callout-title">
-<p><strong>Example 4.5</strong></p>
+<p><strong>Definition</strong></p>
 </div>
 <div class="callout-content">
-<p>Compute the mean and median for income and SAT score. What do these potentially say about the skew of these distributions?</p>
+<p>A <strong>scatterplot</strong> displays one quantitative variable on the horizontal axis and another quantitative variable on the vertical axis. Each point represents one observation, making it possible to see the direction, strength, and shape of a relationship.</p>
 </div>
 </div>
 </div>
-<div class="fragment">
+</section>
+<section id="example-video-length-and-watch-time" class="slide level2">
+<h2>Example: Video Length and Watch Time</h2>
+<p>Longer videos tend to have longer average watch times.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a><span class="fu">mean</span>(Income)</span>
-<span id="cb5-2"><a aria-label="2"></a><span class="fu">median</span>(Income)</span>
-<span id="cb5-3"><a aria-label="3"></a></span>
-<span id="cb5-4"><a aria-label="4"></a><span class="fu">mean</span>(SAT)</span>
-<span id="cb5-5"><a aria-label="5"></a><span class="fu">median</span>(SAT)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</section>
-<section id="ex-failure-data-skew" class="slide level2">
-<h2>Ex: Failure Data Skew</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 4.6</strong></p>
-</div>
-<div class="callout-content">
-<p>Compute the mean and median for failure time and shaft diameter. What do these potentially say about the skew of these distributions?</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</section>
-<section id="skew-and-numeric-summaries" class="slide level2">
-<h2>Skew and Numeric Summaries</h2>
-<p>When data are symmetric, it is common to use the mean and variance/standard deviation as measures of central tendency and variability, respectively.</p>
-<p>When data are skewed, the median and five-number summary give more informative descriptions of the central tendency and variability (spread) of the data, respectively.</p>
-</section>
-<section id="ex-identifying-skew" class="slide level2">
-<h2>Ex: Identifying Skew</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 4.7</strong></p>
-</div>
-<div class="callout-content">
-<p>Consider the visualization below. How would you describe the skew of this distribution? What is the relationship between the mean and the median in these data?</p>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="../assets/images/skew_example_1.png" width="331"></p>
-<figcaption>Histogram of data with most of the observations clustered to the left and some to the right</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>This distribution is <strong><em>right-skewed</em></strong>. The mean of the data will be pulled in the direction of the skew, meaning the mean will be greater than the median.</p>
-</div>
-</section>
-<section id="ex-identifying-skew-1" class="slide level2">
-<h2>Ex: Identifying Skew</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 4.8</strong></p>
-</div>
-<div class="callout-content">
-<p>Consider the visualization below. How would you describe the skew of this distribution? What is the relationship between the mean and the median in these data?</p>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="../assets/images/skew_example_2.png" width="336"></p>
-<figcaption>Histogram of data with most of the observations clustered to the right and some to the left</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>This distribution is <strong><em>YOUR ANSWER</em></strong>. Why?</p>
-</div>
-</section>
-<section id="modality" class="slide level2">
-<h2>Modality</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Definition 4.4</strong></p>
-</div>
-<div class="callout-content">
-<p><strong>Modality</strong> refers to the number of peaks of a distribution.</p>
-</div>
-</div>
-</div>
-<p>When the data are multimodal, single measures of centrality and variability will be misleading.</p>
-</section>
-<section id="ex-identifying-modality" class="slide level2">
-<h2>Ex: Identifying Modality</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 4.9</strong></p>
-</div>
-<div class="callout-content">
-<p>Consider the visualization below. Select the option that correctly describes the modality of the distribution.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="../assets/images/modality_example_1.png" width="338"></p>
-<figcaption>Histogram where bars rise until hitting a peak in the center and then fall again</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>This is a <strong><em>unimodal</em></strong> distribution (one peak).</p>
-</div>
-</section>
-<section id="ex-identifying-modality-1" class="slide level2">
-<h2>Ex: Identifying Modality</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 4.10</strong></p>
-</div>
-<div class="callout-content">
-<p>Consider the visualization below. Select the option that correctly describes the modality of the distribution.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="../assets/images/modality_example_2.png" width="336"></p>
-<figcaption>Histogram where bars rise and then fall and then rise and then fall again</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>This is a <strong><em>YOUR ANSWER</em></strong>. Why?</p>
-</div>
-</section>
-<section id="pie-charts" class="slide level2">
-<h2>Pie Charts</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Definition 4.5</strong></p>
-</div>
-<div class="callout-content">
-<p>A <strong>pie chart</strong> is a type of graph in which a circle is divided into sectors that each represent a proportion of the whole.</p>
-<p>These can be used to visualize qualitative data of any size.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="ex-cs-data-pie-chart" class="slide level2">
-<h2>Ex: CS Data Pie Chart</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 4.11</strong></p>
-</div>
-<div class="callout-content">
-<p>Use a pie chart to create a visualization for ethnicity in the CS dataset.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a>ethnic_table <span class="ot">&lt;-</span> <span class="fu">table</span>(Ethnicity)</span>
-<span id="cb7-2"><a aria-label="2"></a>ethnic_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Ethnicity =</span> <span class="fu">names</span>(ethnic_table), <span class="at">Count =</span> <span class="fu">as.numeric</span>(ethnic_table))</span>
-<span id="cb7-3"><a aria-label="3"></a></span>
-<span id="cb7-4"><a aria-label="4"></a><span class="fu">ggplot</span>(ethnic_data, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">y =</span> Count, <span class="at">fill =</span> Ethnicity)) <span class="sc">+</span></span>
-<span id="cb7-5"><a aria-label="5"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">width =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb7-6"><a aria-label="6"></a>  <span class="fu">coord_polar</span>(<span class="st">"y"</span>) <span class="sc">+</span></span>
-<span id="cb7-7"><a aria-label="7"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Pie Chart of Ethnicity"</span>) <span class="sc">+</span></span>
-<span id="cb7-8"><a aria-label="8"></a>  <span class="fu">theme_void</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</section>
-<section id="ex-failure-data-pie-chart" class="slide level2">
-<h2>Ex: Failure Data Pie Chart</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 4.12</strong></p>
-</div>
-<div class="callout-content">
-<p>Use a pie chart to create a visualization of lubricant in the failure time dataset.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</section>
-<section id="bar-charts" class="slide level2">
-<h2>Bar Charts</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Definition 4.5</strong></p>
-</div>
-<div class="callout-content">
-<p>A <strong>bar chart</strong> can also be used to visualize qualitative data. It shows the count or proportion of observations in each category as a bar.</p>
-<p>These can be used to visualize qualitative data of any size.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="ex-cs-data-bar-chart" class="slide level2">
-<h2>Ex: CS Data Bar Chart</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 4.13</strong></p>
-</div>
-<div class="callout-content">
-<p>Use a bar chart to create a visualization for ethnicity in the CS dataset.</p>
-</div>
-</div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-label="1"></a>ethnic_table <span class="ot">&lt;-</span> <span class="fu">table</span>(Ethnicity)</span>
-<span id="cb9-2"><a aria-label="2"></a>ethnic_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Ethnicity =</span> <span class="fu">names</span>(ethnic_table), <span class="at">Count =</span> <span class="fu">as.numeric</span>(ethnic_table))</span>
-<span id="cb9-3"><a aria-label="3"></a>ethnic_data<span class="sc">$</span>Ethnicity <span class="ot">&lt;-</span> <span class="fu">ordered</span>(ethnic_data<span class="sc">$</span>Ethnicity, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"White"</span>, <span class="st">"Asian"</span>, <span class="st">"Hispanic/Latino"</span>, <span class="st">"Other"</span>, <span class="st">"African American/Black"</span>, <span class="st">"American Indian/Alaska Native"</span>))</span>
-<span id="cb9-4"><a aria-label="4"></a></span>
-<span id="cb9-5"><a aria-label="5"></a><span class="fu">ggplot</span>(ethnic_data, <span class="fu">aes</span>(<span class="at">x =</span> Ethnicity, <span class="at">y =</span> Count)) <span class="sc">+</span></span>
-<span id="cb9-6"><a aria-label="6"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
-<span id="cb9-7"><a aria-label="7"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Bar Chart of Ethnicity"</span>, <span class="at">x =</span> <span class="st">"Ethnicity"</span>, <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
-<span id="cb9-8"><a aria-label="8"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb9-9"><a aria-label="9"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"AA/Black"</span>, <span class="st">"AI/AN"</span>, <span class="st">"Asian"</span>, <span class="st">"Hisp/Lat"</span>, <span class="st">"Other"</span>, <span class="st">"White"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="ex-failure-data-bar-chart" class="slide level2">
-<h2>Ex: Failure Data Bar Chart</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 4.13</strong></p>
-</div>
-<div class="callout-content">
-<p>Use a bar chart to create a visualization of material in the failure time dataset.</p>
-</div>
-</div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="histograms" class="slide level2">
-<h2>Histograms</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Definition 4.6</strong></p>
-</div>
-<div class="callout-content">
-<p><strong>Histograms</strong> are useful for quantitative data when you wish to view the overall shape of the data for a large number of observations and you do not wish to identify specific parts of the distribution or outliers.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="ex-cs-data-histogram" class="slide level2">
-<h2>Ex: CS Data Histogram</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 4.14</strong></p>
-</div>
-<div class="callout-content">
-<p>Create a histogram to visualize income in the CS dataset.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-label="1"></a><span class="fu">ggplot</span>(cs_dataset, <span class="fu">aes</span>(<span class="at">x =</span> Income)) <span class="sc">+</span></span>
-<span id="cb11-2"><a aria-label="2"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">10000</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb11-3"><a aria-label="3"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Histogram of Income"</span>, <span class="at">x =</span> <span class="st">"Income"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
-<span id="cb11-4"><a aria-label="4"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</section>
-<section id="ex-failure-data-histogram" class="slide level2">
-<h2>Ex: Failure Data Histogram</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 4.15</strong></p>
-</div>
-<div class="callout-content">
-<p>Create a histogram to visualize shaft diameter in the failure time dataset.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</section>
-<section id="box-plots" class="slide level2">
-<h2>Box Plots</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Definition 4.7</strong></p>
-</div>
-<div class="callout-content">
-<p>Finally, <strong>box plots</strong> are another way to visualize quantitative data that specifically shows different parts of the five-number summary (as well as outliers)</p>
-</div>
-</div>
-</div>
-</section>
-<section id="ex-cs-data-box-plot" class="slide level2">
-<h2>Ex: CS Data Box Plot</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 4.16</strong></p>
-</div>
-<div class="callout-content">
-<p>Create a box plot for income using the CS dataset.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-label="1"></a><span class="fu">ggplot</span>(cs_dataset, <span class="fu">aes</span>(<span class="at">x =</span> Income)) <span class="sc">+</span></span>
-<span id="cb13-2"><a aria-label="2"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"lightblue"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb13-3"><a aria-label="3"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Box Plot of Income"</span>, <span class="at">x =</span> <span class="st">"Income"</span>) <span class="sc">+</span></span>
-<span id="cb13-4"><a aria-label="4"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</section>
-<section id="ex-failure-data-box-plot" class="slide level2">
-<h2>Ex: Failure Data Box Plot</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 4.17</strong></p>
-</div>
-<div class="callout-content">
-<p>Create a box plot for failure time in the failure time dataset.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</section>
-<section id="ex-large-data-visual" class="slide level2">
-<h2>Ex: Large Data Visual</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 4.18</strong></p>
-</div>
-<div class="callout-content">
-<p>Use the following description to identify the visualization:</p>
-<p>This visualization is used to visualize the distribution of quantitative data when seeing individual outliers as points isn’t needed.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>This best describes a <strong><em>histogram</em></strong>. Histograms are especially useful for visualizing data distributions for large datasets without seeing individual data points or outliers.</p>
-</div>
-</section>
-<section id="ex-categorical-visual" class="slide level2">
-<h2>Ex: Categorical Visual</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 4.19</strong></p>
-</div>
-<div class="callout-content">
-<p>Use the following description to identify the visualization:</p>
-<p>This visualization uses bars to represent categorical data, where the length of each bar corresponds to the count or percentage of observations in each category.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>This best describes a <strong><em>bar chart</em></strong>. Bar charts are used for categorical data where each category has its own bar showing the count or proportion of observations in that category.</p>
-</div>
-</section>
-<section id="ex-seeing-outliers" class="slide level2">
-<h2>Ex: Seeing Outliers</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 4.20</strong></p>
-</div>
-<div class="callout-content">
-<p>Use the following description to identify the visualization:</p>
-<p>This visualization works well with small and large datasets, and is designed specifically to visualize the five-number summary including outliers.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>This best describes a <strong><em>YOUR ANSWER</em></strong>. Why?</p>
-</div>
-</section>
-<section id="ex-departments" class="slide level2">
-<h2>Ex: Departments</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 4.21</strong></p>
-</div>
-<div class="callout-content">
-<p>A company has surveyed its employees about their department, and the results are as follows: Sales (45), Marketing (30), HR (15), and IT (25). The data is categorical, and you want to compare the frequency of each department.</p>
-<p>Which visualization would best display this data?</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>Using a <strong><em>YOUR ANSWER</em></strong> would work best for these data. Why?</p>
-</div>
-</section>
-<section id="ex-energy-consumption" class="slide level2">
-<h2>Ex: Energy Consumption</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 4.22</strong></p>
-</div>
-<div class="callout-content">
-<p>You have a large dataset containing monthly household energy consumption (in kWh) for 10,000 households. You would like to visualize the overall shape of the distribution and are not concerned with seeing specific observations, values, or identifying outliers.</p>
-<p>Which visualization would best display this data?</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>Using a <strong><em>YOUR ANSWER</em></strong> would work best for these data. Why?</p>
-
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-label="1"></a><span class="fu">ggplot</span>(videos, <span class="fu">aes</span>(<span class="at">x =</span> video_length_seconds, <span class="at">y =</span> average_watch_time_seconds)) <span class="sc">+</span></span>
+<span id="cb23-2"><a aria-label="2"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb23-3"><a aria-label="3"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Video length (seconds)"</span>, <span class="at">y =</span> <span class="st">"Average watch time (seconds)"</span>) <span class="sc">+</span></span>
+<span id="cb23-4"><a aria-label="4"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
+<img data-src="l04_data_visualization_files/figure-revealjs/unnamed-chunk-24-1.png" style="width:80.0%" class="r-stretch"><p>The points show a strong positive linear relationship.</p>
+</section>
+<section id="example-video-length-and-percentage-viewed" class="slide level2">
+<h2>Example: Video Length and Percentage Viewed</h2>
+<p>A longer video does not necessarily keep a larger percentage of its viewers.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a aria-label="1"></a><span class="fu">ggplot</span>(videos, <span class="fu">aes</span>(<span class="at">x =</span> video_length_seconds, <span class="at">y =</span> average_percentage_viewed)) <span class="sc">+</span></span>
+<span id="cb24-2"><a aria-label="2"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb24-3"><a aria-label="3"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Video length (seconds)"</span>, <span class="at">y =</span> <span class="st">"Average percentage viewed"</span>) <span class="sc">+</span></span>
+<span id="cb24-4"><a aria-label="4"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+</div>
+<img data-src="l04_data_visualization_files/figure-revealjs/unnamed-chunk-25-1.png" style="width:80.0%" class="r-stretch"><p>The relationship is much weaker, so the points do not follow a clear upward or downward pattern.</p>
+</section>
+<section id="practice-scatterplot" class="slide level2">
+<h2>Practice: Scatterplot</h2>
+<p>Create a scatterplot of <code>views_first_7_days</code> versus <code>likes_first_7_days</code> and compute their correlation.</p>
+<div class="fragment">
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Solution</strong></p>
+</div>
+<div class="callout-content">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="l04_data_visualization_files/figure-revealjs/unnamed-chunk-26-1.png" style="width:80.0%"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+      r
+  &lt;dbl&gt;
+1 0.655</code></pre>
+</div>
+</div>
+<p>The scatterplot shows a strong positive relationship, and the correlation is about 0.65.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="definitions-side-by-side-box-plots" class="slide level2">
+<h2>Definitions: Side-by-Side Box Plots</h2>
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Definition</strong></p>
+</div>
+<div class="callout-content">
+<p><strong>Side-by-side box plots</strong> compare the distribution of a quantitative variable across the categories of a categorical variable. Each category gets its own box plot, making it easy to compare centers, spreads, and outliers.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="example-watch-time-by-platform" class="slide level2">
+<h2>Example: Watch Time by Platform</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a aria-label="1"></a><span class="fu">ggplot</span>(videos, <span class="fu">aes</span>(<span class="at">x =</span> platform, <span class="at">y =</span> average_watch_time_seconds)) <span class="sc">+</span></span>
+<span id="cb26-2"><a aria-label="2"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"lightblue"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb26-3"><a aria-label="3"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Platform"</span>, <span class="at">y =</span> <span class="st">"Average watch time (seconds)"</span>) <span class="sc">+</span></span>
+<span id="cb26-4"><a aria-label="4"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+</div>
+<img data-src="l04_data_visualization_files/figure-revealjs/unnamed-chunk-27-1.png" style="width:80.0%" class="r-stretch"></section>
+<section id="example-views-by-video-format" class="slide level2">
+<h2>Example: Views by Video Format</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a aria-label="1"></a><span class="fu">ggplot</span>(videos, <span class="fu">aes</span>(<span class="at">x =</span> video_format, <span class="at">y =</span> views_first_7_days)) <span class="sc">+</span></span>
+<span id="cb27-2"><a aria-label="2"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"lightblue"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb27-3"><a aria-label="3"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>comma) <span class="sc">+</span></span>
+<span id="cb27-4"><a aria-label="4"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Video format"</span>, <span class="at">y =</span> <span class="st">"First-week views"</span>) <span class="sc">+</span></span>
+<span id="cb27-5"><a aria-label="5"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb27-6"><a aria-label="6"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">25</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+</div>
+<img data-src="l04_data_visualization_files/figure-revealjs/unnamed-chunk-28-1.png" style="width:80.0%" class="r-stretch"></section>
+<section id="practice-side-by-side-box-plots" class="slide level2">
+<h2>Practice: Side-by-Side Box Plots</h2>
+<p>Create side-by-side box plots of <code>creator_audience_size</code> by <code>production_effort</code>.</p>
+<div class="fragment">
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Solution</strong></p>
+</div>
+<div class="callout-content">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="l04_data_visualization_files/figure-revealjs/unnamed-chunk-29-1.png" style="width:80.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The groups have similar medians, but all groups contain high outliers and the distributions are right-skewed.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="practice-choosing-a-visualization" class="slide level2 scrollable">
+<h2>Practice: Choosing a Visualization</h2>
+<p>Match each question to the most appropriate visualization:</p>
+<ol type="1">
+<li>How are videos distributed across platforms?</li>
+<li>What is the distribution of first-week views?</li>
+<li>Do first-week views differ by platform?</li>
+<li>Is there a relationship between video length and average watch time?</li>
+<li>Do comment counts differ by video format?</li>
+</ol>
+<div class="fragment">
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Solution</strong></p>
+</div>
+<div class="callout-content">
+<ol type="1">
+<li>Bar chart of platform proportions.</li>
+<li>Histogram of first-week views.</li>
+<li>Side-by-side box plots of views by platform.</li>
+<li>Scatterplot of watch time versus video length.</li>
+<li>Side-by-side box plots of comments by video format.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+
+
 </section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">

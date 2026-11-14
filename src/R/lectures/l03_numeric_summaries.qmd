@@ -1,6 +1,4 @@
 ---
-execute:
-  enabled: false  # TODO: re-enable after datasets are added to data/
 title: "Numeric Summaries"
 format:
   revealjs:
@@ -9,744 +7,563 @@ format:
 ---
 
 ```{r}
-suppressWarnings(suppressMessages(library(dplyr)))
+#| echo: false
+#| message: false
+library(tidyverse)
+
+videos <- read_csv("../../../data/content_creation/content_creation.csv", show_col_types = FALSE) |>
+  select(-starts_with("latent")) |>
+  mutate(
+    platform = factor(platform),
+    topic = factor(topic),
+    video_format = factor(video_format),
+    thumbnail_style = factor(thumbnail_style),
+    production_effort = factor(production_effort, levels = c("low", "medium", "high")),
+    posting_day_of_week = factor(
+      posting_day_of_week,
+      levels = c("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
+    ),
+    posting_time_local = factor(
+      posting_time_local,
+      levels = c("overnight", "morning", "afternoon", "evening")
+    ),
+    paid_promotion = factor(paid_promotion)
+  )
 ```
 
-## Qualitative Data
+## The Content Creation Dataset
 
-::: {.callout title="Definition 3.1"}
-Non-numerical data that can only be classified into groups or categories are said to be **qualitative** or **categorical** data.
-:::
+The dataset contains 346 short-form videos. Each row is one video, and the columns describe how the video was made, when it was posted, and how it performed during its first seven days.
 
-## Quantitative Data
-
-::: {.callout title="Definition 3.2"}
-**Quantitative** data are observations measured on a numerical scale.
-:::
-
-## CS Dataset
-
-```{r, echo = TRUE}
-cs_dataset <- read.csv("../data/cs_dataset.csv")
-attach(cs_dataset)
-head(cs_dataset)
+```{r}
+#| echo: true
+videos |>
+  select(platform, topic, views_first_7_days, average_watch_time_seconds, average_percentage_viewed) |>
+  slice_head(n = 3)
 ```
 
-## Ex: CS Data Types
+## Definitions: Types of Data
 
-::: {.callout title="Example 3.1"}
-In the computer scientist dataset, which of the variables are quantitative and which are qualitative?
+::: {.callout title="Definitions"}
+**Categorical data** are non-numerical observations that classify units into groups or categories.
+
+**Quantitative data** are observations measured on a numerical scale.
+
+Quantitative data are **discrete** when there are a finite or countably infinite number of distinct values. These are often counts, such as the number of views.
+
+Quantitative data are **continuous** when there are uncountably many possible values. These are often measurements that could be recorded with more precision, such as time.
 :::
 
-. . .
+## Example: Discrete and Continuous Quantitative Variables
 
--   Income (Quantitative)
--   Sex (Qualitative)
--   Age (Quantitative)
--   Birth Year (Quantitative)
--   Education Degree (Qualitative)
--   Education Years (Quantitative)
--   Ethnicity (Qualitative)
--   SAT (Quantitative)
--   Region (Qualitative)
+In the video dataset:
 
-## Failure Time Dataset
+- `views_first_7_days` is **quantitative and discrete**. A video can have 26,692 views or 26,693 views, but not 26,692.4 views.
+- `average_watch_time_seconds` is **quantitative and continuous**. Watch time can take on values such as 17.8 seconds, 17.83 seconds, or 17.831 seconds depending on the precision of the measurement.
 
-```{r, echo = TRUE}
-failure <- read.csv("../data/failure_time.csv")
-attach(failure)
-head(failure)
-```
+## Example: Nominal and Ordinal Categorical Variables
 
-## Ex: Failure Data Types
+In the video dataset:
 
-::: {.callout title="Example 3.1"}
-In the failure time dataset, which of the variables are quantitative and which are qualitative?
+- `platform` is **categorical and nominal**. The categories YouTube, TikTok, and Instagram Reels have no natural order.
+- `production_effort` is **categorical and ordinal**. The categories low, medium, and high have a natural order.
+
+## Practice: Classifying Variables
+
+Classify each variable as categorical or quantitative. For the quantitative variables, also say whether they are discrete or continuous.
+
+- `topic`
+- `title_length_words`
+- `posting_time_local`
+- `subscribers_gained_first_7_days`
+
+::: {.fragment}
+::: {.callout title="Solution"}
+- `topic`: categorical (nominal).
+- `title_length_words`: quantitative and discrete.
+- `posting_time_local`: categorical (ordinal).
+- `subscribers_gained_first_7_days`: quantitative and discrete.
+:::
 :::
 
-. . .
+## Definitions: Mean, Median, and Mode
 
--   Gear Teeth (***ANSWER HERE***)
--   Number of Fasteners (***ANSWER HERE***)
--   Hardness (***ANSWER HERE***)
--   Material (***ANSWER HERE***)
--   Shaft Diameter (***ANSWER HERE***)
--   Engine Temperature (***ANSWER HERE***)
--   Vibration (***ANSWER HERE***)
--   Lubricant (***ANSWER HERE***)
--   Failure Time (***ANSWER HERE***)
-
-## Discrete Data
-
-::: {.callout title="Definition 3.3"}
-Quantitative data are **discrete** when there are a finite or countably infinite number of distinct values. These are often thought of as whole numbers or integers.
-:::
-
-## Continuous Data
-
-::: {.callout title="Definition 3.4"}
-Quantitative data are **continuous** when there are uncountably many values. These are often thought of as real numbers.
-:::
-
-## Ex: CS Quantitative Data
-
-::: {.callout title="Example 3.3"}
-In the computer scientist dataset, which variables are discrete and which are continuous?
-:::
-
-. . .
-
--   Income (Continuous)
--   Age (Discrete, if in whole years)
--   Age (Continuous, if in years, months, etc.)
--   Birth Year (Discrete)
--   Education Years (Discrete)
--   SAT (Discrete)
-
-## Ex: Failure Quantitative Data
-
-::: {.callout title="Example 3.4"}
-In the failure time dataset, which variables are discrete and which are continuous?
-:::
-
-. . .
-
--   Gear Teeth (***ANSWER HERE***)
--   Number of Fasteners (***ANSWER HERE***)
--   Shaft Diameter (***ANSWER HERE***)
--   Engine Temperature (***ANSWER HERE***)
--   Failure Time (***ANSWER HERE***)
-
-## Ex: Students
-
-::: {.callout title="Example 3.5"}
-Two variables are being measured in a study on students. One is the type of degree they are pursuing, and the other is their GPA. Are these variables qualitative or quantitative?
-:::
-
-. . .
-
-The type of degree is ***qualitative*** and the GPA is ***quantitative***.
-
-## Ex: Restaurants
-
-::: {.callout title="Example 3.6"}
-A survey collects information about the preferred type of cuisine and the chosen restaurant chain.
-:::
-
-. . .
-
-Both of these are examples of ***qualitative*** variables.
-
-## Ex: Cars
-
-::: {.callout title="Example 3.7"}
-A study examines the number of cars in a parking lot and the total amount of fuel consumed by the cars in liters. Are these variables discrete or continuous?
-:::
-
-. . .
-
-The number of cars is ***YOUR ANSWER*** and the amount of fuel consumed is ***YOUR ANSWER***.
-
-## Ex: Products
-
-::: {.callout title="Example 3.8"}
-A survey is asking participants about the time (hours, minutes, seconds, etc.) they spend exercising each week and their cholesterol levels in milligrams per deciliter. Are these variables discrete or continuous?
-:::
-
-. . .
-
-The time spent exercising is ***YOUR ANSWER*** and their cholesterol level is ***YOUR ANSWER***.
-
-## Mean (Average)
-
-::: {.callout title="Definition 3.5"}
-The **mean** of a dataset is the sum of the data entries divided by the number of entries. The mean is only computed for quantitative data.
-
-The mean can be computed as follows:
-
+::: {.callout title="Definitions"}
+The **mean** is the sum of the data entries divided by the number of entries. It is computed for quantitative data:
 $$
-\bar{x} = \frac{1}{n}\sum_{i=1}^n x_i
+\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i
+$$
+
+The **median** is the middle value when the quantitative data are ordered. If $n$ is odd, it is the $\left(\frac{n+1}{2}\right)^{th}$ value. If $n$ is even, it is the average of the $\left(\frac{n}{2}\right)^{th}$ and $\left(\frac{n+2}{2}\right)^{th}$ values.
+
+The **mode** is the most frequently occurring category. It is used to describe categorical data.
+:::
+
+## Example: Mean and Median Views
+
+The mean and median first-week views are both close to 27 thousand:
+
+```{r}
+#| echo: true
+videos |>
+  summarise(
+    mean_views = mean(views_first_7_days),
+    median_views = median(views_first_7_days)
+  )
+```
+
+The mean is slightly larger than the median, which suggests a mild right skew in the view counts.
+
+## Example: Modal Categories
+
+To find the mode of a categorical variable, count how often each category occurs:
+
+```{r}
+#| echo: true
+videos |>
+  count(platform, sort = TRUE) |>
+  mutate(proportion = n / sum(n)) |>
+  select(platform, proportion)
+
+videos |>
+  count(video_format, sort = TRUE) |>
+  mutate(proportion = n / sum(n)) |>
+  select(video_format, proportion)
+```
+
+YouTube is the modal platform, and tutorial/how-to is the modal video format.
+
+## Practice: Mean, Median, and Mode
+
+1. Compute the mean and median of `creator_audience_size`.
+2. Find the modal category of `topic`.
+3. Find the modal category of `thumbnail_style`.
+
+::: {.fragment}
+::: {.callout title="Solution"}
+```{r}
+videos |>
+  summarise(
+    mean_audience = mean(creator_audience_size),
+    median_audience = median(creator_audience_size)
+  )
+
+videos |>
+  count(topic, sort = TRUE)
+
+videos |>
+  count(thumbnail_style, sort = TRUE)
+```
+
+The mean audience size is about 46,177 and the median is 31,436, so the mean is pulled upward by large creators. Education is the modal topic, and text-led graphic is the modal thumbnail style.
+:::
+:::
+
+## Choosing Between the Mean and Median
+
+- The **mean** uses every observation, so it contains more information. However, it is strongly affected by skew and outliers.
+- The **median** is resistant to skew and outliers because it depends only on the middle of the ordered data.
+- When data are roughly symmetric, the mean and median are close, and the mean is usually preferred.
+- When data are skewed, the median better describes a typical observation because the mean is pulled toward the long tail.
+
+In the video dataset, the mean watch time is 21.1 seconds and the median is 18 seconds, while the mean audience size is 46,177 and the median is 31,436. These gaps reflect right skew, so the median is the better measure of a typical video or creator here.
+
+**Takeaway:** use the mean for roughly symmetric data and the median for skewed data.
+
+## Definitions: Quantiles, Percentiles, and Quartiles
+
+::: {.callout title="Definitions"}
+**Quantiles** are cut points that divide data into equal parts, each containing the same percentage of the data.
+
+**Percentiles** divide the data into 100 equal parts. The $k^{th}$ percentile, $P_k$, is the value below which $k\%$ of the data falls.
+
+**Quartiles** divide the data into four equal parts: $Q_1 = P_{25}$, $Q_2 = P_{50}$, and $Q_3 = P_{75}$.
+:::
+
+## Example: Percentiles of Views
+
+The 90th percentile of first-week views tells us the view count that separates the bottom 90% of videos from the top 10%:
+
+```{r}
+#| echo: true
+videos |>
+  summarise(
+    p10_views = quantile(views_first_7_days, 0.10),
+    p90_views = quantile(views_first_7_days, 0.90)
+  )
+```
+
+## Example: Quartiles of Audience Size
+
+The quartiles split the videos into four groups of roughly equal size based on audience size:
+
+```{r}
+#| echo: true
+videos |>
+  summarise(
+    Q1 = quantile(creator_audience_size, 0.25),
+    Q2 = quantile(creator_audience_size, 0.50),
+    Q3 = quantile(creator_audience_size, 0.75)
+  )
+```
+
+## Practice: Percentiles and Quartiles
+
+1. Find the 10th and 90th percentiles of `comments_first_7_days`.
+2. Find the quartiles of `video_length_seconds`.
+
+::: {.fragment}
+::: {.callout title="Solution"}
+```{r}
+videos |>
+  summarise(
+    p10_comments = quantile(comments_first_7_days, 0.10),
+    p90_comments = quantile(comments_first_7_days, 0.90)
+  )
+
+videos |>
+  summarise(
+    Q1 = quantile(video_length_seconds, 0.25),
+    Q2 = quantile(video_length_seconds, 0.50),
+    Q3 = quantile(video_length_seconds, 0.75)
+  )
+```
+:::
+:::
+
+## Definitions: Five-Number Summary, Outliers, Range, and IQR
+
+::: {.callout title="Definitions"}
+The **minimum** and **maximum** are the smallest and largest values in a dataset.
+
+The **five-number summary** consists of the minimum, $Q_1$, the median, $Q_3$, and the maximum.
+
+The **range** is the maximum minus the minimum. The **interquartile range (IQR)** is $Q_3 - Q_1$.
+
+An observation is a **low outlier** if it is below
+$$
+L = Q_1 - 1.5 \times IQR
+$$
+and a **high outlier** if it is above
+$$
+U = Q_3 + 1.5 \times IQR
 $$
 :::
 
-. . .
+## Example: Five-Number Summary
+
+The five-number summary for first-week views is:
 
 ```{r}
-set.seed(100)
+#| echo: true
+videos |>
+  summarise(
+    minimum = min(views_first_7_days),
+    Q1 = quantile(views_first_7_days, 0.25),
+    median = median(views_first_7_days),
+    Q3 = quantile(views_first_7_days, 0.75),
+    maximum = max(views_first_7_days),
+    range = maximum - minimum,
+    IQR = Q3 - Q1
+  )
 ```
 
-## Ex: CS Data Means
+## Example: Detecting Outliers
 
-::: {.callout title="Example 3.9"}
-Compute the mean age, income, and SAT score in the CS dataset.
-:::
-
-. . .
-
-```{r, echo = TRUE}
-mean(Age)
-mean(Income)
-mean(SAT)
-```
-
-## Ex: Failure Data Means
-
-::: {.callout title="Example 3.10"}
-Compute the mean shaft diameter, engine temperature, and failure time in the failure dataset.
-:::
-
-. . .
-
-```{r, echo = TRUE}
-# YOUR CODE HERE
-```
-
-## Median
-
-::: {.callout title="Definition 3.6"}
-The **median** of a dataset is the middle of the data when the dataset is ordered. The median is usually computed for quantitative data. Sometimes a median will be computed for ordered qualitative variables
-
-The median is the $\left(\frac{n+1}{2}\right)^{th}$ value if $n$ is odd and the $\frac{\left(\frac{n}{2}\right)^{th} + \left(\frac{n+2}{2}\right)^{th}}{2}$ value when $n$ is even.
-:::
-
-## Ex: CS Data Medians
-
-::: {.callout title="Example 3.11"}
-Compute the median for age, income, and education degree (an ordered qualitative variable) in the CS dataset.
-:::
-
-. . .
-
-```{r, echo = TRUE}
-median(Age)
-median(Income)
-Ed_Deg_Ord <- as.numeric(ordered(Education.Degree, levels = c("A", "BS", "MS", "PhD")))
-median(Ed_Deg_Ord)
-
-```
-
-## Ex: Failure Data Medians
-
-::: {.callout title="Example 3.12"}
-Compute the median shaft diameter, engine temperature, and vibration (an ordered qualitative variable) in the failure time dataset.
-:::
-
-. . .
-
-```{r, echo = TRUE}
-# YOUR CODE HERE
-```
-
-## Mode
-
-::: {.callout title="Definition 3.7"}
-The **mode** is the data value that occurs most frequently in the dataset. This is easily computed for qualitative variables and discrete quantitative variables with few unique values. It is more difficult for discrete quantitative variables with many unique values and for continuous quantitative variables.
-
-A variable can have multiple modes.
-:::
-
-## Ex: CS Data Modes
-
-::: {.callout title="Example 3.13"}
-Compute the mode(s) for region, SAT, and income in the CS dataset.
-:::
-
-. . .
-
-```{r, echo = TRUE}
-table(Region)
-table(Region)[which(table(Region) == max(table(Region)))]
-table(SAT)
-table(SAT)[which(table(SAT) == max(table(SAT)))]
-```
-
-## Ex: CS Data Modes (Continued)
-
-::: {.callout title="Example 3.13 (Continued)"}
-Compute the mode(s) for region, SAT, and income in the CS dataset.
-:::
-
-. . .
+Comments are strongly right-skewed, so the outlier fences are useful:
 
 ```{r}
-#| out-width: "75%"
-#| fig-align: center
-plot(density(Income), main = "Income Distribution", xlab = "")
+#| echo: true
+fences <- videos |>
+  summarise(
+    lower = quantile(comments_first_7_days, 0.25) - 1.5 * IQR(comments_first_7_days),
+    upper = quantile(comments_first_7_days, 0.75) + 1.5 * IQR(comments_first_7_days)
+  )
+
+fences
+
+videos |>
+  filter(comments_first_7_days < fences$lower | comments_first_7_days > fences$upper) |>
+  count()
 ```
 
-```{r, echo = TRUE}
-density(Income)$x[which.max(density(Income)$y)]
+## Practice: Outliers and the Five-Number Summary
+
+Find the five-number summary, range, IQR, and number of outliers for `creator_audience_size`.
+
+::: {.fragment}
+::: {.callout title="Solution"}
+```{r}
+audience_summary <- videos |>
+  summarise(
+    minimum = min(creator_audience_size),
+    Q1 = quantile(creator_audience_size, 0.25),
+    median = median(creator_audience_size),
+    Q3 = quantile(creator_audience_size, 0.75),
+    maximum = max(creator_audience_size),
+    range = maximum - minimum,
+    IQR = Q3 - Q1,
+    lower = Q1 - 1.5 * IQR,
+    upper = Q3 + 1.5 * IQR
+  )
+
+audience_summary
+
+videos |>
+  filter(
+    creator_audience_size < audience_summary$lower |
+      creator_audience_size > audience_summary$upper
+  ) |>
+  count()
 ```
-
-## Ex: Failure Data Modes
-
-::: {.callout title="Example 3.14"}
-Compute the mode(s) for hardness, gear teeth, and shaft diameter in the failure time dataset.
+:::
 :::
 
-. . .
+## Definitions: Variance and Standard Deviation
 
-```{r, echo = TRUE}
-# YOUR CODE HERE
-```
+::: {.callout title="Definitions"}
+The **sample variance** is
+$$
+s^2 = \frac{1}{n-1}\sum_{i=1}^{n}(x_i - \bar{x})^2
+$$
 
-## Ex: CS Data Modes (Continued)
+The **sample standard deviation** is
+$$
+s = \sqrt{s^2}
+$$
 
-::: {.callout title="Example 3.14 (Continued)"}
-Compute the mode(s) for hardness, gear teeth, and shaft diameter in the failure time dataset.
+Variance and standard deviation measure how far observations typically are from the mean.
 :::
 
-. . .
+## Example: Standard Deviation of Watch Time
 
 ```{r}
-#| out-width: "75%"
-#| fig-align: center
-plot(density(ShaftDiameter), main = "Shaft Diameter Distribution", xlab = "")
+#| echo: true
+videos |>
+  summarise(
+    variance_watch = var(average_watch_time_seconds),
+    sd_watch = sd(average_watch_time_seconds),
+    variance_views = var(views_first_7_days),
+    sd_views = sd(views_first_7_days)
+  )
 ```
 
-```{r, echo = TRUE}
-# YOUR CODE HERE
+The standard deviation of watch time is in seconds, while the variance is in squared seconds.
+
+## Example: Standard Deviation Versus IQR
+
+Comments contain large outliers, so the standard deviation is inflated much more than the IQR:
+
+```{r}
+#| echo: true
+videos |>
+  summarise(
+    sd_comments = sd(comments_first_7_days),
+    iqr_comments = IQR(comments_first_7_days),
+    sd_views = sd(views_first_7_days),
+    iqr_views = IQR(views_first_7_days)
+  )
 ```
 
-## Quantiles and Percentiles
+The standard deviation of comments is heavily influenced by the long right tail. The IQR is more resistant.
 
-::: {.callout title="Definition 3.8"}
-**Quantiles** are cut points that divide data into equal parts, each of which contains the same percentage of the data. **Percentiles** are quantiles that divide the data into 100 equal parts. We define $P_k$ as the $k^{th}$ percentile which is computed by finding the value below which $k\%$ of the data falls.
-:::
+## Practice: Variance and Standard Deviation
 
-## Ex: CS Data Quantiles
+Compute the variance and standard deviation of `creator_audience_size` and `likes_first_7_days`. Which variable has more variability relative to its mean?
 
-::: {.callout title="Example 3.15"}
-Find the 90th percentile for income as well as the 35th percentile for age in the CS dataset.
-:::
-
-. . .
-
-```{r, echo = TRUE}
-quantile(Income, 0.9)
-quantile(Age, 0.35)
+::: {.fragment}
+::: {.callout title="Solution"}
+```{r}
+videos |>
+  summarise(
+    variance_audience = var(creator_audience_size),
+    sd_audience = sd(creator_audience_size),
+    variance_likes = var(likes_first_7_days),
+    sd_likes = sd(likes_first_7_days)
+  )
 ```
 
-## Ex: Failure Data Quantiles
-
-::: {.callout title="Example 3.16"}
-Find the 75th percentile for failure time as well as the 10th percentile for engine temperature.
+Audience size has much more variability, both in absolute terms and relative to its mean.
+:::
 :::
 
-. . .
+## Choosing a Measure of Variability
 
-```{r, echo = TRUE}
-# YOUR CODE HERE
+- **Variance** uses all observations and is the basis for many later methods, but its units are squared and it is sensitive to outliers.
+- **Standard deviation** is in the original units and is easy to interpret, but it is also sensitive to skew and outliers.
+- **Range** is simple but depends only on the two most extreme observations, so a single outlier can dominate it.
+- **IQR** is resistant to outliers and describes the spread of the middle 50% of the data.
+- **Five-number summary** gives a robust overall picture of center and spread.
+
+In the video dataset, the standard deviation of comments is inflated by the long right tail, while the IQR gives a more stable description of the middle of the distribution.
+
+**Takeaway:** use the standard deviation for roughly symmetric data and the IQR for skewed data.
+
+## Definitions: Variability for Categorical Data
+
+::: {.callout title="Definition"}
+For categorical data, variability is described with **proportions**: the proportion of observations in each category is the category frequency divided by the total number of observations.
+:::
+
+## Example: Platform Proportions
+
+```{r}
+#| echo: true
+videos |>
+  count(platform) |>
+  mutate(proportion = n / sum(n)) |>
+  select(platform, proportion)
 ```
 
-## Quartiles
+Roughly 41% of the videos in the sample came from YouTube, 36% from TikTok, and 23% from Instagram Reels.
 
-::: {.callout title="Definition 3.9"}
-**Quartiles** are quantiles that divide the data into four equal parts, called $Q_1 = P_{25}$, $Q_2 = P_{50}$, and $Q_3 = P_{75}$.
-:::
+## Example: Paid Promotion Proportions
 
-## Ex: CS Data Quartiles
-
-::: {.callout title="Example 3.17"}
-Find the quartiles for income as well as for education years in the CS dataset.
-:::
-
-. . .
-
-```{r, echo = TRUE}
-quantile(Income, c(0.25, 0.5, 0.75))
-quantile(Education.Years, c(0.25, 0.5, 0.75))
+```{r}
+#| echo: true
+videos |>
+  count(paid_promotion) |>
+  mutate(proportion = n / sum(n)) |>
+  select(paid_promotion, proportion)
 ```
 
-## Ex: Failure Data Quartiles
+Most videos in the sample did not use paid promotion.
 
-::: {.callout title="Example 3.18"}
-Find the quartiles for failure time as well as for fasteners in the failure time dataset.
+## Practice: Categorical Variability
+
+Find the proportions for `video_format` and `production_effort`.
+
+::: {.fragment}
+::: {.callout title="Solution"}
+```{r}
+videos |>
+  count(video_format) |>
+  mutate(proportion = n / sum(n)) |>
+  select(video_format, proportion)
+
+videos |>
+  count(production_effort) |>
+  mutate(proportion = n / sum(n)) |>
+  select(production_effort, proportion)
+```
+:::
 :::
 
-. . .
+## Summaries Within Groups
 
-```{r, echo = TRUE}
-# YOUR CODE HERE
+A **grouped summary** describes a quantitative variable separately for each category of a categorical variable. Grouping makes it possible to compare groups instead of collapsing everything into a single summary.
+
+For categorical outcomes, we can also compare the proportion in each category within each group.
+
+## Example: Comparing Performance Across Platforms
+
+```{r}
+#| echo: true
+videos |>
+  group_by(platform) |>
+  summarise(
+    n = n(),
+    mean_views = mean(views_first_7_days),
+    median_views = median(views_first_7_days),
+    sd_views = sd(views_first_7_days)
+  )
 ```
 
-## Minimum and Maximum
+The platforms have similar average view counts, but their medians and standard deviations differ slightly.
 
-::: {.callout title="Definition 3.10"}
-The **minimum** is defined as the smallest value in the dataset and the **maximum** is defined as the largest value in the dataset.
-:::
+## Example: Proportions Within Groups
 
-## Ex: CS Data Extrema
-
-::: {.callout title="Example 3.19"}
-Find the minimum and maximum for both age as well as SAT score in the CS dataset.
-:::
-
-. . .
-
-```{r, echo = TRUE}
-min(Age)
-max(Age)
-min(SAT)
-max(SAT)
+```{r}
+#| echo: true
+videos |>
+  count(platform, paid_promotion) |>
+  group_by(platform) |>
+  mutate(proportion = n / sum(n)) |>
+  ungroup() |>
+  select(platform, paid_promotion, proportion)
 ```
 
-## Ex: Failure Data Extrema
+This shows the proportion of videos that used paid promotion within each platform.
 
-::: {.callout title="Example 3.19"}
-Find the minimum and maximum for both gear teeth as well as engine temperature in the failure time dataset.
+## Practice: Grouped Summary
+
+Compute the mean, median, and standard deviation of `likes_first_7_days` for each `topic`.
+
+::: {.fragment}
+::: {.callout title="Solution"}
+```{r}
+videos |>
+  group_by(topic) |>
+  summarise(
+    n = n(),
+    mean_likes = mean(likes_first_7_days),
+    median_likes = median(likes_first_7_days),
+    sd_likes = sd(likes_first_7_days)
+  )
+```
+:::
 :::
 
-. . .
+## Definition: Correlation
 
-```{r, echo = TRUE}
-# YOUR CODE HERE
+::: {.callout title="Definition"}
+The **correlation coefficient** $r$ measures the direction and strength of the linear relationship between two quantitative variables. It always falls between $-1$ and $1$.
+
+- $r > 0$ indicates a positive linear relationship.
+- $r < 0$ indicates a negative linear relationship.
+- $r$ near $0$ indicates little or no linear relationship.
+
+Correlation describes association, not causation, and it can be strongly affected by outliers.
+:::
+
+## Example: A Strong Positive Correlation
+
+Longer videos tend to have longer average watch times:
+
+```{r}
+#| echo: true
+videos |>
+  summarise(r = cor(video_length_seconds, average_watch_time_seconds))
 ```
 
-## Counts and Proportions
+The correlation is about 0.80, which indicates a strong positive linear relationship.
 
-::: {.callout title="Definition 3.11"}
-A **count** is the number of observations belonging to a certain category. A **proportion** is the number of observations belonging to a category divided by the total number of observations.
-:::
+## Example: Little Linear Relationship
 
-## Ex: CS Data Count/Props
+Views and comments are both engagement measures, but they are not strongly linearly related in this sample:
 
-::: {.callout title="Example 3.20"}
-Find the counts and proportions for both region as well as education degree in the CS dataset.
-:::
-
-. . .
-
-```{r, echo = TRUE}
-table(Region)
-table(Region)/length(Region)
-table(Education.Degree)
-table(Education.Degree)/length(Education.Degree)
+```{r}
+#| echo: true
+videos |>
+  summarise(r = cor(views_first_7_days, comments_first_7_days))
 ```
 
-## Ex: Failure Data Count/Props
+The correlation is about 0.05, which indicates little linear relationship. The relationship is dominated by a few videos with many comments.
 
-::: {.callout title="Example 3.21"}
-Find the counts and proportions for both hardness as well as material type in the failure time dataset.
-:::
+## Practice: Correlation
 
-. . .
+Compute and interpret the correlations between:
 
-```{r, echo = TRUE}
-# YOUR CODE HERE
+1. `average_watch_time_seconds` and `average_percentage_viewed`
+2. `video_length_seconds` and `average_percentage_viewed`
+
+::: {.fragment}
+::: {.callout title="Solution"}
+```{r}
+videos |>
+  summarise(
+    r_watch_pct = cor(average_watch_time_seconds, average_percentage_viewed),
+    r_length_pct = cor(video_length_seconds, average_percentage_viewed)
+  )
 ```
 
-## Range and IQR
-
-::: {.callout title="Definition 3.12"}
-The **range** is defined as the difference between the maximum and minimum.
-
-The **interquartile range (IQR)** is the difference between $Q_3$ and $Q_1$.
+Watch time and percentage viewed have a moderately strong positive correlation, while video length and percentage viewed have a weak positive correlation. Longer videos do not necessarily keep a larger percentage of their viewers.
+:::
 :::
 
-## Ex: CS Data Range/IQR
-
-::: {.callout title="Example 3.22"}
-Find the range and IQR for income and age in the CS dataset.
-:::
-
-. . .
-
-```{r, echo = TRUE}
-max(Income) - min(Income)
-IQR(Income)
-max(Age) - min(Age)
-IQR(Age)
-```
-
-## Ex: Failure Data Range/IQR
-
-::: {.callout title="Example 3.23"}
-Find the range and IQR for failure time and fasteners in the failure time dataset.
-:::
-
-. . .
-
-```{r, echo = TRUE}
-# YOUR CODE HERE
-```
-
-## Five-Number Summary
-
-::: {.callout title="Definition 3.13"}
-The **five-number summary** describes the data using the minimum, $Q_1$, the median ($Q_2$), $Q_3$, and the maximum.
-:::
-
-## Ex: CS Data FNS
-
-::: {.callout title="Example 3.24"}
-Report the five-number summary for both SAT score and education years in the CS datset.
-:::
-
-. . .
-
-```{r, echo = TRUE}
-summary(SAT)
-summary(Education.Years)
-```
-
-## Ex:Failure Data FNS
-
-::: {.callout title="Example 3.25"}
-Report the five-number summary for both gear teeth and shaft diameter in the failure time datset.
-:::
-
-. . .
-
-```{r, echo = TRUE}
-# YOUR CODE HERE
-```
-
-## Outliers
-
-::: {.callout title="Definition 3.14"}
-An **outlier** is an observation that seems to be far away from the bulk of the data.
-
-A **low-outlier** is any observation below the 'lower fence', which is calculated as:
-
-$$L = Q_1 - 1.5 \times IQR$$
-
-A **high-outlier** is any observation above the 'upper fence', which is calculated as:
-
-$$U = Q_3 + 1.5 \times IQR$$
-:::
-
-## Ex: CS Data Outliers
-
-::: {.callout title="Example 3.26"}
-Are there any outliers for income in the CS dataset?
-:::
-
-. . .
-
-```{r, echo = TRUE}
-lower_fence <- quantile(Income, 0.25) - 1.5*IQR(Income)
-upper_fence <- quantile(Income, 0.75) + 1.5*IQR(Income)
-
-which(Income <= lower_fence)
-which(Income >= upper_fence)
-```
-
-## Ex: Failure Data Outliers
-
-::: {.callout title="Example 3.27"}
-Are there any outliers for gear teeth in the failure time dataset?
-:::
-
-. . .
-
-```{r, echo = TRUE}
-# YOUR CODE HERE
-```
-
-## Variance and Standard Deviation
-
-::: {.callout title="Definition 3.15"}
-The **sample variance** $s^2$ is an estimate of the population variance $\sigma^2$ and is computed as:
-
-$$s^2 = \frac{1}{n-1} \sum_{i=1}^n (x_i - \bar{x})^2$$
-
-The **sample standard deviation** $s$ is defined as:
-
-$$s = \sqrt{s^2}$$
-:::
-
-## Ex: CS Data $s^2$ and $s$
-
-::: {.callout title="Example 3.28"}
-Compute the sample variance and standard deviation for income and age in the CS dataset.
-:::
-
-. . .
-
-```{r, echo = TRUE}
-var(Income)
-sd(Income)
-var(Age)
-sd(Age)
-```
-
-## Ex: Failure Data $s^2$ and $s$
-
-::: {.callout title="Example 3.29"}
-Compute the sample variance and standard deviation for failure time and engine temperature in the failure time dataset.
-:::
-
-. . .
-
-```{r, echo = TRUE}
-# YOUR CODE HERE
-```
-
-## Central Tendency
-
-::: {.callout title="Definition 3.16"}
-Measures of **central tendency** are used to describe data in terms of common or typical values. For quantitative variables, these include:
-
--   Mean
--   Median
--   Mode
-
-For qualitative variables, these include:
-
--   Median (if categories are ordered)
--   Mode
-:::
-
-## Variability (or Spread)
-
-::: {.callout title="Definition 3.17"}
-Measures of **variability** or **spread** either quantify how much observations deviate from typical values or how far apart observations are from one another. For quantitative variables, measures of variability or spread include:
-
--   Variance
--   Standard Deviation
--   Range
--   IQR
--   Five-Number Summary
-
-For qualitative variables, measures of variability or spread include:
-
--   Counts
--   Proportions
-:::
-
-## Ex: CS Data Centrality
-
-::: {.callout title="Example 3.30"}
-For each variable in the CS dataset, what measures of centrality would we use?
-:::
-
-. . .
-
--   Income (Mean, Median, or Mode)
--   Sex (Mode)
--   Age (Mean, Median, or Mode)
--   Birth Year (Mean, Median, or Mode)
--   Education Degree (Median or Mode)
--   Education Years (Mean, Median, or Mode)
--   Ethnicity (Mode)
--   SAT (Mean, Median, or Mode)
--   Region (Mode)
-
-## Ex: Failure Data Centrality
-
-::: {.callout title="Example 3.31"}
-For each variable in the failure time dataset, what measures of centrality would we use?
-:::
-
-. . .
-
--   Gear Teeth (***YOUR ANSWER***)
--   Number of Fasteners (***YOUR ANSWER***)
--   Hardness (***YOUR ANSWER***)
--   Material (***YOUR ANSWER***)
--   Shaft Diameter (***YOUR ANSWER***)
--   Engine Temperature (***YOUR ANSWER***)
--   Vibration (***YOUR ANSWER***)
--   Lubricant (***YOUR ANSWER***)
--   Failure Time (***YOUR ANSWER***)
-
-## Ex: CS Data Variability
-
-::: {.callout title="Example 3.32"}
-For each variable in the CS dataset, what measures of variability (or spread) would we use?
-:::
-
-. . .
-
--   Income (Variance, Standard Deviation, IQR, Range, or FNS)
--   Sex (Counts or Proportions)
--   Age (Variance, Standard Deviation, IQR, Range, or FNS)
--   Birth Year (Variance, Standard Deviation, IQR, Range, or FNS)
--   Education Degree (Counts or Proportions)
--   Education Years (Variance, Standard Deviation, IQR, Range, or FNS)
--   Ethnicity (Counts or Proportions)
--   SAT (Variance, Standard Deviation, IQR, Range, or FNS)
--   Region (Counts or Proportions)
-
-## Ex: Failure Data Variability
-
-::: {.callout title="Example 3.32"}
-For each variable in the failure time dataset, what measures of variability (or spread) would we use?
-:::
-
-. . .
-
--   Gear Teeth (***YOUR ANSWER***)
--   Number of Fasteners (***YOUR ANSWER***)
--   Hardness (***YOUR ANSWER***)
--   Material (***YOUR ANSWER***)
--   Shaft Diameter (***YOUR ANSWER***)
--   Engine Temperature (***YOUR ANSWER***)
--   Vibration (***YOUR ANSWER***)
--   Lubricant (***YOUR ANSWER***)
--   Failure Time (***YOUR ANSWER***)
-
-## Ex: Central Tendency
-
-::: {.callout title="Example 2.33"}
-For each of the following variables, which measures of central tendency would we use?
-
--   Weight
--   Favorite Color
--   BMI
-:::
-
-. . .
-
--   Weight (Mean, Median, or Mode)
--   Favorite Color (Mode)
--   BMI (Mean, Median, or Mode)
-
-## Ex: Central Tendency
-
-::: {.callout title="Example 2.34"}
-For each of the following variables, which measures of central tendency would we use?
-
--   Satisfaction Rating: Very Unsatisfied to Very Satisfied
--   Place of Birth
--   Height
-:::
-
-. . .
-
--   Satisfaction Rating: Very Unsatisfied to Very Satisfied (***YOUR ANSWER***)
--   Place of Birth (***YOUR ANSWER***)
--   Height (***YOUR ANSWER***)
-
-## Ex: Variability
-
-::: {.callout title="Example 2.35"}
-For each of the following variables, which measures of variability (or spread) would we use?
-
--   Fuel Efficiency, in MPG
--   Clothing Brand
--   Bus Wait Times
-:::
-
-. . .
-
--   Fuel Efficiency, in MPG (Variance, Standard Deviation, IQR, Range, or FNS)
--   Clothing Brand (Counts or Proportions)
--   Bus Wait Times (Variance, Standard Deviation, IQR, Range, or FNS)
-
-## Ex: Variability
-
-::: {.callout title="Example 2.36"}
-For each of the following variables, which measures of variability would we use?
-
--   Wood Type
--   Flour Amount in Recipe
--   Tire Tread Life
-:::
-
-. . .
-
--   Wood Type (***YOUR ANSWER***)
--   Flour Amount in Recipe (***YOUR ANSWER***)
--   Tire Tread Life (***YOUR ANSWER***)
+## Choosing Summary Measures
+
+- **Categorical data:** use the mode for centrality and proportions for variability.
+- **Quantitative data:** use the mean or median for centrality, and the standard deviation or IQR for variability.
+- **Grouped comparisons:** use grouped summaries to compare quantitative variables across categories.
+- **Two quantitative variables:** use the correlation coefficient to describe the direction and strength of a linear relationship.

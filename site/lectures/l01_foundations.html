@@ -139,250 +139,116 @@
 </div>
 
 </section>
-<section id="what-is-statistics" class="slide level2">
-<h2>What is Statistics?</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Definition 1.1</strong></p>
-</div>
-<div class="callout-content">
-<p>The field of <strong>statistics</strong> is concerned with the scientific study of collecting, organizing, analyzing, and drawing conclusions from data.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="population" class="slide level2">
-<h2>Population</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Definition 1.2</strong></p>
-</div>
-<div class="callout-content">
-<p>A <strong>population</strong> is the collection or set of all objects or measurements that are of interest to the collector.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="parameter" class="slide level2">
-<h2>Parameter</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Definition 1.3</strong></p>
-</div>
-<div class="callout-content">
-<p>A <strong>parameter</strong> is any quantity of a statistical population that summarizes or describes an aspect of the population. These are often denoted as Greek letters or Latin letters without diacritics (e.g., <span class="math inline">\(\hat{}\)</span>, <span class="math inline">\(\tilde{}\)</span>, <span class="math inline">\(\bar{}\)</span>, etc.)</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>Some examples of population parameters are:</p>
+<section id="the-content-creation-dataset" class="slide level2">
+<h2>The Content Creation Dataset</h2>
+<p>Throughout these lectures we will use a sample of <strong>346 short-form videos</strong> posted on YouTube, TikTok, and Instagram Reels. For each video, the dataset records:</p>
 <ul>
-<li>The population mean <span class="math inline">\(\mu\)</span></li>
-<li>The population proportion <span class="math inline">\(p\)</span></li>
-<li>The population variance <span class="math inline">\(\sigma^2\)</span></li>
-<li>The population standard deviation <span class="math inline">\(\sigma\)</span></li>
+<li><strong>Categorical variables:</strong> platform, topic, video format, thumbnail style, production effort, posting day, posting time, and whether paid promotion was used.</li>
+<li><strong>Quantitative variables:</strong> creator audience size, creator tenure, posting frequency, video length, title length, impressions, views, watch time, percentage viewed, likes, comments, shares, and subscribers gained.</li>
+</ul>
+<p>There are no missing values. The dataset is a sample, so we will use it to learn about the larger population of short-form videos.</p>
+</section>
+<section id="definitions-populations-and-samples" class="slide level2">
+<h2>Definitions: Populations and Samples</h2>
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Definitions</strong></p>
+</div>
+<div class="callout-content">
+<p><strong>Statistics</strong> is the field concerned with collecting, organizing, analyzing, and drawing conclusions from data.</p>
+<p>A <strong>population</strong> is the complete collection of all objects or measurements of interest.</p>
+<p>A <strong>sample</strong> is a subset of data selected from a population.</p>
+<p>A <strong>parameter</strong> is a numerical summary of a population. Parameters are often denoted by Greek letters, such as <span class="math inline">\(\mu\)</span> for a population mean and <span class="math inline">\(p\)</span> for a population proportion.</p>
+<p>A <strong>statistic</strong> is a numerical summary computed from a sample. Statistics are often denoted by Latin letters, such as <span class="math inline">\(\bar{x}\)</span> for a sample mean and <span class="math inline">\(\hat{p}\)</span> for a sample proportion.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="example-average-views" class="slide level2">
+<h2>Example: Average Views</h2>
+<p>Suppose we want to study the average number of first-week views for all short-form videos posted on YouTube, TikTok, and Instagram Reels. We collect data on 346 videos and compute the average number of first-week views for those 346 videos.</p>
+<ul>
+<li>The <strong>population</strong> is all short-form videos posted on these three platforms.</li>
+<li>The <strong>sample</strong> is the 346 videos in our dataset.</li>
+<li>The <strong>parameter</strong> is the average first-week views for all videos in the population, denoted <span class="math inline">\(\mu\)</span>.</li>
+<li>The <strong>statistic</strong> is the average first-week views for the 346 sampled videos, denoted <span class="math inline">\(\bar{x}\)</span>.</li>
+</ul>
+</section>
+<section id="example-paid-promotion" class="slide level2">
+<h2>Example: Paid Promotion</h2>
+<p>Suppose we want to know what proportion of all short-form videos use paid promotion. In our sample, 35 of the 346 videos used paid promotion, so the sample proportion is <span class="math inline">\(35/346 \approx 0.101\)</span>.</p>
+<ul>
+<li>The <strong>population</strong> is all short-form videos posted on these three platforms.</li>
+<li>The <strong>sample</strong> is the 346 videos in our dataset.</li>
+<li>The <strong>parameter</strong> is the proportion of all videos in the population that use paid promotion, denoted <span class="math inline">\(p\)</span>.</li>
+<li>The <strong>statistic</strong> is the proportion of sampled videos that use paid promotion, denoted <span class="math inline">\(\hat{p} \approx 0.101\)</span>.</li>
+</ul>
+</section>
+<section id="practice-average-watch-time" class="slide level2">
+<h2>Practice: Average Watch Time</h2>
+<p>A marketing team wants to study the average first-week watch time for all short-form videos on these platforms. They collect the 346 videos in our dataset and compute the average watch time of those videos.</p>
+<p>Identify the population, sample, population parameter, and sample statistic, including the appropriate symbols.</p>
+<div class="fragment">
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Solution</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><strong>Population:</strong> all short-form videos posted on YouTube, TikTok, and Instagram Reels.</li>
+<li><strong>Sample:</strong> the 346 videos in the dataset.</li>
+<li><strong>Parameter:</strong> the average first-week watch time for all videos in the population, denoted <span class="math inline">\(\mu\)</span>.</li>
+<li><strong>Statistic:</strong> the average first-week watch time for the 346 sampled videos, denoted <span class="math inline">\(\bar{x}\)</span>.</li>
 </ul>
 </div>
-</section>
-<section id="sample" class="slide level2">
-<h2>Sample</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Definition 1.4</strong></p>
-</div>
-<div class="callout-content">
-<p>The <strong>sample</strong> is a subset of data selected from a population. The size of a sample is the number of elements in it.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="statistic" class="slide level2">
-<h2>Statistic</h2>
+<section id="definitions-descriptive-statistics-and-inference" class="slide level2">
+<h2>Definitions: Descriptive Statistics and Inference</h2>
 <div class="callout callout-none no-icon callout-titled callout-style-simple">
 <div class="callout-body">
 <div class="callout-title">
-<p><strong>Definition 1.5</strong></p>
+<p><strong>Definitions</strong></p>
 </div>
 <div class="callout-content">
-<p>A <strong>statistic</strong> is any quantity computed from values in a sample which is considered for a statistical purpose. These are often denoted as Latin letters and sometimes include diacritics.</p>
+<p><strong>Descriptive statistics</strong> organize, describe, summarize, and display data.</p>
+<p><strong>Statistical inference</strong> is an estimate, prediction, decision, or generalization about a population based on information from a sample.</p>
 </div>
 </div>
 </div>
+</section>
+<section id="example-describing-the-sample" class="slide level2">
+<h2>Example: Describing the Sample</h2>
+<p>An analyst reports that the average first-week watch time in the sample of 346 videos is about <strong>21.1 seconds</strong> and that the median is <strong>18 seconds</strong>.</p>
+<p>This is an example of <strong>descriptive statistics</strong>. The analyst is summarizing the sample and is not making a claim about all short-form videos.</p>
+</section>
+<section id="example-generalizing-beyond-the-sample" class="slide level2">
+<h2>Example: Generalizing Beyond the Sample</h2>
+<p>An analyst finds that <strong>10.1%</strong> of the sampled videos used paid promotion and concludes that roughly <strong>10% of all short-form videos on these platforms</strong> use paid promotion.</p>
+<p>This is an example of <strong>statistical inference</strong>. The analyst uses a sample statistic to make a generalization about the population.</p>
+</section>
+<section id="practice-descriptive-or-inferential" class="slide level2">
+<h2>Practice: Descriptive or Inferential?</h2>
+<p>A researcher finds that 95% of the sampled videos have an average percentage viewed between 5% and 20%, then concludes that the average percentage viewed for all short-form videos on these platforms is likely between 5% and 20%.</p>
+<p>Is this descriptive statistics or statistical inference?</p>
 <div class="fragment">
-<p>Some examples of sample statistics are:</p>
-<ul>
-<li>The sample mean <span class="math inline">\(\bar{x}\)</span></li>
-<li>The sample proportion <span class="math inline">\(\hat{p}\)</span></li>
-<li>The sample variance <span class="math inline">\(s^2\)</span></li>
-<li>The sample standard deviation <span class="math inline">\(s\)</span></li>
-</ul>
-</div>
-</section>
-<section id="ex-adult-heights" class="slide level2">
-<h2>Ex: Adult Heights</h2>
 <div class="callout callout-none no-icon callout-titled callout-style-simple">
 <div class="callout-body">
 <div class="callout-title">
-<p><strong>Example 1.1</strong></p>
+<p><strong>Solution</strong></p>
 </div>
 <div class="callout-content">
-<p>A researcher wants to study the average height of all adult males in a city. She measures the height of 200 randomly selected adult males and computes the mean of these 200 heights.</p>
+<p>This is <strong>statistical inference</strong>. The researcher uses a summary of the sample to make a claim about the entire population of short-form videos.</p>
 </div>
 </div>
 </div>
-<div class="fragment">
-<p>The population is <strong><em>all adult males in the city</em></strong>. The sample is the <strong><em>200 randomly selected adult males</em></strong>. The population parameter is the <strong><em>average height of all adult males in the city,</em></strong> <span class="math inline">\(\mu\)</span>. The sample statistic is the <strong><em>average height of the 200 random selected males,</em></strong> <span class="math inline">\(\bar{x}\)</span>.</p>
 </div>
-</section>
-<section id="ex-groceries" class="slide level2">
-<h2>Ex: Groceries</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 1.2</strong></p>
-</div>
-<div class="callout-content">
-<p>A survey is conducted to find out the proportion of families in a specific town that spend more than $1000 a month on groceries. Data is collected from 150 randomly selected families and it is found that 60% of these families spend more than $1000 a month on groceries.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>The population is <strong><em>all families in the specific town</em></strong>. The sample is the <strong><em>150 randomly selected families in the town</em></strong>. The parameter is the <strong><em>proportion of all families in the town that spend more than $1000 a month on groceries,</em></strong> <span class="math inline">\(p\)</span>. The statistic is the <strong><em>proportion of the 150 families that spend more than $1000 a month on groceries,</em></strong> <span class="math inline">\(\hat{p}\)</span>.</p>
-</div>
-</section>
-<section id="ex-dog-weights" class="slide level2">
-<h2>Ex: Dog Weights</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 1.3</strong></p>
-</div>
-<div class="callout-content">
-<p>A researcher wants to study the average weight of a certain breed of dog. She calculates the mean weight from a sample of 200 randomly selected dogs of that breed.</p>
-<p>In this example, what are the population and sample and what are the population parameter and sample statistic, along with their appropriate symbols?</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>The population is <strong><em>YOUR ANSWER</em></strong>. The sample is the <strong><em>YOUR ANSWER</em></strong>. The parameter is the <strong><em>YOUR ANSWER,</em></strong> <span class="math inline">\(\text{symbol here}\)</span>. The statistic is the <strong><em>YOUR ANSWER,</em></strong> <span class="math inline">\(\text{symbol here}\)</span>.</p>
-</div>
-</section>
-<section id="ex-diabetes-prevalence" class="slide level2">
-<h2>Ex: Diabetes Prevalence</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 1.4</strong></p>
-</div>
-<div class="callout-content">
-<p>A health organization studies the prevalence of diabetes among adults aged 40-60 in a city. They calculate the proportion of diabetes cases from a sample of 300 individuals in this age group.</p>
-<p>In this example, what are the population and sample and what are the population parameter and sample statistic, along with their appropriate symbols?</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>The population is <strong><em>YOUR ANSWER</em></strong>. The sample is the <strong><em>YOUR ANSWER</em></strong>. The parameter is the <strong><em>YOUR ANSWER,</em></strong> <span class="math inline">\(\text{symbol here}\)</span>. The statistic is the <strong><em>YOUR ANSWER,</em></strong> <span class="math inline">\(\text{symbol here}\)</span>.</p>
-</div>
-</section>
-<section id="descriptive-statistics" class="slide level2">
-<h2>Descriptive Statistics</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Definition 1.6</strong></p>
-</div>
-<div class="callout-content">
-<p><strong>Descriptive statistics</strong> are statistics that assist us in organizing, describing, summarizing, and displaying experimental or observational data.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="statistical-inference" class="slide level2">
-<h2>Statistical Inference</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Definition 1.7</strong></p>
-</div>
-<div class="callout-content">
-<p>A <strong>statistical inference</strong> is an estimate, a prediction, a decision, or a generalization about the population based on information contained in a sample.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="ex-athlete-heights" class="slide level2">
-<h2>Ex: Athlete Heights</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 1.5</strong></p>
-</div>
-<div class="callout-content">
-<p>A researcher collects a random sample of 30 athletes from a specific country. They report that the sample mean height (<span class="math inline">\(\bar{x}\)</span>) of 30 athletes in a country is 170 cm.</p>
-<p>Is this an example of descriptive statistics or statistical inference?</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>This is an example of descriptive statistics.</p>
-</div>
-</section>
-<section id="ex-defective-parts" class="slide level2">
-<h2>Ex: Defective Parts</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 1.6</strong></p>
-</div>
-<div class="callout-content">
-<p>A worker takes a random sample of 50 parts manufactured at a specific location. They find that the sample proportion (<span class="math inline">\(\hat{p}\)</span>) of defective parts 5% and state that they expect that 5% of all parts are likely defective.</p>
-<p>Is this an example of descriptive statistics or statistical inference?</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>This is an example of statistical inference.</p>
-</div>
-</section>
-<section id="ex-cell-toxicity" class="slide level2">
-<h2>Ex: Cell Toxicity</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 1.7</strong></p>
-</div>
-<div class="callout-content">
-<p>A research scientist collects a random sample of 100 cells from a particular tissue sample and measures the toxicity level for each cell. They find that 95% of toxicity levels are between 30 and 50 ppm and conclude that toxicity levels for all cells likely fall within this range.</p>
-<p>Is this an example of descriptive statistics or statistical inference?</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>This is an example of <strong><em>YOUR ANSWER</em></strong>.</p>
-</div>
-</section>
-<section id="ex-bridge-strength" class="slide level2">
-<h2>Ex: Bridge Strength</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 1.8</strong></p>
-</div>
-<div class="callout-content">
-<p>An engineer is testing the strength of a material used in bridge construction. They produce 50 batches of this material and test how much weight each batch of material can hold before breaking. They report that the average weight held by the material before breaking is 200 pounds.</p>
-<p>Is this an example of descriptive statistics or statistical inference?</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>This is an example of <strong><em>YOUR ANSWER</em></strong>.</p>
 
 
-</div>
 </section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">

@@ -139,264 +139,90 @@
 </div>
 
 </section>
-<section id="simple-random-sample" class="slide level2">
-<h2>Simple Random Sample</h2>
+<section id="definitions-simple-random-and-systematic-sampling" class="slide level2">
+<h2>Definitions: Simple Random and Systematic Sampling</h2>
 <div class="callout callout-none no-icon callout-titled callout-style-simple">
 <div class="callout-body">
 <div class="callout-title">
-<p><strong>Definition 2.1</strong></p>
+<p><strong>Definitions</strong></p>
 </div>
 <div class="callout-content">
-<p>A sample selected in such a way that every element of the population has an equal chance of being chosen is called a <strong>simple random sample</strong>.</p>
+<p>A <strong>simple random sample</strong> is a sample selected in such a way that every element of the population has an equal chance of being chosen.</p>
+<p>A <strong>systematic sample</strong> is a sample in which every <span class="math inline">\(K^{th}\)</span> element in the sampling frame (the list of population elements) is selected after a suitable random start for the first element.</p>
 </div>
 </div>
 </div>
+</section>
+<section id="example-simple-random-sample" class="slide level2">
+<h2>Example: Simple Random Sample</h2>
+<p>An analyst has a database containing 10,000 short-form videos. They assign each video a unique number from 1 to 10,000 and use a random number generator to select 346 of those numbers. Every video in the database has the same chance of being selected.</p>
+<p>This is a <strong>simple random sample</strong>.</p>
+</section>
+<section id="example-systematic-sample" class="slide level2">
+<h2>Example: Systematic Sample</h2>
+<p>A platform provides an analyst with a list of videos in chronological order. The analyst randomly chooses one of the first 29 videos as a starting point, then selects every 29th video after that until 346 videos have been selected.</p>
+<p>This is a <strong>systematic sample</strong>. The random start helps avoid a predictable pattern in the selection.</p>
+</section>
+<section id="practice-every-tenth-video" class="slide level2">
+<h2>Practice: Every Tenth Video</h2>
+<p>A research assistant watches a live feed of newly posted videos. They randomly choose one of the first 10 videos, then select every 10th video after that for review.</p>
+<p>What type of sampling method is this?</p>
 <div class="fragment">
 <div class="callout callout-none no-icon callout-titled callout-style-simple">
 <div class="callout-body">
 <div class="callout-title">
-<p><strong>Example 2.1</strong></p>
+<p><strong>Solution</strong></p>
 </div>
 <div class="callout-content">
-<p>A teacher wants to survey 10 students out of a class of 50 about their study habits. She writes each student’s name on a piece of paper, puts the slips in a hat, and randomly draws 10 names.</p>
+<p>This is a <strong>systematic sample</strong>. After a random start, the assistant selects every <span class="math inline">\(K^{th}\)</span> video, where <span class="math inline">\(K = 10\)</span>.</p>
 </div>
 </div>
 </div>
 </div>
 </section>
-<section id="systematic-sample" class="slide level2">
-<h2>Systematic Sample</h2>
+<section id="definitions-stratified-cluster-and-multistage-sampling" class="slide level2">
+<h2>Definitions: Stratified, Cluster, and Multistage Sampling</h2>
 <div class="callout callout-none no-icon callout-titled callout-style-simple">
 <div class="callout-body">
 <div class="callout-title">
-<p><strong>Definition 2.2</strong></p>
+<p><strong>Definitions</strong></p>
 </div>
 <div class="callout-content">
-<p>A <strong>systematic sample</strong> is a sample in which every <span class="math inline">\(K^{th}\)</span> element in the sampling frame is selected after a suitable random start for the first element.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 2.2</strong></p>
-</div>
-<div class="callout-content">
-<p>A company wants to inspect the quality of items in a production line. They decide to inspect every 10th item after the first item is chosen randomly. If the first randomly selected item is the 4th, they inspect items 4, 14, 24, and so on.</p>
-</div>
+<p>A <strong>stratified sample</strong> is obtained by dividing the population into nonoverlapping groups called strata, then randomly selecting a proportional number of elements from each stratum.</p>
+<p>In <strong>cluster sampling</strong>, the sampling unit is a group of elements called a cluster. Clusters are usually natural groups, and entire selected clusters are included in the sample.</p>
+<p><strong>Multistage sampling</strong> collects information from the whole sample and then collects additional data, either at the same time or later, from subsamples.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="stratified-sample" class="slide level2">
-<h2>Stratified Sample</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Definition 2.3</strong></p>
-</div>
-<div class="callout-content">
-<p>A sample is obtained by dividing the population into nonoverlapping groups, called strata, based on some factors. A proportional number of elements are then randomly selected from each stratum. This is called a <strong>stratified sample</strong>.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 2.3</strong></p>
-</div>
-<div class="callout-content">
-<p>A company wants to survey employee satisfaction. To ensure representation across job roles, the employees are divided into strata based on roles: managers, technical staff, administrative staff, and customer service representatives. The survey then selects 10 employees randomly from each of these predefined groups.</p>
-</div>
-</div>
-</div>
-</div>
+<section id="example-stratified-sample" class="slide level2">
+<h2>Example: Stratified Sample</h2>
+<p>An analyst wants to ensure that each platform is represented in the sample. They divide all videos into three strata: YouTube, TikTok, and Instagram Reels. Then they randomly select videos from each stratum in proportion to its size in the population, roughly 41% YouTube, 36% TikTok, and 23% Instagram Reels.</p>
+<p>This is a <strong>stratified sample</strong>.</p>
 </section>
-<section id="cluster-sample" class="slide level2">
-<h2>Cluster Sample</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Definition 2.4</strong></p>
-</div>
-<div class="callout-content">
-<p>In <strong>cluster sampling</strong>, the sampling unit contains groups of elements called clusters instead of individual elements of the population. A cluster is an intact group naturally available in the field.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 2.4</strong></p>
-</div>
-<div class="callout-content">
-<p>A city wants to survey households about public transportation. There are 15 neighborhoods (clusters) in the city. Five neighborhoods are randomly selected, and all households within those neighborhoods are surveyed.</p>
-</div>
-</div>
-</div>
-</div>
+<section id="example-cluster-sample" class="slide level2">
+<h2>Example: Cluster Sample</h2>
+<p>An analyst randomly selects 20 creators from a large list of creators and then includes <strong>every video</strong> posted by those 20 creators in the sample.</p>
+<p>This is a <strong>cluster sample</strong>. The creators are the clusters, and all videos within each selected cluster are included.</p>
 </section>
-<section id="multistage-sample" class="slide level2">
-<h2>Multistage Sample</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Definition 2.5</strong></p>
-</div>
-<div class="callout-content">
-<p><strong>Multistage sampling</strong> involves collecting information from the whole sample, followed by additional data collection either at the same time or later from subsamples.</p>
-</div>
-</div>
-</div>
+<section id="practice-platforms-creators-and-videos" class="slide level2">
+<h2>Practice: Platforms, Creators, and Videos</h2>
+<p>A national study selects 2 platforms at random. Within each selected platform, the researchers randomly choose 15 creators. Finally, they randomly select 5 videos from each selected creator.</p>
+<p>What type of sampling method is this?</p>
 <div class="fragment">
 <div class="callout callout-none no-icon callout-titled callout-style-simple">
 <div class="callout-body">
 <div class="callout-title">
-<p><strong>Example 2.5</strong></p>
+<p><strong>Solution</strong></p>
 </div>
 <div class="callout-content">
-<p>A national survey aims to assess high school students’ opinions on standardized testing. First, researchers randomly select 10 states from across the country. Within each selected state, they randomly choose 5 school districts. Next, they randomly select 3 high schools within each of those districts. Finally, within each selected high school, 30 students are randomly surveyed.</p>
+<p>This is <strong>multistage sampling</strong>. The researchers sample in stages: platforms, then creators within platforms, then videos within creators.</p>
 </div>
 </div>
 </div>
 </div>
-</section>
-<section id="ex-equal-chance-selection" class="slide level2">
-<h2>Ex: Equal Chance Selection</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 2.6</strong></p>
-</div>
-<div class="callout-content">
-<p>In which type of sampling method does every individual of the population have an equal chance of being selected?</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>This refers to <strong><em>simple random sampling</em></strong>. Every individual in a simple random sample has an equal chance of being selected.</p>
-</div>
-</section>
-<section id="ex-selection-from-hierarchies" class="slide level2">
-<h2>Ex: Selection from Hierarchies</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 2.6</strong></p>
-</div>
-<div class="callout-content">
-<p>Which type of sampling method is often used to sample from populations that have natural hierarchies?</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>Sampling from populations with natural hierarchies often involves <strong><em>multistage sampling</em></strong>. At each step of the process, you sample from one level of the hierarchy.</p>
-</div>
-</section>
-<section id="ex-group-selection" class="slide level2">
-<h2>Ex: Group Selection</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 2.7</strong></p>
-</div>
-<div class="callout-content">
-<p>Which type of sampling method randomly selects entire groups of individuals to be part of the sample rather than selecting the individuals directly?</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>This refers to <strong><em>cluster sampling</em></strong>. In cluster sampling, entire groups, or clusters, are randomly selected and every individual in the group/cluster is included in the sample.</p>
-</div>
-</section>
-<section id="ex-subgroup-selection" class="slide level2">
-<h2>Ex: Subgroup Selection</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 2.8</strong></p>
-</div>
-<div class="callout-content">
-<p>Which type of sampling method divides the population into distinct subgroups and randomly selects a fixed number of individuals from each subgroup?</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>This refers to <strong><em>stratified sampling</em></strong>. Researchers create or define subgroups of the population. They then select a certain number of individuals within each subgroup.</p>
-</div>
-</section>
-<section id="ex-city-survey" class="slide level2">
-<h2>Ex: City Survey</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 2.9</strong></p>
-</div>
-<div class="callout-content">
-<p>A researcher randomly selects 10 neighborhoods in a city and then surveys every household in those neighborhoods.</p>
-<p>What type of sampling is this?</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>This is an example of <strong><em>YOUR ANSWER</em></strong>. Why?</p>
-</div>
-</section>
-<section id="ex-polling-agency" class="slide level2">
-<h2>Ex: Polling Agency</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 2.10</strong></p>
-</div>
-<div class="callout-content">
-<p>A polling agency divides the population into males and females, then randomly selects a fixed number of individuals from each group to survey.</p>
-<p>What type of sampling is this?</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>This is an example of <strong><em>YOUR ANSWER</em></strong>. Why?</p>
-</div>
-</section>
-<section id="ex-rose-bushes" class="slide level2">
-<h2>Ex: Rose Bushes</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 2.11</strong></p>
-</div>
-<div class="callout-content">
-<p>A researcher needs to know how many rose flowers are afflicted with a certain disease. They randomly select 10 rose bushes from a flower garden with many rose bushes. They then look through every flower on each bush and record whether or not that flower has the disease.</p>
-<p>What type of sampling is this?</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>This is an example of <strong><em>YOUR ANSWER</em></strong>. Why?</p>
-</div>
-</section>
-<section id="ex-food-preferences" class="slide level2">
-<h2>Ex: Food Preferences</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 2.12</strong></p>
-</div>
-<div class="callout-content">
-<p>You are interested in understanding food choice preferences for customers at a certain restaurant. You stand outside the door and talk to every 5th customer that comes out of the restaurant.</p>
-<p>What type of sampling is this?</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>This is an example of <strong><em>YOUR ANSWER</em></strong>. Why?</p>
 
 
-</div>
 </section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">

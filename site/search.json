@@ -1,241 +1,248 @@
 [
   {
-    "objectID": "lectures/l04_data_visualization.html#data-distribution",
-    "href": "lectures/l04_data_visualization.html#data-distribution",
+    "objectID": "lectures/l04_data_visualization.html#the-content-creation-dataset",
+    "href": "lectures/l04_data_visualization.html#the-content-creation-dataset",
     "title": "Data Visualization",
-    "section": "Data Distribution",
-    "text": "Data Distribution\n\n\n\nDefinition 4.1\n\n\nThe distribution of a variable refers to which values a variable can take and how often (frequency) it takes on those values."
+    "section": "The Content Creation Dataset",
+    "text": "The Content Creation Dataset\nWe will visualize the same 346 short-form videos used in the numeric summaries lecture. The dataset includes categorical variables such as platform and video format, and quantitative variables such as views, watch time, and audience size."
   },
   {
-    "objectID": "lectures/l04_data_visualization.html#frequency-table",
-    "href": "lectures/l04_data_visualization.html#frequency-table",
+    "objectID": "lectures/l04_data_visualization.html#definitions-distribution-and-frequency-tables",
+    "href": "lectures/l04_data_visualization.html#definitions-distribution-and-frequency-tables",
     "title": "Data Visualization",
-    "section": "Frequency Table",
-    "text": "Frequency Table\nOne way to investigate the distribution of the data is using a frequency table.\n\n\n\nDefinition 4.2\n\n\nA frequency table shows the ranges of values of a variable and how many observations fall within those ranges."
+    "section": "Definitions: Distribution and Frequency Tables",
+    "text": "Definitions: Distribution and Frequency Tables\n\n\n\nDefinitions\n\n\nThe distribution of a variable describes which values the variable takes and how often it takes them.\nA frequency table shows ranges of values of a variable and how many observations fall within each range."
   },
   {
-    "objectID": "lectures/l04_data_visualization.html#ex-cs-data-age-dist",
-    "href": "lectures/l04_data_visualization.html#ex-cs-data-age-dist",
+    "objectID": "lectures/l04_data_visualization.html#example-frequency-table-and-histogram-for-views",
+    "href": "lectures/l04_data_visualization.html#example-frequency-table-and-histogram-for-views",
     "title": "Data Visualization",
-    "section": "Ex: CS Data Age Dist",
-    "text": "Ex: CS Data Age Dist\n\n\n\nExample 4.1\n\n\nCreate a frequency table and display the results for age in the CS dataset.\n\n\n\n\n\ncs_dataset &lt;- read.csv(\"../data/cs_dataset.csv\")\nattach(cs_dataset)\n\nage_binned &lt;- cut(Age, 8)\ntable(age_binned)"
+    "section": "Example: Frequency Table and Histogram for Views",
+    "text": "Example: Frequency Table and Histogram for Views\nFirst, bin the view counts and count how many videos fall in each bin:\n\nvideos |&gt;\n  mutate(views_bin = cut(views_first_7_days, breaks = 10)) |&gt;\n  count(views_bin)\n\n# A tibble: 10 × 2\n   views_bin               n\n   &lt;fct&gt;               &lt;int&gt;\n 1 (8.96e+03,1.36e+04]     8\n 2 (1.36e+04,1.82e+04]    27\n 3 (1.82e+04,2.28e+04]    76\n 4 (2.28e+04,2.74e+04]    75\n 5 (2.74e+04,3.2e+04]     76\n 6 (3.2e+04,3.66e+04]     43\n 7 (3.66e+04,4.11e+04]    21\n 8 (4.11e+04,4.57e+04]    13\n 9 (4.57e+04,5.03e+04]     5\n10 (5.03e+04,5.5e+04]      2\n\n\nThen display the distribution with a histogram:\n\nggplot(videos, aes(x = views_first_7_days)) +\n  geom_histogram(bins = 20, fill = \"steelblue\", color = \"white\") +\n  scale_x_continuous(labels = scales::comma) +\n  labs(x = \"First-week views\", y = \"Frequency\") +\n  theme_minimal()"
   },
   {
-    "objectID": "lectures/l04_data_visualization.html#ex-cs-data-income-dist",
-    "href": "lectures/l04_data_visualization.html#ex-cs-data-income-dist",
+    "objectID": "lectures/l04_data_visualization.html#example-frequency-table-and-histogram-for-watch-time",
+    "href": "lectures/l04_data_visualization.html#example-frequency-table-and-histogram-for-watch-time",
     "title": "Data Visualization",
-    "section": "Ex: CS Data Income Dist",
-    "text": "Ex: CS Data Income Dist\n\n\n\nExample 4.2\n\n\nCreate a frequency table and display the results for income in the CS dataset.\n\n\n\n\n\nincome_binned &lt;- cut(Income/1000, 10) # Income in Thousands\ntable(income_binned)"
+    "section": "Example: Frequency Table and Histogram for Watch Time",
+    "text": "Example: Frequency Table and Histogram for Watch Time\n\nvideos |&gt;\n  mutate(watch_bin = cut(average_watch_time_seconds, breaks = 10)) |&gt;\n  count(watch_bin)\n\n# A tibble: 9 × 2\n  watch_bin       n\n  &lt;fct&gt;       &lt;int&gt;\n1 (1.69,13]     114\n2 (13,24.3]     128\n3 (24.3,35.5]    60\n4 (35.5,46.7]    24\n5 (46.7,58]      10\n6 (58,69.2]       6\n7 (69.2,80.4]     2\n8 (80.4,91.6]     1\n9 (103,114]       1\n\n\n\nggplot(videos, aes(x = average_watch_time_seconds)) +\n  geom_histogram(bins = 20, fill = \"steelblue\", color = \"white\") +\n  labs(x = \"Average watch time (seconds)\", y = \"Frequency\") +\n  theme_minimal()"
   },
   {
-    "objectID": "lectures/l04_data_visualization.html#ex-failure-data-age-dist",
-    "href": "lectures/l04_data_visualization.html#ex-failure-data-age-dist",
+    "objectID": "lectures/l04_data_visualization.html#practice-audience-size-distribution",
+    "href": "lectures/l04_data_visualization.html#practice-audience-size-distribution",
     "title": "Data Visualization",
-    "section": "Ex: Failure Data Age Dist",
-    "text": "Ex: Failure Data Age Dist\n\n\n\nExample 4.3\n\n\nCreate a frequency table and display the results for failure time in the failure time dataset.\n\n\n\n\n\nfailure &lt;- read.csv(\"../data/failure_time.csv\")\nattach(failure)\n\n# YOUR CODE HERE (call variable ft_binned and use 8 bins)"
+    "section": "Practice: Audience Size Distribution",
+    "text": "Practice: Audience Size Distribution\nCreate a frequency table and histogram for creator_audience_size.\n\n\n\n\nSolution\n\n\n\n\n# A tibble: 9 × 2\n  audience_bin            n\n  &lt;fct&gt;               &lt;int&gt;\n1 (-98.5,3.39e+04]      177\n2 (3.39e+04,6.75e+04]    90\n3 (6.75e+04,1.01e+05]    41\n4 (1.01e+05,1.35e+05]    15\n5 (1.35e+05,1.69e+05]     9\n6 (1.69e+05,2.02e+05]     8\n7 (2.02e+05,2.36e+05]     2\n8 (2.36e+05,2.69e+05]     3\n9 (3.03e+05,3.37e+05]     1\n\n\n\n\n\n\n\n\n\nThe distribution is strongly right-skewed, with most creators having relatively small audiences and a few having very large audiences."
   },
   {
-    "objectID": "lectures/l04_data_visualization.html#ex-failure-data-time-dist",
-    "href": "lectures/l04_data_visualization.html#ex-failure-data-time-dist",
+    "objectID": "lectures/l04_data_visualization.html#definitions-skew",
+    "href": "lectures/l04_data_visualization.html#definitions-skew",
     "title": "Data Visualization",
-    "section": "Ex: Failure Data Time Dist",
-    "text": "Ex: Failure Data Time Dist\n\n\n\nExample 4.4\n\n\nCreate a frequency table and display the results for engine temperature in the failure time dataset.\n\n\n\n\n\n# YOUR CODE HERE (call variable temp_binned and use 10 bins)"
+    "section": "Definitions: Skew",
+    "text": "Definitions: Skew\n\n\n\nDefinition\n\n\nSkew describes the asymmetry of a distribution.\n\nA right-skewed distribution has a long tail on the right.\nA left-skewed distribution has a long tail on the left.\nA symmetric distribution has no strong tail in either direction."
   },
   {
-    "objectID": "lectures/l04_data_visualization.html#visual-descriptions",
-    "href": "lectures/l04_data_visualization.html#visual-descriptions",
+    "objectID": "lectures/l04_data_visualization.html#example-a-strongly-right-skewed-distribution",
+    "href": "lectures/l04_data_visualization.html#example-a-strongly-right-skewed-distribution",
     "title": "Data Visualization",
-    "section": "Visual Descriptions",
-    "text": "Visual Descriptions\nTwo key features to describe a distribution visually are its skew and modality."
+    "section": "Example: A Strongly Right-Skewed Distribution",
+    "text": "Example: A Strongly Right-Skewed Distribution\nComments are strongly right-skewed: most videos receive relatively few comments, while a few receive many.\n\nggplot(videos, aes(x = comments_first_7_days)) +\n  geom_histogram(bins = 30, fill = \"steelblue\", color = \"white\") +\n  labs(x = \"First-week comments\", y = \"Frequency\") +\n  theme_minimal()\n\n\n\nvideos |&gt;\n  summarise(\n    mean_comments = mean(comments_first_7_days),\n    median_comments = median(comments_first_7_days)\n  )\n\n# A tibble: 1 × 2\n  mean_comments median_comments\n          &lt;dbl&gt;           &lt;dbl&gt;\n1          90.0              27\n\n\nThe mean is much larger than the median because the long right tail pulls the mean upward."
   },
   {
-    "objectID": "lectures/l04_data_visualization.html#skew",
-    "href": "lectures/l04_data_visualization.html#skew",
+    "objectID": "lectures/l04_data_visualization.html#example-a-nearly-symmetric-distribution",
+    "href": "lectures/l04_data_visualization.html#example-a-nearly-symmetric-distribution",
     "title": "Data Visualization",
-    "section": "Skew",
-    "text": "Skew\n\n\n\nDefinition 4.3\n\n\nSkew is a measure of the asymmetry of a distribution."
+    "section": "Example: A Nearly Symmetric Distribution",
+    "text": "Example: A Nearly Symmetric Distribution\nFirst-week views are much closer to symmetric, although there is still a mild right tail.\n\nggplot(videos, aes(x = views_first_7_days)) +\n  geom_histogram(bins = 25, fill = \"steelblue\", color = \"white\") +\n  scale_x_continuous(labels = scales::comma) +\n  labs(x = \"First-week views\", y = \"Frequency\") +\n  theme_minimal()\n\n\n\nvideos |&gt;\n  summarise(\n    mean_views = mean(views_first_7_days),\n    median_views = median(views_first_7_days)\n  )\n\n# A tibble: 1 × 2\n  mean_views median_views\n       &lt;dbl&gt;        &lt;dbl&gt;\n1     27335.        26692\n\n\nThe mean and median are close because the distribution is much more balanced."
   },
   {
-    "objectID": "lectures/l04_data_visualization.html#skew-mean-and-median",
-    "href": "lectures/l04_data_visualization.html#skew-mean-and-median",
+    "objectID": "lectures/l04_data_visualization.html#practice-describing-skew",
+    "href": "lectures/l04_data_visualization.html#practice-describing-skew",
     "title": "Data Visualization",
-    "section": "Skew, Mean, and Median",
-    "text": "Skew, Mean, and Median\nThe mean is more affected by skew than the median. In general, the mean will be pulled in the direction of the skew.\nYou can use the relative position of the mean and median to obtain insights into whether the data are skewed:\n\nIf the mean is larger than the median, the data are skewed to the right\nIf the mean is smaller than the median, the data are skewed to the left\nIf the mean and median about the same, the data are more symmetric"
+    "section": "Practice: Describing Skew",
+    "text": "Practice: Describing Skew\nCreate a histogram for shares_first_7_days, then compute the mean and median. Describe the skew and explain how the mean and median compare.\n\n\n\n\nSolution\n\n\n\n\n\n\n\n\n\n\n\n# A tibble: 1 × 2\n  mean_shares median_shares\n        &lt;dbl&gt;         &lt;dbl&gt;\n1        302.           135\n\n\nThe distribution is strongly right-skewed. The mean is much larger than the median because a few videos have very large share counts."
   },
   {
-    "objectID": "lectures/l04_data_visualization.html#ex-cs-data-skew",
-    "href": "lectures/l04_data_visualization.html#ex-cs-data-skew",
+    "objectID": "lectures/l04_data_visualization.html#definitions-modality",
+    "href": "lectures/l04_data_visualization.html#definitions-modality",
     "title": "Data Visualization",
-    "section": "Ex: CS Data Skew",
-    "text": "Ex: CS Data Skew\n\n\n\nExample 4.5\n\n\nCompute the mean and median for income and SAT score. What do these potentially say about the skew of these distributions?\n\n\n\n\n\nmean(Income)\nmedian(Income)\n\nmean(SAT)\nmedian(SAT)"
+    "section": "Definitions: Modality",
+    "text": "Definitions: Modality\n\n\n\nDefinition\n\n\nModality is the number of peaks in a distribution.\n\nUnimodal: one peak.\nBimodal: two peaks.\nMultimodal: more than two peaks.\n\nWhen data are multimodal, a single measure of center or spread may hide important group structure."
   },
   {
-    "objectID": "lectures/l04_data_visualization.html#ex-failure-data-skew",
-    "href": "lectures/l04_data_visualization.html#ex-failure-data-skew",
+    "objectID": "lectures/l04_data_visualization.html#example-a-multimodal-distribution",
+    "href": "lectures/l04_data_visualization.html#example-a-multimodal-distribution",
     "title": "Data Visualization",
-    "section": "Ex: Failure Data Skew",
-    "text": "Ex: Failure Data Skew\n\n\n\nExample 4.6\n\n\nCompute the mean and median for failure time and shaft diameter. What do these potentially say about the skew of these distributions?\n\n\n\n\n\n# YOUR CODE HERE"
+    "section": "Example: A Multimodal Distribution",
+    "text": "Example: A Multimodal Distribution\nTitle length has several peaks. Many titles are short and punchy, while others are longer and more descriptive, so there is no single typical title length.\n\nggplot(videos, aes(x = title_length_words)) +\n  geom_histogram(bins = 25, fill = \"steelblue\", color = \"white\") +\n  labs(x = \"Title length (words)\", y = \"Frequency\") +\n  theme_minimal()"
   },
   {
-    "objectID": "lectures/l04_data_visualization.html#skew-and-numeric-summaries",
-    "href": "lectures/l04_data_visualization.html#skew-and-numeric-summaries",
+    "objectID": "lectures/l04_data_visualization.html#example-a-unimodal-distribution",
+    "href": "lectures/l04_data_visualization.html#example-a-unimodal-distribution",
     "title": "Data Visualization",
-    "section": "Skew and Numeric Summaries",
-    "text": "Skew and Numeric Summaries\nWhen data are symmetric, it is common to use the mean and variance/standard deviation as measures of central tendency and variability, respectively.\nWhen data are skewed, the median and five-number summary give more informative descriptions of the central tendency and variability (spread) of the data, respectively."
+    "section": "Example: A Unimodal Distribution",
+    "text": "Example: A Unimodal Distribution\nFirst-week views have one main peak, so the distribution is unimodal.\n\nggplot(videos, aes(x = views_first_7_days)) +\n  geom_histogram(bins = 25, fill = \"steelblue\", color = \"white\") +\n  scale_x_continuous(labels = scales::comma) +\n  labs(x = \"First-week views\", y = \"Frequency\") +\n  theme_minimal()"
   },
   {
-    "objectID": "lectures/l04_data_visualization.html#ex-identifying-skew",
-    "href": "lectures/l04_data_visualization.html#ex-identifying-skew",
+    "objectID": "lectures/l04_data_visualization.html#practice-describing-modality",
+    "href": "lectures/l04_data_visualization.html#practice-describing-modality",
     "title": "Data Visualization",
-    "section": "Ex: Identifying Skew",
-    "text": "Ex: Identifying Skew\n\n\n\nExample 4.7\n\n\nConsider the visualization below. How would you describe the skew of this distribution? What is the relationship between the mean and the median in these data?\n\n\n\nHistogram of data with most of the observations clustered to the left and some to the right\n\n\n\n\n\n\nThis distribution is right-skewed. The mean of the data will be pulled in the direction of the skew, meaning the mean will be greater than the median."
+    "section": "Practice: Describing Modality",
+    "text": "Practice: Describing Modality\nCreate a histogram for average_watch_time_seconds. Is the distribution unimodal, bimodal, or multimodal?\n\n\n\n\nSolution\n\n\n\n\n\n\n\n\n\n\n\nThe distribution is unimodal, with a long right tail."
   },
   {
-    "objectID": "lectures/l04_data_visualization.html#ex-identifying-skew-1",
-    "href": "lectures/l04_data_visualization.html#ex-identifying-skew-1",
+    "objectID": "lectures/l04_data_visualization.html#definitions-bar-charts",
+    "href": "lectures/l04_data_visualization.html#definitions-bar-charts",
     "title": "Data Visualization",
-    "section": "Ex: Identifying Skew",
-    "text": "Ex: Identifying Skew\n\n\n\nExample 4.8\n\n\nConsider the visualization below. How would you describe the skew of this distribution? What is the relationship between the mean and the median in these data?\n\n\n\nHistogram of data with most of the observations clustered to the right and some to the left\n\n\n\n\n\n\nThis distribution is YOUR ANSWER. Why?"
+    "section": "Definitions: Bar Charts",
+    "text": "Definitions: Bar Charts\n\n\n\nDefinition\n\n\nA bar chart displays a categorical variable by using bars whose lengths represent the proportion of observations in each category."
   },
   {
-    "objectID": "lectures/l04_data_visualization.html#modality",
-    "href": "lectures/l04_data_visualization.html#modality",
+    "objectID": "lectures/l04_data_visualization.html#example-platform-proportions",
+    "href": "lectures/l04_data_visualization.html#example-platform-proportions",
     "title": "Data Visualization",
-    "section": "Modality",
-    "text": "Modality\n\n\n\nDefinition 4.4\n\n\nModality refers to the number of peaks of a distribution.\n\n\n\nWhen the data are multimodal, single measures of centrality and variability will be misleading."
+    "section": "Example: Platform Proportions",
+    "text": "Example: Platform Proportions\n\nvideos |&gt;\n  count(platform) |&gt;\n  mutate(proportion = n / sum(n)) |&gt;\n  ggplot(aes(x = platform, y = proportion)) +\n  geom_col(fill = \"steelblue\") +\n  scale_y_continuous(labels = scales::percent) +\n  labs(x = \"Platform\", y = \"Proportion\") +\n  theme_minimal()"
   },
   {
-    "objectID": "lectures/l04_data_visualization.html#ex-identifying-modality",
-    "href": "lectures/l04_data_visualization.html#ex-identifying-modality",
+    "objectID": "lectures/l04_data_visualization.html#example-video-format-proportions",
+    "href": "lectures/l04_data_visualization.html#example-video-format-proportions",
     "title": "Data Visualization",
-    "section": "Ex: Identifying Modality",
-    "text": "Ex: Identifying Modality\n\n\n\nExample 4.9\n\n\nConsider the visualization below. Select the option that correctly describes the modality of the distribution.\n\n\n\nHistogram where bars rise until hitting a peak in the center and then fall again\n\n\n\n\n\n\nThis is a unimodal distribution (one peak)."
+    "section": "Example: Video Format Proportions",
+    "text": "Example: Video Format Proportions\n\nvideos |&gt;\n  count(video_format) |&gt;\n  mutate(proportion = n / sum(n)) |&gt;\n  ggplot(aes(x = fct_reorder(video_format, proportion), y = proportion)) +\n  geom_col(fill = \"steelblue\") +\n  coord_flip() +\n  scale_y_continuous(labels = scales::percent) +\n  labs(x = NULL, y = \"Proportion\") +\n  theme_minimal()"
   },
   {
-    "objectID": "lectures/l04_data_visualization.html#ex-identifying-modality-1",
-    "href": "lectures/l04_data_visualization.html#ex-identifying-modality-1",
+    "objectID": "lectures/l04_data_visualization.html#practice-bar-chart",
+    "href": "lectures/l04_data_visualization.html#practice-bar-chart",
     "title": "Data Visualization",
-    "section": "Ex: Identifying Modality",
-    "text": "Ex: Identifying Modality\n\n\n\nExample 4.10\n\n\nConsider the visualization below. Select the option that correctly describes the modality of the distribution.\n\n\n\nHistogram where bars rise and then fall and then rise and then fall again\n\n\n\n\n\n\nThis is a YOUR ANSWER. Why?"
+    "section": "Practice: Bar Chart",
+    "text": "Practice: Bar Chart\nCreate a bar chart showing the proportion of videos in each topic.\n\n\n\n\nSolution"
   },
   {
-    "objectID": "lectures/l04_data_visualization.html#pie-charts",
-    "href": "lectures/l04_data_visualization.html#pie-charts",
+    "objectID": "lectures/l04_data_visualization.html#definitions-histograms",
+    "href": "lectures/l04_data_visualization.html#definitions-histograms",
     "title": "Data Visualization",
-    "section": "Pie Charts",
-    "text": "Pie Charts\n\n\n\nDefinition 4.5\n\n\nA pie chart is a type of graph in which a circle is divided into sectors that each represent a proportion of the whole.\nThese can be used to visualize qualitative data of any size."
+    "section": "Definitions: Histograms",
+    "text": "Definitions: Histograms\n\n\n\nDefinition\n\n\nA histogram displays the distribution of a quantitative variable by grouping values into bins and showing the frequency or proportion of observations in each bin."
   },
   {
-    "objectID": "lectures/l04_data_visualization.html#ex-cs-data-pie-chart",
-    "href": "lectures/l04_data_visualization.html#ex-cs-data-pie-chart",
+    "objectID": "lectures/l04_data_visualization.html#example-histogram-of-views",
+    "href": "lectures/l04_data_visualization.html#example-histogram-of-views",
     "title": "Data Visualization",
-    "section": "Ex: CS Data Pie Chart",
-    "text": "Ex: CS Data Pie Chart\n\n\n\nExample 4.11\n\n\nUse a pie chart to create a visualization for ethnicity in the CS dataset.\n\n\n\n\n\nethnic_table &lt;- table(Ethnicity)\nethnic_data &lt;- data.frame(Ethnicity = names(ethnic_table), Count = as.numeric(ethnic_table))\n\nggplot(ethnic_data, aes(x = \"\", y = Count, fill = Ethnicity)) +\n  geom_bar(stat = \"identity\", width = 1) +\n  coord_polar(\"y\") +\n  labs(title = \"Pie Chart of Ethnicity\") +\n  theme_void()"
+    "section": "Example: Histogram of Views",
+    "text": "Example: Histogram of Views\n\nggplot(videos, aes(x = views_first_7_days)) +\n  geom_histogram(bins = 25, fill = \"steelblue\", color = \"white\") +\n  scale_x_continuous(labels = scales::comma) +\n  labs(x = \"First-week views\", y = \"Frequency\") +\n  theme_minimal()"
   },
   {
-    "objectID": "lectures/l04_data_visualization.html#ex-failure-data-pie-chart",
-    "href": "lectures/l04_data_visualization.html#ex-failure-data-pie-chart",
+    "objectID": "lectures/l04_data_visualization.html#example-histogram-of-audience-size",
+    "href": "lectures/l04_data_visualization.html#example-histogram-of-audience-size",
     "title": "Data Visualization",
-    "section": "Ex: Failure Data Pie Chart",
-    "text": "Ex: Failure Data Pie Chart\n\n\n\nExample 4.12\n\n\nUse a pie chart to create a visualization of lubricant in the failure time dataset.\n\n\n\n\n\n# YOUR CODE HERE"
+    "section": "Example: Histogram of Audience Size",
+    "text": "Example: Histogram of Audience Size\n\nggplot(videos, aes(x = creator_audience_size)) +\n  geom_histogram(bins = 25, fill = \"steelblue\", color = \"white\") +\n  scale_x_continuous(labels = scales::comma) +\n  labs(x = \"Creator audience size\", y = \"Frequency\") +\n  theme_minimal()"
   },
   {
-    "objectID": "lectures/l04_data_visualization.html#bar-charts",
-    "href": "lectures/l04_data_visualization.html#bar-charts",
+    "objectID": "lectures/l04_data_visualization.html#practice-histogram",
+    "href": "lectures/l04_data_visualization.html#practice-histogram",
     "title": "Data Visualization",
-    "section": "Bar Charts",
-    "text": "Bar Charts\n\n\n\nDefinition 4.5\n\n\nA bar chart can also be used to visualize qualitative data. It shows the count or proportion of observations in each category as a bar.\nThese can be used to visualize qualitative data of any size."
+    "section": "Practice: Histogram",
+    "text": "Practice: Histogram\nCreate a histogram for comments_first_7_days.\n\n\n\n\nSolution\n\n\n\n\n\n\n\n\n\n\n\nThe histogram shows a strong right skew with a long tail of videos that received many comments."
   },
   {
-    "objectID": "lectures/l04_data_visualization.html#ex-cs-data-bar-chart",
-    "href": "lectures/l04_data_visualization.html#ex-cs-data-bar-chart",
+    "objectID": "lectures/l04_data_visualization.html#definitions-box-plots",
+    "href": "lectures/l04_data_visualization.html#definitions-box-plots",
     "title": "Data Visualization",
-    "section": "Ex: CS Data Bar Chart",
-    "text": "Ex: CS Data Bar Chart\n\n\n\nExample 4.13\n\n\nUse a bar chart to create a visualization for ethnicity in the CS dataset.\n\n\n\n\nethnic_table &lt;- table(Ethnicity)\nethnic_data &lt;- data.frame(Ethnicity = names(ethnic_table), Count = as.numeric(ethnic_table))\nethnic_data$Ethnicity &lt;- ordered(ethnic_data$Ethnicity, levels = c(\"White\", \"Asian\", \"Hispanic/Latino\", \"Other\", \"African American/Black\", \"American Indian/Alaska Native\"))\n\nggplot(ethnic_data, aes(x = Ethnicity, y = Count)) +\n  geom_bar(stat = \"identity\") +\n  labs(title = \"Bar Chart of Ethnicity\", x = \"Ethnicity\", y = \"Count\") +\n  theme_minimal() +\n  scale_x_discrete(labels = c(\"AA/Black\", \"AI/AN\", \"Asian\", \"Hisp/Lat\", \"Other\", \"White\"))"
+    "section": "Definitions: Box Plots",
+    "text": "Definitions: Box Plots\n\n\n\nDefinition\n\n\nA box plot displays the five-number summary of a quantitative variable: the minimum, first quartile, median, third quartile, and maximum. It also marks observations that are flagged as outliers."
   },
   {
-    "objectID": "lectures/l04_data_visualization.html#ex-failure-data-bar-chart",
-    "href": "lectures/l04_data_visualization.html#ex-failure-data-bar-chart",
+    "objectID": "lectures/l04_data_visualization.html#example-box-plot-of-views",
+    "href": "lectures/l04_data_visualization.html#example-box-plot-of-views",
     "title": "Data Visualization",
-    "section": "Ex: Failure Data Bar Chart",
-    "text": "Ex: Failure Data Bar Chart\n\n\n\nExample 4.13\n\n\nUse a bar chart to create a visualization of material in the failure time dataset.\n\n\n\n\n# YOUR CODE HERE"
+    "section": "Example: Box Plot of Views",
+    "text": "Example: Box Plot of Views\n\nggplot(videos, aes(y = views_first_7_days, x = \"\")) +\n  geom_boxplot(fill = \"lightblue\", color = \"black\") +\n  scale_y_continuous(labels = scales::comma) +\n  labs(x = NULL, y = \"First-week views\") +\n  theme_minimal()"
   },
   {
-    "objectID": "lectures/l04_data_visualization.html#histograms",
-    "href": "lectures/l04_data_visualization.html#histograms",
+    "objectID": "lectures/l04_data_visualization.html#example-box-plot-of-watch-time",
+    "href": "lectures/l04_data_visualization.html#example-box-plot-of-watch-time",
     "title": "Data Visualization",
-    "section": "Histograms",
-    "text": "Histograms\n\n\n\nDefinition 4.6\n\n\nHistograms are useful for quantitative data when you wish to view the overall shape of the data for a large number of observations and you do not wish to identify specific parts of the distribution or outliers."
+    "section": "Example: Box Plot of Watch Time",
+    "text": "Example: Box Plot of Watch Time\n\nggplot(videos, aes(y = average_watch_time_seconds, x = \"\")) +\n  geom_boxplot(fill = \"lightblue\", color = \"black\") +\n  labs(x = NULL, y = \"Average watch time (seconds)\") +\n  theme_minimal()"
   },
   {
-    "objectID": "lectures/l04_data_visualization.html#ex-cs-data-histogram",
-    "href": "lectures/l04_data_visualization.html#ex-cs-data-histogram",
+    "objectID": "lectures/l04_data_visualization.html#practice-box-plot",
+    "href": "lectures/l04_data_visualization.html#practice-box-plot",
     "title": "Data Visualization",
-    "section": "Ex: CS Data Histogram",
-    "text": "Ex: CS Data Histogram\n\n\n\nExample 4.14\n\n\nCreate a histogram to visualize income in the CS dataset.\n\n\n\n\n\nggplot(cs_dataset, aes(x = Income)) +\n  geom_histogram(binwidth = 10000, fill = \"steelblue\", color = \"white\") +\n  labs(title = \"Histogram of Income\", x = \"Income\", y = \"Frequency\") +\n  theme_minimal()"
+    "section": "Practice: Box Plot",
+    "text": "Practice: Box Plot\nCreate a box plot for creator_audience_size.\n\n\n\n\nSolution\n\n\n\n\n\n\n\n\n\n\n\nThe box plot shows many high outliers, which is consistent with the strong right skew of audience size."
   },
   {
-    "objectID": "lectures/l04_data_visualization.html#ex-failure-data-histogram",
-    "href": "lectures/l04_data_visualization.html#ex-failure-data-histogram",
+    "objectID": "lectures/l04_data_visualization.html#bivariate-relationships",
+    "href": "lectures/l04_data_visualization.html#bivariate-relationships",
     "title": "Data Visualization",
-    "section": "Ex: Failure Data Histogram",
-    "text": "Ex: Failure Data Histogram\n\n\n\nExample 4.15\n\n\nCreate a histogram to visualize shaft diameter in the failure time dataset.\n\n\n\n\n\n# YOUR CODE HERE"
+    "section": "Bivariate Relationships",
+    "text": "Bivariate Relationships\nA bivariate relationship describes how two variables vary together.\n\nWhen both variables are quantitative, a scatterplot displays the relationship.\nWhen one variable is categorical and the other is quantitative, side-by-side box plots compare the quantitative distribution across categories."
   },
   {
-    "objectID": "lectures/l04_data_visualization.html#box-plots",
-    "href": "lectures/l04_data_visualization.html#box-plots",
+    "objectID": "lectures/l04_data_visualization.html#definitions-scatterplots",
+    "href": "lectures/l04_data_visualization.html#definitions-scatterplots",
     "title": "Data Visualization",
-    "section": "Box Plots",
-    "text": "Box Plots\n\n\n\nDefinition 4.7\n\n\nFinally, box plots are another way to visualize quantitative data that specifically shows different parts of the five-number summary (as well as outliers)"
+    "section": "Definitions: Scatterplots",
+    "text": "Definitions: Scatterplots\n\n\n\nDefinition\n\n\nA scatterplot displays one quantitative variable on the horizontal axis and another quantitative variable on the vertical axis. Each point represents one observation, making it possible to see the direction, strength, and shape of a relationship."
   },
   {
-    "objectID": "lectures/l04_data_visualization.html#ex-cs-data-box-plot",
-    "href": "lectures/l04_data_visualization.html#ex-cs-data-box-plot",
+    "objectID": "lectures/l04_data_visualization.html#example-video-length-and-watch-time",
+    "href": "lectures/l04_data_visualization.html#example-video-length-and-watch-time",
     "title": "Data Visualization",
-    "section": "Ex: CS Data Box Plot",
-    "text": "Ex: CS Data Box Plot\n\n\n\nExample 4.16\n\n\nCreate a box plot for income using the CS dataset.\n\n\n\n\n\nggplot(cs_dataset, aes(x = Income)) +\n  geom_boxplot(fill = \"lightblue\", color = \"black\") +\n  labs(title = \"Box Plot of Income\", x = \"Income\") +\n  theme_minimal()"
+    "section": "Example: Video Length and Watch Time",
+    "text": "Example: Video Length and Watch Time\nLonger videos tend to have longer average watch times.\n\nggplot(videos, aes(x = video_length_seconds, y = average_watch_time_seconds)) +\n  geom_point(alpha = 0.5) +\n  labs(x = \"Video length (seconds)\", y = \"Average watch time (seconds)\") +\n  theme_minimal()\n\n\nThe points show a strong positive linear relationship."
   },
   {
-    "objectID": "lectures/l04_data_visualization.html#ex-failure-data-box-plot",
-    "href": "lectures/l04_data_visualization.html#ex-failure-data-box-plot",
+    "objectID": "lectures/l04_data_visualization.html#example-video-length-and-percentage-viewed",
+    "href": "lectures/l04_data_visualization.html#example-video-length-and-percentage-viewed",
     "title": "Data Visualization",
-    "section": "Ex: Failure Data Box Plot",
-    "text": "Ex: Failure Data Box Plot\n\n\n\nExample 4.17\n\n\nCreate a box plot for failure time in the failure time dataset.\n\n\n\n\n\n# YOUR CODE HERE"
+    "section": "Example: Video Length and Percentage Viewed",
+    "text": "Example: Video Length and Percentage Viewed\nA longer video does not necessarily keep a larger percentage of its viewers.\n\nggplot(videos, aes(x = video_length_seconds, y = average_percentage_viewed)) +\n  geom_point(alpha = 0.5) +\n  labs(x = \"Video length (seconds)\", y = \"Average percentage viewed\") +\n  theme_minimal()\n\n\nThe relationship is much weaker, so the points do not follow a clear upward or downward pattern."
   },
   {
-    "objectID": "lectures/l04_data_visualization.html#ex-large-data-visual",
-    "href": "lectures/l04_data_visualization.html#ex-large-data-visual",
+    "objectID": "lectures/l04_data_visualization.html#practice-scatterplot",
+    "href": "lectures/l04_data_visualization.html#practice-scatterplot",
     "title": "Data Visualization",
-    "section": "Ex: Large Data Visual",
-    "text": "Ex: Large Data Visual\n\n\n\nExample 4.18\n\n\nUse the following description to identify the visualization:\nThis visualization is used to visualize the distribution of quantitative data when seeing individual outliers as points isn’t needed.\n\n\n\n\nThis best describes a histogram. Histograms are especially useful for visualizing data distributions for large datasets without seeing individual data points or outliers."
+    "section": "Practice: Scatterplot",
+    "text": "Practice: Scatterplot\nCreate a scatterplot of views_first_7_days versus likes_first_7_days and compute their correlation.\n\n\n\n\nSolution\n\n\n\n\n\n\n\n\n\n\n\n# A tibble: 1 × 1\n      r\n  &lt;dbl&gt;\n1 0.655\n\n\nThe scatterplot shows a strong positive relationship, and the correlation is about 0.65."
   },
   {
-    "objectID": "lectures/l04_data_visualization.html#ex-categorical-visual",
-    "href": "lectures/l04_data_visualization.html#ex-categorical-visual",
+    "objectID": "lectures/l04_data_visualization.html#definitions-side-by-side-box-plots",
+    "href": "lectures/l04_data_visualization.html#definitions-side-by-side-box-plots",
     "title": "Data Visualization",
-    "section": "Ex: Categorical Visual",
-    "text": "Ex: Categorical Visual\n\n\n\nExample 4.19\n\n\nUse the following description to identify the visualization:\nThis visualization uses bars to represent categorical data, where the length of each bar corresponds to the count or percentage of observations in each category.\n\n\n\n\nThis best describes a bar chart. Bar charts are used for categorical data where each category has its own bar showing the count or proportion of observations in that category."
+    "section": "Definitions: Side-by-Side Box Plots",
+    "text": "Definitions: Side-by-Side Box Plots\n\n\n\nDefinition\n\n\nSide-by-side box plots compare the distribution of a quantitative variable across the categories of a categorical variable. Each category gets its own box plot, making it easy to compare centers, spreads, and outliers."
   },
   {
-    "objectID": "lectures/l04_data_visualization.html#ex-seeing-outliers",
-    "href": "lectures/l04_data_visualization.html#ex-seeing-outliers",
+    "objectID": "lectures/l04_data_visualization.html#example-watch-time-by-platform",
+    "href": "lectures/l04_data_visualization.html#example-watch-time-by-platform",
     "title": "Data Visualization",
-    "section": "Ex: Seeing Outliers",
-    "text": "Ex: Seeing Outliers\n\n\n\nExample 4.20\n\n\nUse the following description to identify the visualization:\nThis visualization works well with small and large datasets, and is designed specifically to visualize the five-number summary including outliers.\n\n\n\n\nThis best describes a YOUR ANSWER. Why?"
+    "section": "Example: Watch Time by Platform",
+    "text": "Example: Watch Time by Platform\n\nggplot(videos, aes(x = platform, y = average_watch_time_seconds)) +\n  geom_boxplot(fill = \"lightblue\", color = \"black\") +\n  labs(x = \"Platform\", y = \"Average watch time (seconds)\") +\n  theme_minimal()"
   },
   {
-    "objectID": "lectures/l04_data_visualization.html#ex-departments",
-    "href": "lectures/l04_data_visualization.html#ex-departments",
+    "objectID": "lectures/l04_data_visualization.html#example-views-by-video-format",
+    "href": "lectures/l04_data_visualization.html#example-views-by-video-format",
     "title": "Data Visualization",
-    "section": "Ex: Departments",
-    "text": "Ex: Departments\n\n\n\nExample 4.21\n\n\nA company has surveyed its employees about their department, and the results are as follows: Sales (45), Marketing (30), HR (15), and IT (25). The data is categorical, and you want to compare the frequency of each department.\nWhich visualization would best display this data?\n\n\n\n\nUsing a YOUR ANSWER would work best for these data. Why?"
+    "section": "Example: Views by Video Format",
+    "text": "Example: Views by Video Format\n\nggplot(videos, aes(x = video_format, y = views_first_7_days)) +\n  geom_boxplot(fill = \"lightblue\", color = \"black\") +\n  scale_y_continuous(labels = scales::comma) +\n  labs(x = \"Video format\", y = \"First-week views\") +\n  theme_minimal() +\n  theme(axis.text.x = element_text(angle = 25, hjust = 1))"
   },
   {
-    "objectID": "lectures/l04_data_visualization.html#ex-energy-consumption",
-    "href": "lectures/l04_data_visualization.html#ex-energy-consumption",
+    "objectID": "lectures/l04_data_visualization.html#practice-side-by-side-box-plots",
+    "href": "lectures/l04_data_visualization.html#practice-side-by-side-box-plots",
     "title": "Data Visualization",
-    "section": "Ex: Energy Consumption",
-    "text": "Ex: Energy Consumption\n\n\n\nExample 4.22\n\n\nYou have a large dataset containing monthly household energy consumption (in kWh) for 10,000 households. You would like to visualize the overall shape of the distribution and are not concerned with seeing specific observations, values, or identifying outliers.\nWhich visualization would best display this data?\n\n\n\n\nUsing a YOUR ANSWER would work best for these data. Why?"
+    "section": "Practice: Side-by-Side Box Plots",
+    "text": "Practice: Side-by-Side Box Plots\nCreate side-by-side box plots of creator_audience_size by production_effort.\n\n\n\n\nSolution\n\n\n\n\n\n\n\n\n\n\n\nThe groups have similar medians, but all groups contain high outliers and the distributions are right-skewed."
+  },
+  {
+    "objectID": "lectures/l04_data_visualization.html#practice-choosing-a-visualization",
+    "href": "lectures/l04_data_visualization.html#practice-choosing-a-visualization",
+    "title": "Data Visualization",
+    "section": "Practice: Choosing a Visualization",
+    "text": "Practice: Choosing a Visualization\nMatch each question to the most appropriate visualization:\n\nHow are videos distributed across platforms?\nWhat is the distribution of first-week views?\nDo first-week views differ by platform?\nIs there a relationship between video length and average watch time?\nDo comment counts differ by video format?\n\n\n\n\n\nSolution\n\n\n\nBar chart of platform proportions.\nHistogram of first-week views.\nSide-by-side box plots of views by platform.\nScatterplot of watch time versus video length.\nSide-by-side box plots of comments by video format."
   },
   {
     "objectID": "lectures/l25_ci_population_proportion.html#ci-for-population-proportion",
@@ -1470,109 +1477,67 @@
     "text": "Ex: Exam Scores\n\n\n\nExample 25.13\n\n\nA professor is analyzing the scores of students on a recent statistics exam. A random sample of 40 student scores is obtained:\n\nscores &lt;- c(72, 85, 90, 78, 81, 76, 84, 89, 91, 95, 87, 73, 88, 77, 82, 86, 80, \n            83, 85, 79, 94, 92, 75, 78, 82, 84, 90, 88, 87, 85, 81, 79, 77, 86,\n            92, 89, 90, 91, 80, 83)\n\nThe past average score was 85, but the professor believes it has decreased since then. Using a significance level of \\(\\alpha = 0.05\\), perform a hypothesis test to test that the average score has decreased.\n\n\n\n\n\nt.test(scores, alternative = \"less\", mu = 85, conf.level = 0.95)\n\n\n    One Sample t-test\n\ndata:  scores\nt = -0.96547, df = 39, p-value = 0.1701\nalternative hypothesis: true mean is less than 85\n95 percent confidence interval:\n     -Inf 85.67062\nsample estimates:\nmean of x \n     84.1"
   },
   {
-    "objectID": "lectures/l01_foundations.html#what-is-statistics",
-    "href": "lectures/l01_foundations.html#what-is-statistics",
+    "objectID": "lectures/l01_foundations.html#the-content-creation-dataset",
+    "href": "lectures/l01_foundations.html#the-content-creation-dataset",
     "title": "Introduction to Statistics",
-    "section": "What is Statistics?",
-    "text": "What is Statistics?\n\n\n\nDefinition 1.1\n\n\nThe field of statistics is concerned with the scientific study of collecting, organizing, analyzing, and drawing conclusions from data."
+    "section": "The Content Creation Dataset",
+    "text": "The Content Creation Dataset\nThroughout these lectures we will use a sample of 346 short-form videos posted on YouTube, TikTok, and Instagram Reels. For each video, the dataset records:\n\nCategorical variables: platform, topic, video format, thumbnail style, production effort, posting day, posting time, and whether paid promotion was used.\nQuantitative variables: creator audience size, creator tenure, posting frequency, video length, title length, impressions, views, watch time, percentage viewed, likes, comments, shares, and subscribers gained.\n\nThere are no missing values. The dataset is a sample, so we will use it to learn about the larger population of short-form videos."
   },
   {
-    "objectID": "lectures/l01_foundations.html#population",
-    "href": "lectures/l01_foundations.html#population",
+    "objectID": "lectures/l01_foundations.html#definitions-populations-and-samples",
+    "href": "lectures/l01_foundations.html#definitions-populations-and-samples",
     "title": "Introduction to Statistics",
-    "section": "Population",
-    "text": "Population\n\n\n\nDefinition 1.2\n\n\nA population is the collection or set of all objects or measurements that are of interest to the collector."
+    "section": "Definitions: Populations and Samples",
+    "text": "Definitions: Populations and Samples\n\n\n\nDefinitions\n\n\nStatistics is the field concerned with collecting, organizing, analyzing, and drawing conclusions from data.\nA population is the complete collection of all objects or measurements of interest.\nA sample is a subset of data selected from a population.\nA parameter is a numerical summary of a population. Parameters are often denoted by Greek letters, such as \\(\\mu\\) for a population mean and \\(p\\) for a population proportion.\nA statistic is a numerical summary computed from a sample. Statistics are often denoted by Latin letters, such as \\(\\bar{x}\\) for a sample mean and \\(\\hat{p}\\) for a sample proportion."
   },
   {
-    "objectID": "lectures/l01_foundations.html#parameter",
-    "href": "lectures/l01_foundations.html#parameter",
+    "objectID": "lectures/l01_foundations.html#example-average-views",
+    "href": "lectures/l01_foundations.html#example-average-views",
     "title": "Introduction to Statistics",
-    "section": "Parameter",
-    "text": "Parameter\n\n\n\nDefinition 1.3\n\n\nA parameter is any quantity of a statistical population that summarizes or describes an aspect of the population. These are often denoted as Greek letters or Latin letters without diacritics (e.g., \\(\\hat{}\\), \\(\\tilde{}\\), \\(\\bar{}\\), etc.)\n\n\n\n\nSome examples of population parameters are:\n\nThe population mean \\(\\mu\\)\nThe population proportion \\(p\\)\nThe population variance \\(\\sigma^2\\)\nThe population standard deviation \\(\\sigma\\)"
+    "section": "Example: Average Views",
+    "text": "Example: Average Views\nSuppose we want to study the average number of first-week views for all short-form videos posted on YouTube, TikTok, and Instagram Reels. We collect data on 346 videos and compute the average number of first-week views for those 346 videos.\n\nThe population is all short-form videos posted on these three platforms.\nThe sample is the 346 videos in our dataset.\nThe parameter is the average first-week views for all videos in the population, denoted \\(\\mu\\).\nThe statistic is the average first-week views for the 346 sampled videos, denoted \\(\\bar{x}\\)."
   },
   {
-    "objectID": "lectures/l01_foundations.html#sample",
-    "href": "lectures/l01_foundations.html#sample",
+    "objectID": "lectures/l01_foundations.html#example-paid-promotion",
+    "href": "lectures/l01_foundations.html#example-paid-promotion",
     "title": "Introduction to Statistics",
-    "section": "Sample",
-    "text": "Sample\n\n\n\nDefinition 1.4\n\n\nThe sample is a subset of data selected from a population. The size of a sample is the number of elements in it."
+    "section": "Example: Paid Promotion",
+    "text": "Example: Paid Promotion\nSuppose we want to know what proportion of all short-form videos use paid promotion. In our sample, 35 of the 346 videos used paid promotion, so the sample proportion is \\(35/346 \\approx 0.101\\).\n\nThe population is all short-form videos posted on these three platforms.\nThe sample is the 346 videos in our dataset.\nThe parameter is the proportion of all videos in the population that use paid promotion, denoted \\(p\\).\nThe statistic is the proportion of sampled videos that use paid promotion, denoted \\(\\hat{p} \\approx 0.101\\)."
   },
   {
-    "objectID": "lectures/l01_foundations.html#statistic",
-    "href": "lectures/l01_foundations.html#statistic",
+    "objectID": "lectures/l01_foundations.html#practice-average-watch-time",
+    "href": "lectures/l01_foundations.html#practice-average-watch-time",
     "title": "Introduction to Statistics",
-    "section": "Statistic",
-    "text": "Statistic\n\n\n\nDefinition 1.5\n\n\nA statistic is any quantity computed from values in a sample which is considered for a statistical purpose. These are often denoted as Latin letters and sometimes include diacritics.\n\n\n\n\nSome examples of sample statistics are:\n\nThe sample mean \\(\\bar{x}\\)\nThe sample proportion \\(\\hat{p}\\)\nThe sample variance \\(s^2\\)\nThe sample standard deviation \\(s\\)"
+    "section": "Practice: Average Watch Time",
+    "text": "Practice: Average Watch Time\nA marketing team wants to study the average first-week watch time for all short-form videos on these platforms. They collect the 346 videos in our dataset and compute the average watch time of those videos.\nIdentify the population, sample, population parameter, and sample statistic, including the appropriate symbols.\n\n\n\n\nSolution\n\n\n\nPopulation: all short-form videos posted on YouTube, TikTok, and Instagram Reels.\nSample: the 346 videos in the dataset.\nParameter: the average first-week watch time for all videos in the population, denoted \\(\\mu\\).\nStatistic: the average first-week watch time for the 346 sampled videos, denoted \\(\\bar{x}\\)."
   },
   {
-    "objectID": "lectures/l01_foundations.html#ex-adult-heights",
-    "href": "lectures/l01_foundations.html#ex-adult-heights",
+    "objectID": "lectures/l01_foundations.html#definitions-descriptive-statistics-and-inference",
+    "href": "lectures/l01_foundations.html#definitions-descriptive-statistics-and-inference",
     "title": "Introduction to Statistics",
-    "section": "Ex: Adult Heights",
-    "text": "Ex: Adult Heights\n\n\n\nExample 1.1\n\n\nA researcher wants to study the average height of all adult males in a city. She measures the height of 200 randomly selected adult males and computes the mean of these 200 heights.\n\n\n\n\nThe population is all adult males in the city. The sample is the 200 randomly selected adult males. The population parameter is the average height of all adult males in the city, \\(\\mu\\). The sample statistic is the average height of the 200 random selected males, \\(\\bar{x}\\)."
+    "section": "Definitions: Descriptive Statistics and Inference",
+    "text": "Definitions: Descriptive Statistics and Inference\n\n\n\nDefinitions\n\n\nDescriptive statistics organize, describe, summarize, and display data.\nStatistical inference is an estimate, prediction, decision, or generalization about a population based on information from a sample."
   },
   {
-    "objectID": "lectures/l01_foundations.html#ex-groceries",
-    "href": "lectures/l01_foundations.html#ex-groceries",
+    "objectID": "lectures/l01_foundations.html#example-describing-the-sample",
+    "href": "lectures/l01_foundations.html#example-describing-the-sample",
     "title": "Introduction to Statistics",
-    "section": "Ex: Groceries",
-    "text": "Ex: Groceries\n\n\n\nExample 1.2\n\n\nA survey is conducted to find out the proportion of families in a specific town that spend more than $1000 a month on groceries. Data is collected from 150 randomly selected families and it is found that 60% of these families spend more than $1000 a month on groceries.\n\n\n\n\nThe population is all families in the specific town. The sample is the 150 randomly selected families in the town. The parameter is the proportion of all families in the town that spend more than $1000 a month on groceries, \\(p\\). The statistic is the proportion of the 150 families that spend more than $1000 a month on groceries, \\(\\hat{p}\\)."
+    "section": "Example: Describing the Sample",
+    "text": "Example: Describing the Sample\nAn analyst reports that the average first-week watch time in the sample of 346 videos is about 21.1 seconds and that the median is 18 seconds.\nThis is an example of descriptive statistics. The analyst is summarizing the sample and is not making a claim about all short-form videos."
   },
   {
-    "objectID": "lectures/l01_foundations.html#ex-dog-weights",
-    "href": "lectures/l01_foundations.html#ex-dog-weights",
+    "objectID": "lectures/l01_foundations.html#example-generalizing-beyond-the-sample",
+    "href": "lectures/l01_foundations.html#example-generalizing-beyond-the-sample",
     "title": "Introduction to Statistics",
-    "section": "Ex: Dog Weights",
-    "text": "Ex: Dog Weights\n\n\n\nExample 1.3\n\n\nA researcher wants to study the average weight of a certain breed of dog. She calculates the mean weight from a sample of 200 randomly selected dogs of that breed.\nIn this example, what are the population and sample and what are the population parameter and sample statistic, along with their appropriate symbols?\n\n\n\n\nThe population is YOUR ANSWER. The sample is the YOUR ANSWER. The parameter is the YOUR ANSWER, \\(\\text{symbol here}\\). The statistic is the YOUR ANSWER, \\(\\text{symbol here}\\)."
+    "section": "Example: Generalizing Beyond the Sample",
+    "text": "Example: Generalizing Beyond the Sample\nAn analyst finds that 10.1% of the sampled videos used paid promotion and concludes that roughly 10% of all short-form videos on these platforms use paid promotion.\nThis is an example of statistical inference. The analyst uses a sample statistic to make a generalization about the population."
   },
   {
-    "objectID": "lectures/l01_foundations.html#ex-diabetes-prevalence",
-    "href": "lectures/l01_foundations.html#ex-diabetes-prevalence",
+    "objectID": "lectures/l01_foundations.html#practice-descriptive-or-inferential",
+    "href": "lectures/l01_foundations.html#practice-descriptive-or-inferential",
     "title": "Introduction to Statistics",
-    "section": "Ex: Diabetes Prevalence",
-    "text": "Ex: Diabetes Prevalence\n\n\n\nExample 1.4\n\n\nA health organization studies the prevalence of diabetes among adults aged 40-60 in a city. They calculate the proportion of diabetes cases from a sample of 300 individuals in this age group.\nIn this example, what are the population and sample and what are the population parameter and sample statistic, along with their appropriate symbols?\n\n\n\n\nThe population is YOUR ANSWER. The sample is the YOUR ANSWER. The parameter is the YOUR ANSWER, \\(\\text{symbol here}\\). The statistic is the YOUR ANSWER, \\(\\text{symbol here}\\)."
-  },
-  {
-    "objectID": "lectures/l01_foundations.html#descriptive-statistics",
-    "href": "lectures/l01_foundations.html#descriptive-statistics",
-    "title": "Introduction to Statistics",
-    "section": "Descriptive Statistics",
-    "text": "Descriptive Statistics\n\n\n\nDefinition 1.6\n\n\nDescriptive statistics are statistics that assist us in organizing, describing, summarizing, and displaying experimental or observational data."
-  },
-  {
-    "objectID": "lectures/l01_foundations.html#statistical-inference",
-    "href": "lectures/l01_foundations.html#statistical-inference",
-    "title": "Introduction to Statistics",
-    "section": "Statistical Inference",
-    "text": "Statistical Inference\n\n\n\nDefinition 1.7\n\n\nA statistical inference is an estimate, a prediction, a decision, or a generalization about the population based on information contained in a sample."
-  },
-  {
-    "objectID": "lectures/l01_foundations.html#ex-athlete-heights",
-    "href": "lectures/l01_foundations.html#ex-athlete-heights",
-    "title": "Introduction to Statistics",
-    "section": "Ex: Athlete Heights",
-    "text": "Ex: Athlete Heights\n\n\n\nExample 1.5\n\n\nA researcher collects a random sample of 30 athletes from a specific country. They report that the sample mean height (\\(\\bar{x}\\)) of 30 athletes in a country is 170 cm.\nIs this an example of descriptive statistics or statistical inference?\n\n\n\n\nThis is an example of descriptive statistics."
-  },
-  {
-    "objectID": "lectures/l01_foundations.html#ex-defective-parts",
-    "href": "lectures/l01_foundations.html#ex-defective-parts",
-    "title": "Introduction to Statistics",
-    "section": "Ex: Defective Parts",
-    "text": "Ex: Defective Parts\n\n\n\nExample 1.6\n\n\nA worker takes a random sample of 50 parts manufactured at a specific location. They find that the sample proportion (\\(\\hat{p}\\)) of defective parts 5% and state that they expect that 5% of all parts are likely defective.\nIs this an example of descriptive statistics or statistical inference?\n\n\n\n\nThis is an example of statistical inference."
-  },
-  {
-    "objectID": "lectures/l01_foundations.html#ex-cell-toxicity",
-    "href": "lectures/l01_foundations.html#ex-cell-toxicity",
-    "title": "Introduction to Statistics",
-    "section": "Ex: Cell Toxicity",
-    "text": "Ex: Cell Toxicity\n\n\n\nExample 1.7\n\n\nA research scientist collects a random sample of 100 cells from a particular tissue sample and measures the toxicity level for each cell. They find that 95% of toxicity levels are between 30 and 50 ppm and conclude that toxicity levels for all cells likely fall within this range.\nIs this an example of descriptive statistics or statistical inference?\n\n\n\n\nThis is an example of YOUR ANSWER."
-  },
-  {
-    "objectID": "lectures/l01_foundations.html#ex-bridge-strength",
-    "href": "lectures/l01_foundations.html#ex-bridge-strength",
-    "title": "Introduction to Statistics",
-    "section": "Ex: Bridge Strength",
-    "text": "Ex: Bridge Strength\n\n\n\nExample 1.8\n\n\nAn engineer is testing the strength of a material used in bridge construction. They produce 50 batches of this material and test how much weight each batch of material can hold before breaking. They report that the average weight held by the material before breaking is 200 pounds.\nIs this an example of descriptive statistics or statistical inference?\n\n\n\n\nThis is an example of YOUR ANSWER."
+    "section": "Practice: Descriptive or Inferential?",
+    "text": "Practice: Descriptive or Inferential?\nA researcher finds that 95% of the sampled videos have an average percentage viewed between 5% and 20%, then concludes that the average percentage viewed for all short-form videos on these platforms is likely between 5% and 20%.\nIs this descriptive statistics or statistical inference?\n\n\n\n\nSolution\n\n\nThis is statistical inference. The researcher uses a summary of the sample to make a claim about the entire population of short-form videos."
   },
   {
     "objectID": "lectures/l09_bayes_theorem.html#law-of-total-probability-simple",
@@ -2135,95 +2100,60 @@
     "text": "Ex: Stock Returns\n\n\n\nExample 10.17\n\n\nLet \\(X\\) be a random variable corresponding to stock market returns for a particular stock, with CDF:\n\\[\nF_X(x) = \\int_{-\\infty}^x \\frac{1}{\\sqrt{2 \\pi}} \\exp \\left\\{-\\frac{(t-2)^2}{2}\\right\\} \\ dt \\text{ for } x \\in (-\\infty, \\infty)\n\\].\nWhat is \\(P(2 &lt; X &lt; 3)\\)\n\nFX &lt;- function(x){\n  integrate(function(tt) 1/sqrt(2*pi)*exp(-(tt-2)^2/2), \n            lower = -Inf, upper = x)$value\n}\n\n\n\n\n\n\n# YOUR CODE HERE"
   },
   {
-    "objectID": "lectures/l02_sampling.html#simple-random-sample",
-    "href": "lectures/l02_sampling.html#simple-random-sample",
+    "objectID": "lectures/l02_sampling.html#definitions-simple-random-and-systematic-sampling",
+    "href": "lectures/l02_sampling.html#definitions-simple-random-and-systematic-sampling",
     "title": "Sampling Methods",
-    "section": "Simple Random Sample",
-    "text": "Simple Random Sample\n\n\n\nDefinition 2.1\n\n\nA sample selected in such a way that every element of the population has an equal chance of being chosen is called a simple random sample.\n\n\n\n\n\n\n\nExample 2.1\n\n\nA teacher wants to survey 10 students out of a class of 50 about their study habits. She writes each student’s name on a piece of paper, puts the slips in a hat, and randomly draws 10 names."
+    "section": "Definitions: Simple Random and Systematic Sampling",
+    "text": "Definitions: Simple Random and Systematic Sampling\n\n\n\nDefinitions\n\n\nA simple random sample is a sample selected in such a way that every element of the population has an equal chance of being chosen.\nA systematic sample is a sample in which every \\(K^{th}\\) element in the sampling frame (the list of population elements) is selected after a suitable random start for the first element."
   },
   {
-    "objectID": "lectures/l02_sampling.html#systematic-sample",
-    "href": "lectures/l02_sampling.html#systematic-sample",
+    "objectID": "lectures/l02_sampling.html#example-simple-random-sample",
+    "href": "lectures/l02_sampling.html#example-simple-random-sample",
     "title": "Sampling Methods",
-    "section": "Systematic Sample",
-    "text": "Systematic Sample\n\n\n\nDefinition 2.2\n\n\nA systematic sample is a sample in which every \\(K^{th}\\) element in the sampling frame is selected after a suitable random start for the first element.\n\n\n\n\n\n\n\nExample 2.2\n\n\nA company wants to inspect the quality of items in a production line. They decide to inspect every 10th item after the first item is chosen randomly. If the first randomly selected item is the 4th, they inspect items 4, 14, 24, and so on."
+    "section": "Example: Simple Random Sample",
+    "text": "Example: Simple Random Sample\nAn analyst has a database containing 10,000 short-form videos. They assign each video a unique number from 1 to 10,000 and use a random number generator to select 346 of those numbers. Every video in the database has the same chance of being selected.\nThis is a simple random sample."
   },
   {
-    "objectID": "lectures/l02_sampling.html#stratified-sample",
-    "href": "lectures/l02_sampling.html#stratified-sample",
+    "objectID": "lectures/l02_sampling.html#example-systematic-sample",
+    "href": "lectures/l02_sampling.html#example-systematic-sample",
     "title": "Sampling Methods",
-    "section": "Stratified Sample",
-    "text": "Stratified Sample\n\n\n\nDefinition 2.3\n\n\nA sample is obtained by dividing the population into nonoverlapping groups, called strata, based on some factors. A proportional number of elements are then randomly selected from each stratum. This is called a stratified sample.\n\n\n\n\n\n\n\nExample 2.3\n\n\nA company wants to survey employee satisfaction. To ensure representation across job roles, the employees are divided into strata based on roles: managers, technical staff, administrative staff, and customer service representatives. The survey then selects 10 employees randomly from each of these predefined groups."
+    "section": "Example: Systematic Sample",
+    "text": "Example: Systematic Sample\nA platform provides an analyst with a list of videos in chronological order. The analyst randomly chooses one of the first 29 videos as a starting point, then selects every 29th video after that until 346 videos have been selected.\nThis is a systematic sample. The random start helps avoid a predictable pattern in the selection."
   },
   {
-    "objectID": "lectures/l02_sampling.html#cluster-sample",
-    "href": "lectures/l02_sampling.html#cluster-sample",
+    "objectID": "lectures/l02_sampling.html#practice-every-tenth-video",
+    "href": "lectures/l02_sampling.html#practice-every-tenth-video",
     "title": "Sampling Methods",
-    "section": "Cluster Sample",
-    "text": "Cluster Sample\n\n\n\nDefinition 2.4\n\n\nIn cluster sampling, the sampling unit contains groups of elements called clusters instead of individual elements of the population. A cluster is an intact group naturally available in the field.\n\n\n\n\n\n\n\nExample 2.4\n\n\nA city wants to survey households about public transportation. There are 15 neighborhoods (clusters) in the city. Five neighborhoods are randomly selected, and all households within those neighborhoods are surveyed."
+    "section": "Practice: Every Tenth Video",
+    "text": "Practice: Every Tenth Video\nA research assistant watches a live feed of newly posted videos. They randomly choose one of the first 10 videos, then select every 10th video after that for review.\nWhat type of sampling method is this?\n\n\n\n\nSolution\n\n\nThis is a systematic sample. After a random start, the assistant selects every \\(K^{th}\\) video, where \\(K = 10\\)."
   },
   {
-    "objectID": "lectures/l02_sampling.html#multistage-sample",
-    "href": "lectures/l02_sampling.html#multistage-sample",
+    "objectID": "lectures/l02_sampling.html#definitions-stratified-cluster-and-multistage-sampling",
+    "href": "lectures/l02_sampling.html#definitions-stratified-cluster-and-multistage-sampling",
     "title": "Sampling Methods",
-    "section": "Multistage Sample",
-    "text": "Multistage Sample\n\n\n\nDefinition 2.5\n\n\nMultistage sampling involves collecting information from the whole sample, followed by additional data collection either at the same time or later from subsamples.\n\n\n\n\n\n\n\nExample 2.5\n\n\nA national survey aims to assess high school students’ opinions on standardized testing. First, researchers randomly select 10 states from across the country. Within each selected state, they randomly choose 5 school districts. Next, they randomly select 3 high schools within each of those districts. Finally, within each selected high school, 30 students are randomly surveyed."
+    "section": "Definitions: Stratified, Cluster, and Multistage Sampling",
+    "text": "Definitions: Stratified, Cluster, and Multistage Sampling\n\n\n\nDefinitions\n\n\nA stratified sample is obtained by dividing the population into nonoverlapping groups called strata, then randomly selecting a proportional number of elements from each stratum.\nIn cluster sampling, the sampling unit is a group of elements called a cluster. Clusters are usually natural groups, and entire selected clusters are included in the sample.\nMultistage sampling collects information from the whole sample and then collects additional data, either at the same time or later, from subsamples."
   },
   {
-    "objectID": "lectures/l02_sampling.html#ex-equal-chance-selection",
-    "href": "lectures/l02_sampling.html#ex-equal-chance-selection",
+    "objectID": "lectures/l02_sampling.html#example-stratified-sample",
+    "href": "lectures/l02_sampling.html#example-stratified-sample",
     "title": "Sampling Methods",
-    "section": "Ex: Equal Chance Selection",
-    "text": "Ex: Equal Chance Selection\n\n\n\nExample 2.6\n\n\nIn which type of sampling method does every individual of the population have an equal chance of being selected?\n\n\n\n\nThis refers to simple random sampling. Every individual in a simple random sample has an equal chance of being selected."
+    "section": "Example: Stratified Sample",
+    "text": "Example: Stratified Sample\nAn analyst wants to ensure that each platform is represented in the sample. They divide all videos into three strata: YouTube, TikTok, and Instagram Reels. Then they randomly select videos from each stratum in proportion to its size in the population, roughly 41% YouTube, 36% TikTok, and 23% Instagram Reels.\nThis is a stratified sample."
   },
   {
-    "objectID": "lectures/l02_sampling.html#ex-selection-from-hierarchies",
-    "href": "lectures/l02_sampling.html#ex-selection-from-hierarchies",
+    "objectID": "lectures/l02_sampling.html#example-cluster-sample",
+    "href": "lectures/l02_sampling.html#example-cluster-sample",
     "title": "Sampling Methods",
-    "section": "Ex: Selection from Hierarchies",
-    "text": "Ex: Selection from Hierarchies\n\n\n\nExample 2.6\n\n\nWhich type of sampling method is often used to sample from populations that have natural hierarchies?\n\n\n\n\nSampling from populations with natural hierarchies often involves multistage sampling. At each step of the process, you sample from one level of the hierarchy."
+    "section": "Example: Cluster Sample",
+    "text": "Example: Cluster Sample\nAn analyst randomly selects 20 creators from a large list of creators and then includes every video posted by those 20 creators in the sample.\nThis is a cluster sample. The creators are the clusters, and all videos within each selected cluster are included."
   },
   {
-    "objectID": "lectures/l02_sampling.html#ex-group-selection",
-    "href": "lectures/l02_sampling.html#ex-group-selection",
+    "objectID": "lectures/l02_sampling.html#practice-platforms-creators-and-videos",
+    "href": "lectures/l02_sampling.html#practice-platforms-creators-and-videos",
     "title": "Sampling Methods",
-    "section": "Ex: Group Selection",
-    "text": "Ex: Group Selection\n\n\n\nExample 2.7\n\n\nWhich type of sampling method randomly selects entire groups of individuals to be part of the sample rather than selecting the individuals directly?\n\n\n\n\nThis refers to cluster sampling. In cluster sampling, entire groups, or clusters, are randomly selected and every individual in the group/cluster is included in the sample."
-  },
-  {
-    "objectID": "lectures/l02_sampling.html#ex-subgroup-selection",
-    "href": "lectures/l02_sampling.html#ex-subgroup-selection",
-    "title": "Sampling Methods",
-    "section": "Ex: Subgroup Selection",
-    "text": "Ex: Subgroup Selection\n\n\n\nExample 2.8\n\n\nWhich type of sampling method divides the population into distinct subgroups and randomly selects a fixed number of individuals from each subgroup?\n\n\n\n\nThis refers to stratified sampling. Researchers create or define subgroups of the population. They then select a certain number of individuals within each subgroup."
-  },
-  {
-    "objectID": "lectures/l02_sampling.html#ex-city-survey",
-    "href": "lectures/l02_sampling.html#ex-city-survey",
-    "title": "Sampling Methods",
-    "section": "Ex: City Survey",
-    "text": "Ex: City Survey\n\n\n\nExample 2.9\n\n\nA researcher randomly selects 10 neighborhoods in a city and then surveys every household in those neighborhoods.\nWhat type of sampling is this?\n\n\n\n\nThis is an example of YOUR ANSWER. Why?"
-  },
-  {
-    "objectID": "lectures/l02_sampling.html#ex-polling-agency",
-    "href": "lectures/l02_sampling.html#ex-polling-agency",
-    "title": "Sampling Methods",
-    "section": "Ex: Polling Agency",
-    "text": "Ex: Polling Agency\n\n\n\nExample 2.10\n\n\nA polling agency divides the population into males and females, then randomly selects a fixed number of individuals from each group to survey.\nWhat type of sampling is this?\n\n\n\n\nThis is an example of YOUR ANSWER. Why?"
-  },
-  {
-    "objectID": "lectures/l02_sampling.html#ex-rose-bushes",
-    "href": "lectures/l02_sampling.html#ex-rose-bushes",
-    "title": "Sampling Methods",
-    "section": "Ex: Rose Bushes",
-    "text": "Ex: Rose Bushes\n\n\n\nExample 2.11\n\n\nA researcher needs to know how many rose flowers are afflicted with a certain disease. They randomly select 10 rose bushes from a flower garden with many rose bushes. They then look through every flower on each bush and record whether or not that flower has the disease.\nWhat type of sampling is this?\n\n\n\n\nThis is an example of YOUR ANSWER. Why?"
-  },
-  {
-    "objectID": "lectures/l02_sampling.html#ex-food-preferences",
-    "href": "lectures/l02_sampling.html#ex-food-preferences",
-    "title": "Sampling Methods",
-    "section": "Ex: Food Preferences",
-    "text": "Ex: Food Preferences\n\n\n\nExample 2.12\n\n\nYou are interested in understanding food choice preferences for customers at a certain restaurant. You stand outside the door and talk to every 5th customer that comes out of the restaurant.\nWhat type of sampling is this?\n\n\n\n\nThis is an example of YOUR ANSWER. Why?"
+    "section": "Practice: Platforms, Creators, and Videos",
+    "text": "Practice: Platforms, Creators, and Videos\nA national study selects 2 platforms at random. Within each selected platform, the researchers randomly choose 15 creators. Finally, they randomly select 5 videos from each selected creator.\nWhat type of sampling method is this?\n\n\n\n\nSolution\n\n\nThis is multistage sampling. The researchers sample in stages: platforms, then creators within platforms, then videos within creators."
   },
   {
     "objectID": "homework/ht_one_population_mean.html",
@@ -3399,7 +3329,7 @@
     "href": "solutions/transformations.html#question-1b-2-points",
     "title": "Transformations Solutions",
     "section": "Question 1B (2 points)",
-    "text": "Question 1B (2 points)\n\nrPX_31 &lt;- function(n){\n  sample(c(-1, 0, 1), n, TRUE, prob = c(0.2, 0.5, 0.3))\n}\n\nThe function rPX_31 above takes as input a positive integer n and returns \\(n\\) random samples of the random variable \\(X\\). Use this function to produce \\(n = 10000\\) random draws of \\(X\\) and then use these draws to obtain draws of \\(Y\\) where \\(Y = g(X) = 2X\\). Then use these samples to compute an estimate of \\(P(Y = y)\\) for each value of \\(y\\).\n\nx &lt;- rPX_31(10000)\ny &lt;- 2*x\n\ntable(y)/length(y)\n\ny\n    -2      0      2 \n0.2012 0.4967 0.3021"
+    "text": "Question 1B (2 points)\n\nrPX_31 &lt;- function(n){\n  sample(c(-1, 0, 1), n, TRUE, prob = c(0.2, 0.5, 0.3))\n}\n\nThe function rPX_31 above takes as input a positive integer n and returns \\(n\\) random samples of the random variable \\(X\\). Use this function to produce \\(n = 10000\\) random draws of \\(X\\) and then use these draws to obtain draws of \\(Y\\) where \\(Y = g(X) = 2X\\). Then use these samples to compute an estimate of \\(P(Y = y)\\) for each value of \\(y\\).\n\nx &lt;- rPX_31(10000)\ny &lt;- 2*x\n\ntable(y)/length(y)\n\ny\n    -2      0      2 \n0.1945 0.5027 0.3028"
   },
   {
     "objectID": "solutions/transformations.html#question-2-5-points",
@@ -5194,417 +5124,256 @@
     "text": "Ex: Exam Scores\n\n\n\nExample 21.16\n\n\nA professor is analyzing the scores of students on a recent statistics exam. A random sample of 40 student scores is obtained:\n\nscores &lt;- c(72, 85, 90, 78, 81, 76, 84, 89, 91, 95, 87, 73, 88, 77, 82, 86, 80, \n            83, 85, 79, 94, 92, 75, 78, 82, 84, 90, 88, 87, 85, 81, 79, 77, 86,\n            92, 89, 90, 91, 80, 83)\n\nThe professor does not know the distribution of exam scores but assumes the sample size is large enough. They wish to construct a 95% confidence interval for the population mean exam score.\n\n\n\n\n\n# YOUR CODE HERE"
   },
   {
-    "objectID": "lectures/l03_numeric_summaries.html#qualitative-data",
-    "href": "lectures/l03_numeric_summaries.html#qualitative-data",
+    "objectID": "lectures/l03_numeric_summaries.html#the-content-creation-dataset",
+    "href": "lectures/l03_numeric_summaries.html#the-content-creation-dataset",
     "title": "Numeric Summaries",
-    "section": "Qualitative Data",
-    "text": "Qualitative Data\n\n\n\nDefinition 3.1\n\n\nNon-numerical data that can only be classified into groups or categories are said to be qualitative or categorical data."
+    "section": "The Content Creation Dataset",
+    "text": "The Content Creation Dataset\nThe dataset contains 346 short-form videos. Each row is one video, and the columns describe how the video was made, when it was posted, and how it performed during its first seven days.\n\nvideos |&gt;\n  select(platform, topic, views_first_7_days, average_watch_time_seconds, average_percentage_viewed) |&gt;\n  slice_head(n = 3)\n\n# A tibble: 3 × 5\n  platform        topic          views_first_7_days average_watch_time_seconds\n  &lt;fct&gt;           &lt;fct&gt;                       &lt;dbl&gt;                      &lt;dbl&gt;\n1 TikTok          product review              25262                        5.1\n2 Instagram Reels product review              25543                       10.7\n3 YouTube         lifestyle                   33723                       25.9\n# ℹ 1 more variable: average_percentage_viewed &lt;dbl&gt;"
   },
   {
-    "objectID": "lectures/l03_numeric_summaries.html#quantitative-data",
-    "href": "lectures/l03_numeric_summaries.html#quantitative-data",
+    "objectID": "lectures/l03_numeric_summaries.html#definitions-types-of-data",
+    "href": "lectures/l03_numeric_summaries.html#definitions-types-of-data",
     "title": "Numeric Summaries",
-    "section": "Quantitative Data",
-    "text": "Quantitative Data\n\n\n\nDefinition 3.2\n\n\nQuantitative data are observations measured on a numerical scale."
+    "section": "Definitions: Types of Data",
+    "text": "Definitions: Types of Data\n\n\n\nDefinitions\n\n\nCategorical data are non-numerical observations that classify units into groups or categories.\nQuantitative data are observations measured on a numerical scale.\nQuantitative data are discrete when there are a finite or countably infinite number of distinct values. These are often counts, such as the number of views.\nQuantitative data are continuous when there are uncountably many possible values. These are often measurements that could be recorded with more precision, such as time."
   },
   {
-    "objectID": "lectures/l03_numeric_summaries.html#cs-dataset",
-    "href": "lectures/l03_numeric_summaries.html#cs-dataset",
+    "objectID": "lectures/l03_numeric_summaries.html#example-discrete-and-continuous-quantitative-variables",
+    "href": "lectures/l03_numeric_summaries.html#example-discrete-and-continuous-quantitative-variables",
     "title": "Numeric Summaries",
-    "section": "CS Dataset",
-    "text": "CS Dataset\n\ncs_dataset &lt;- read.csv(\"../data/cs_dataset.csv\")\nattach(cs_dataset)\nhead(cs_dataset)"
+    "section": "Example: Discrete and Continuous Quantitative Variables",
+    "text": "Example: Discrete and Continuous Quantitative Variables\nIn the video dataset:\n\nviews_first_7_days is quantitative and discrete. A video can have 26,692 views or 26,693 views, but not 26,692.4 views.\naverage_watch_time_seconds is quantitative and continuous. Watch time can take on values such as 17.8 seconds, 17.83 seconds, or 17.831 seconds depending on the precision of the measurement."
   },
   {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-cs-data-types",
-    "href": "lectures/l03_numeric_summaries.html#ex-cs-data-types",
+    "objectID": "lectures/l03_numeric_summaries.html#example-nominal-and-ordinal-categorical-variables",
+    "href": "lectures/l03_numeric_summaries.html#example-nominal-and-ordinal-categorical-variables",
     "title": "Numeric Summaries",
-    "section": "Ex: CS Data Types",
-    "text": "Ex: CS Data Types\n\n\n\nExample 3.1\n\n\nIn the computer scientist dataset, which of the variables are quantitative and which are qualitative?\n\n\n\n\n\nIncome (Quantitative)\nSex (Qualitative)\nAge (Quantitative)\nBirth Year (Quantitative)\nEducation Degree (Qualitative)\nEducation Years (Quantitative)\nEthnicity (Qualitative)\nSAT (Quantitative)\nRegion (Qualitative)"
+    "section": "Example: Nominal and Ordinal Categorical Variables",
+    "text": "Example: Nominal and Ordinal Categorical Variables\nIn the video dataset:\n\nplatform is categorical and nominal. The categories YouTube, TikTok, and Instagram Reels have no natural order.\nproduction_effort is categorical and ordinal. The categories low, medium, and high have a natural order."
   },
   {
-    "objectID": "lectures/l03_numeric_summaries.html#failure-time-dataset",
-    "href": "lectures/l03_numeric_summaries.html#failure-time-dataset",
+    "objectID": "lectures/l03_numeric_summaries.html#practice-classifying-variables",
+    "href": "lectures/l03_numeric_summaries.html#practice-classifying-variables",
     "title": "Numeric Summaries",
-    "section": "Failure Time Dataset",
-    "text": "Failure Time Dataset\n\nfailure &lt;- read.csv(\"../data/failure_time.csv\")\nattach(failure)\nhead(failure)"
+    "section": "Practice: Classifying Variables",
+    "text": "Practice: Classifying Variables\nClassify each variable as categorical or quantitative. For the quantitative variables, also say whether they are discrete or continuous.\n\ntopic\ntitle_length_words\nposting_time_local\nsubscribers_gained_first_7_days\n\n\n\n\n\nSolution\n\n\n\ntopic: categorical (nominal).\ntitle_length_words: quantitative and discrete.\nposting_time_local: categorical (ordinal).\nsubscribers_gained_first_7_days: quantitative and discrete."
   },
   {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-failure-data-types",
-    "href": "lectures/l03_numeric_summaries.html#ex-failure-data-types",
+    "objectID": "lectures/l03_numeric_summaries.html#definitions-mean-median-and-mode",
+    "href": "lectures/l03_numeric_summaries.html#definitions-mean-median-and-mode",
     "title": "Numeric Summaries",
-    "section": "Ex: Failure Data Types",
-    "text": "Ex: Failure Data Types\n\n\n\nExample 3.1\n\n\nIn the failure time dataset, which of the variables are quantitative and which are qualitative?\n\n\n\n\n\nGear Teeth (ANSWER HERE)\nNumber of Fasteners (ANSWER HERE)\nHardness (ANSWER HERE)\nMaterial (ANSWER HERE)\nShaft Diameter (ANSWER HERE)\nEngine Temperature (ANSWER HERE)\nVibration (ANSWER HERE)\nLubricant (ANSWER HERE)\nFailure Time (ANSWER HERE)"
+    "section": "Definitions: Mean, Median, and Mode",
+    "text": "Definitions: Mean, Median, and Mode\n\n\n\nDefinitions\n\n\nThe mean is the sum of the data entries divided by the number of entries. It is computed for quantitative data: \\[\n\\bar{x} = \\frac{1}{n}\\sum_{i=1}^{n} x_i\n\\]\nThe median is the middle value when the quantitative data are ordered. If \\(n\\) is odd, it is the \\(\\left(\\frac{n+1}{2}\\right)^{th}\\) value. If \\(n\\) is even, it is the average of the \\(\\left(\\frac{n}{2}\\right)^{th}\\) and \\(\\left(\\frac{n+2}{2}\\right)^{th}\\) values.\nThe mode is the most frequently occurring category. It is used to describe categorical data."
   },
   {
-    "objectID": "lectures/l03_numeric_summaries.html#discrete-data",
-    "href": "lectures/l03_numeric_summaries.html#discrete-data",
+    "objectID": "lectures/l03_numeric_summaries.html#example-mean-and-median-views",
+    "href": "lectures/l03_numeric_summaries.html#example-mean-and-median-views",
     "title": "Numeric Summaries",
-    "section": "Discrete Data",
-    "text": "Discrete Data\n\n\n\nDefinition 3.3\n\n\nQuantitative data are discrete when there are a finite or countably infinite number of distinct values. These are often thought of as whole numbers or integers."
+    "section": "Example: Mean and Median Views",
+    "text": "Example: Mean and Median Views\nThe mean and median first-week views are both close to 27 thousand:\n\nvideos |&gt;\n  summarise(\n    mean_views = mean(views_first_7_days),\n    median_views = median(views_first_7_days)\n  )\n\n# A tibble: 1 × 2\n  mean_views median_views\n       &lt;dbl&gt;        &lt;dbl&gt;\n1     27335.        26692\n\n\nThe mean is slightly larger than the median, which suggests a mild right skew in the view counts."
   },
   {
-    "objectID": "lectures/l03_numeric_summaries.html#continuous-data",
-    "href": "lectures/l03_numeric_summaries.html#continuous-data",
+    "objectID": "lectures/l03_numeric_summaries.html#example-modal-categories",
+    "href": "lectures/l03_numeric_summaries.html#example-modal-categories",
     "title": "Numeric Summaries",
-    "section": "Continuous Data",
-    "text": "Continuous Data\n\n\n\nDefinition 3.4\n\n\nQuantitative data are continuous when there are uncountably many values. These are often thought of as real numbers."
+    "section": "Example: Modal Categories",
+    "text": "Example: Modal Categories\nTo find the mode of a categorical variable, count how often each category occurs:\n\nvideos |&gt;\n  count(platform, sort = TRUE) |&gt;\n  mutate(proportion = n / sum(n)) |&gt;\n  select(platform, proportion)\n\n# A tibble: 3 × 2\n  platform        proportion\n  &lt;fct&gt;                &lt;dbl&gt;\n1 YouTube              0.410\n2 TikTok               0.361\n3 Instagram Reels      0.228\n\nvideos |&gt;\n  count(video_format, sort = TRUE) |&gt;\n  mutate(proportion = n / sum(n)) |&gt;\n  select(video_format, proportion)\n\n# A tibble: 5 × 2\n  video_format         proportion\n  &lt;fct&gt;                     &lt;dbl&gt;\n1 tutorial/how-to           0.237\n2 demonstration/review      0.217\n3 commentary                0.205\n4 skit/story                0.191\n5 vlog                      0.150\n\n\nYouTube is the modal platform, and tutorial/how-to is the modal video format."
   },
   {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-cs-quantitative-data",
-    "href": "lectures/l03_numeric_summaries.html#ex-cs-quantitative-data",
+    "objectID": "lectures/l03_numeric_summaries.html#practice-mean-median-and-mode",
+    "href": "lectures/l03_numeric_summaries.html#practice-mean-median-and-mode",
     "title": "Numeric Summaries",
-    "section": "Ex: CS Quantitative Data",
-    "text": "Ex: CS Quantitative Data\n\n\n\nExample 3.3\n\n\nIn the computer scientist dataset, which variables are discrete and which are continuous?\n\n\n\n\n\nIncome (Continuous)\nAge (Discrete, if in whole years)\nAge (Continuous, if in years, months, etc.)\nBirth Year (Discrete)\nEducation Years (Discrete)\nSAT (Discrete)"
+    "section": "Practice: Mean, Median, and Mode",
+    "text": "Practice: Mean, Median, and Mode\n\nCompute the mean and median of creator_audience_size.\nFind the modal category of topic.\nFind the modal category of thumbnail_style.\n\n\n\n\n\nSolution\n\n\n\n\n# A tibble: 1 × 2\n  mean_audience median_audience\n          &lt;dbl&gt;           &lt;dbl&gt;\n1        46177.           31436\n\n\n# A tibble: 5 × 2\n  topic              n\n  &lt;fct&gt;          &lt;int&gt;\n1 education         78\n2 entertainment     76\n3 lifestyle         74\n4 gaming            65\n5 product review    53\n\n\n# A tibble: 4 × 2\n  thumbnail_style            n\n  &lt;fct&gt;                  &lt;int&gt;\n1 text-led graphic         101\n2 creator face              96\n3 subject/product           94\n4 minimal/auto-generated    55\n\n\nThe mean audience size is about 46,177 and the median is 31,436, so the mean is pulled upward by large creators. Education is the modal topic, and text-led graphic is the modal thumbnail style."
   },
   {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-failure-quantitative-data",
-    "href": "lectures/l03_numeric_summaries.html#ex-failure-quantitative-data",
+    "objectID": "lectures/l03_numeric_summaries.html#choosing-between-the-mean-and-median",
+    "href": "lectures/l03_numeric_summaries.html#choosing-between-the-mean-and-median",
     "title": "Numeric Summaries",
-    "section": "Ex: Failure Quantitative Data",
-    "text": "Ex: Failure Quantitative Data\n\n\n\nExample 3.4\n\n\nIn the failure time dataset, which variables are discrete and which are continuous?\n\n\n\n\n\nGear Teeth (ANSWER HERE)\nNumber of Fasteners (ANSWER HERE)\nShaft Diameter (ANSWER HERE)\nEngine Temperature (ANSWER HERE)\nFailure Time (ANSWER HERE)"
+    "section": "Choosing Between the Mean and Median",
+    "text": "Choosing Between the Mean and Median\n\nThe mean uses every observation, so it contains more information. However, it is strongly affected by skew and outliers.\nThe median is resistant to skew and outliers because it depends only on the middle of the ordered data.\nWhen data are roughly symmetric, the mean and median are close, and the mean is usually preferred.\nWhen data are skewed, the median better describes a typical observation because the mean is pulled toward the long tail.\n\nIn the video dataset, the mean watch time is 21.1 seconds and the median is 18 seconds, while the mean audience size is 46,177 and the median is 31,436. These gaps reflect right skew, so the median is the better measure of a typical video or creator here.\nTakeaway: use the mean for roughly symmetric data and the median for skewed data."
   },
   {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-students",
-    "href": "lectures/l03_numeric_summaries.html#ex-students",
+    "objectID": "lectures/l03_numeric_summaries.html#definitions-quantiles-percentiles-and-quartiles",
+    "href": "lectures/l03_numeric_summaries.html#definitions-quantiles-percentiles-and-quartiles",
     "title": "Numeric Summaries",
-    "section": "Ex: Students",
-    "text": "Ex: Students\n\n\n\nExample 3.5\n\n\nTwo variables are being measured in a study on students. One is the type of degree they are pursuing, and the other is their GPA. Are these variables qualitative or quantitative?\n\n\n\n\nThe type of degree is qualitative and the GPA is quantitative."
+    "section": "Definitions: Quantiles, Percentiles, and Quartiles",
+    "text": "Definitions: Quantiles, Percentiles, and Quartiles\n\n\n\nDefinitions\n\n\nQuantiles are cut points that divide data into equal parts, each containing the same percentage of the data.\nPercentiles divide the data into 100 equal parts. The \\(k^{th}\\) percentile, \\(P_k\\), is the value below which \\(k\\%\\) of the data falls.\nQuartiles divide the data into four equal parts: \\(Q_1 = P_{25}\\), \\(Q_2 = P_{50}\\), and \\(Q_3 = P_{75}\\)."
   },
   {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-restaurants",
-    "href": "lectures/l03_numeric_summaries.html#ex-restaurants",
+    "objectID": "lectures/l03_numeric_summaries.html#example-percentiles-of-views",
+    "href": "lectures/l03_numeric_summaries.html#example-percentiles-of-views",
     "title": "Numeric Summaries",
-    "section": "Ex: Restaurants",
-    "text": "Ex: Restaurants\n\n\n\nExample 3.6\n\n\nA survey collects information about the preferred type of cuisine and the chosen restaurant chain.\n\n\n\n\nBoth of these are examples of qualitative variables."
+    "section": "Example: Percentiles of Views",
+    "text": "Example: Percentiles of Views\nThe 90th percentile of first-week views tells us the view count that separates the bottom 90% of videos from the top 10%:\n\nvideos |&gt;\n  summarise(\n    p10_views = quantile(views_first_7_days, 0.10),\n    p90_views = quantile(views_first_7_days, 0.90)\n  )\n\n# A tibble: 1 × 2\n  p10_views p90_views\n      &lt;dbl&gt;     &lt;dbl&gt;\n1     18242    37770."
   },
   {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-cars",
-    "href": "lectures/l03_numeric_summaries.html#ex-cars",
+    "objectID": "lectures/l03_numeric_summaries.html#example-quartiles-of-audience-size",
+    "href": "lectures/l03_numeric_summaries.html#example-quartiles-of-audience-size",
     "title": "Numeric Summaries",
-    "section": "Ex: Cars",
-    "text": "Ex: Cars\n\n\n\nExample 3.7\n\n\nA study examines the number of cars in a parking lot and the total amount of fuel consumed by the cars in liters. Are these variables discrete or continuous?\n\n\n\n\nThe number of cars is YOUR ANSWER and the amount of fuel consumed is YOUR ANSWER."
+    "section": "Example: Quartiles of Audience Size",
+    "text": "Example: Quartiles of Audience Size\nThe quartiles split the videos into four groups of roughly equal size based on audience size:\n\nvideos |&gt;\n  summarise(\n    Q1 = quantile(creator_audience_size, 0.25),\n    Q2 = quantile(creator_audience_size, 0.50),\n    Q3 = quantile(creator_audience_size, 0.75)\n  )\n\n# A tibble: 1 × 3\n     Q1    Q2     Q3\n  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;\n1 9460. 31436 62296."
   },
   {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-products",
-    "href": "lectures/l03_numeric_summaries.html#ex-products",
+    "objectID": "lectures/l03_numeric_summaries.html#practice-percentiles-and-quartiles",
+    "href": "lectures/l03_numeric_summaries.html#practice-percentiles-and-quartiles",
     "title": "Numeric Summaries",
-    "section": "Ex: Products",
-    "text": "Ex: Products\n\n\n\nExample 3.8\n\n\nA survey is asking participants about the time (hours, minutes, seconds, etc.) they spend exercising each week and their cholesterol levels in milligrams per deciliter. Are these variables discrete or continuous?\n\n\n\n\nThe time spent exercising is YOUR ANSWER and their cholesterol level is YOUR ANSWER."
+    "section": "Practice: Percentiles and Quartiles",
+    "text": "Practice: Percentiles and Quartiles\n\nFind the 10th and 90th percentiles of comments_first_7_days.\nFind the quartiles of video_length_seconds.\n\n\n\n\n\nSolution\n\n\n\n\n# A tibble: 1 × 2\n  p10_comments p90_comments\n         &lt;dbl&gt;        &lt;dbl&gt;\n1            0          221\n\n\n# A tibble: 1 × 3\n     Q1    Q2    Q3\n  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n1  122.   162   230"
   },
   {
-    "objectID": "lectures/l03_numeric_summaries.html#mean-average",
-    "href": "lectures/l03_numeric_summaries.html#mean-average",
+    "objectID": "lectures/l03_numeric_summaries.html#definitions-five-number-summary-outliers-range-and-iqr",
+    "href": "lectures/l03_numeric_summaries.html#definitions-five-number-summary-outliers-range-and-iqr",
     "title": "Numeric Summaries",
-    "section": "Mean (Average)",
-    "text": "Mean (Average)\n\n\n\nDefinition 3.5\n\n\nThe mean of a dataset is the sum of the data entries divided by the number of entries. The mean is only computed for quantitative data.\nThe mean can be computed as follows:\n\\[\n\\bar{x} = \\frac{1}{n}\\sum_{i=1}^n x_i\n\\]"
+    "section": "Definitions: Five-Number Summary, Outliers, Range, and IQR",
+    "text": "Definitions: Five-Number Summary, Outliers, Range, and IQR\n\n\n\nDefinitions\n\n\nThe minimum and maximum are the smallest and largest values in a dataset.\nThe five-number summary consists of the minimum, \\(Q_1\\), the median, \\(Q_3\\), and the maximum.\nThe range is the maximum minus the minimum. The interquartile range (IQR) is \\(Q_3 - Q_1\\).\nAn observation is a low outlier if it is below \\[\nL = Q_1 - 1.5 \\times IQR\n\\] and a high outlier if it is above \\[\nU = Q_3 + 1.5 \\times IQR\n\\]"
   },
   {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-cs-data-means",
-    "href": "lectures/l03_numeric_summaries.html#ex-cs-data-means",
+    "objectID": "lectures/l03_numeric_summaries.html#example-five-number-summary",
+    "href": "lectures/l03_numeric_summaries.html#example-five-number-summary",
     "title": "Numeric Summaries",
-    "section": "Ex: CS Data Means",
-    "text": "Ex: CS Data Means\n\n\n\nExample 3.9\n\n\nCompute the mean age, income, and SAT score in the CS dataset.\n\n\n\n\n\nmean(Age)\nmean(Income)\nmean(SAT)"
+    "section": "Example: Five-Number Summary",
+    "text": "Example: Five-Number Summary\nThe five-number summary for first-week views is:\n\nvideos |&gt;\n  summarise(\n    minimum = min(views_first_7_days),\n    Q1 = quantile(views_first_7_days, 0.25),\n    median = median(views_first_7_days),\n    Q3 = quantile(views_first_7_days, 0.75),\n    maximum = max(views_first_7_days),\n    range = maximum - minimum,\n    IQR = Q3 - Q1\n  )\n\n# A tibble: 1 × 7\n  minimum     Q1 median     Q3 maximum range    IQR\n    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;\n1    9005 21746.  26692 31817.   54923 45918 10071."
   },
   {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-failure-data-means",
-    "href": "lectures/l03_numeric_summaries.html#ex-failure-data-means",
+    "objectID": "lectures/l03_numeric_summaries.html#example-detecting-outliers",
+    "href": "lectures/l03_numeric_summaries.html#example-detecting-outliers",
     "title": "Numeric Summaries",
-    "section": "Ex: Failure Data Means",
-    "text": "Ex: Failure Data Means\n\n\n\nExample 3.10\n\n\nCompute the mean shaft diameter, engine temperature, and failure time in the failure dataset.\n\n\n\n\n\n# YOUR CODE HERE"
+    "section": "Example: Detecting Outliers",
+    "text": "Example: Detecting Outliers\nComments are strongly right-skewed, so the outlier fences are useful:\n\nfences &lt;- videos |&gt;\n  summarise(\n    lower = quantile(comments_first_7_days, 0.25) - 1.5 * IQR(comments_first_7_days),\n    upper = quantile(comments_first_7_days, 0.75) + 1.5 * IQR(comments_first_7_days)\n  )\n\nfences\n\n# A tibble: 1 × 2\n  lower upper\n  &lt;dbl&gt; &lt;dbl&gt;\n1 -135.  239.\n\nvideos |&gt;\n  filter(comments_first_7_days &lt; fences$lower | comments_first_7_days &gt; fences$upper) |&gt;\n  count()\n\n# A tibble: 1 × 1\n      n\n  &lt;int&gt;\n1    31"
   },
   {
-    "objectID": "lectures/l03_numeric_summaries.html#median",
-    "href": "lectures/l03_numeric_summaries.html#median",
+    "objectID": "lectures/l03_numeric_summaries.html#practice-outliers-and-the-five-number-summary",
+    "href": "lectures/l03_numeric_summaries.html#practice-outliers-and-the-five-number-summary",
     "title": "Numeric Summaries",
-    "section": "Median",
-    "text": "Median\n\n\n\nDefinition 3.6\n\n\nThe median of a dataset is the middle of the data when the dataset is ordered. The median is usually computed for quantitative data. Sometimes a median will be computed for ordered qualitative variables\nThe median is the \\(\\left(\\frac{n+1}{2}\\right)^{th}\\) value if \\(n\\) is odd and the \\(\\frac{\\left(\\frac{n}{2}\\right)^{th} + \\left(\\frac{n+2}{2}\\right)^{th}}{2}\\) value when \\(n\\) is even."
+    "section": "Practice: Outliers and the Five-Number Summary",
+    "text": "Practice: Outliers and the Five-Number Summary\nFind the five-number summary, range, IQR, and number of outliers for creator_audience_size.\n\n\n\n\nSolution\n\n\n\n\n# A tibble: 1 × 9\n  minimum    Q1 median     Q3 maximum  range    IQR   lower   upper\n    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;\n1     238 9460.  31436 62296.  336766 336528 52837. -69795. 141552.\n\n\n# A tibble: 1 × 1\n      n\n  &lt;int&gt;\n1    21"
   },
   {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-cs-data-medians",
-    "href": "lectures/l03_numeric_summaries.html#ex-cs-data-medians",
+    "objectID": "lectures/l03_numeric_summaries.html#definitions-variance-and-standard-deviation",
+    "href": "lectures/l03_numeric_summaries.html#definitions-variance-and-standard-deviation",
     "title": "Numeric Summaries",
-    "section": "Ex: CS Data Medians",
-    "text": "Ex: CS Data Medians\n\n\n\nExample 3.11\n\n\nCompute the median for age, income, and education degree (an ordered qualitative variable) in the CS dataset.\n\n\n\n\n\nmedian(Age)\nmedian(Income)\nEd_Deg_Ord &lt;- as.numeric(ordered(Education.Degree, levels = c(\"A\", \"BS\", \"MS\", \"PhD\")))\nmedian(Ed_Deg_Ord)"
+    "section": "Definitions: Variance and Standard Deviation",
+    "text": "Definitions: Variance and Standard Deviation\n\n\n\nDefinitions\n\n\nThe sample variance is \\[\ns^2 = \\frac{1}{n-1}\\sum_{i=1}^{n}(x_i - \\bar{x})^2\n\\]\nThe sample standard deviation is \\[\ns = \\sqrt{s^2}\n\\]\nVariance and standard deviation measure how far observations typically are from the mean."
   },
   {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-failure-data-medians",
-    "href": "lectures/l03_numeric_summaries.html#ex-failure-data-medians",
+    "objectID": "lectures/l03_numeric_summaries.html#example-standard-deviation-of-watch-time",
+    "href": "lectures/l03_numeric_summaries.html#example-standard-deviation-of-watch-time",
     "title": "Numeric Summaries",
-    "section": "Ex: Failure Data Medians",
-    "text": "Ex: Failure Data Medians\n\n\n\nExample 3.12\n\n\nCompute the median shaft diameter, engine temperature, and vibration (an ordered qualitative variable) in the failure time dataset.\n\n\n\n\n\n# YOUR CODE HERE"
+    "section": "Example: Standard Deviation of Watch Time",
+    "text": "Example: Standard Deviation of Watch Time\n\nvideos |&gt;\n  summarise(\n    variance_watch = var(average_watch_time_seconds),\n    sd_watch = sd(average_watch_time_seconds),\n    variance_views = var(views_first_7_days),\n    sd_views = sd(views_first_7_days)\n  )\n\n# A tibble: 1 × 4\n  variance_watch sd_watch variance_views sd_views\n           &lt;dbl&gt;    &lt;dbl&gt;          &lt;dbl&gt;    &lt;dbl&gt;\n1           206.     14.3      61335760.    7832.\n\n\nThe standard deviation of watch time is in seconds, while the variance is in squared seconds."
   },
   {
-    "objectID": "lectures/l03_numeric_summaries.html#mode",
-    "href": "lectures/l03_numeric_summaries.html#mode",
+    "objectID": "lectures/l03_numeric_summaries.html#example-standard-deviation-versus-iqr",
+    "href": "lectures/l03_numeric_summaries.html#example-standard-deviation-versus-iqr",
     "title": "Numeric Summaries",
-    "section": "Mode",
-    "text": "Mode\n\n\n\nDefinition 3.7\n\n\nThe mode is the data value that occurs most frequently in the dataset. This is easily computed for qualitative variables and discrete quantitative variables with few unique values. It is more difficult for discrete quantitative variables with many unique values and for continuous quantitative variables.\nA variable can have multiple modes."
+    "section": "Example: Standard Deviation Versus IQR",
+    "text": "Example: Standard Deviation Versus IQR\nComments contain large outliers, so the standard deviation is inflated much more than the IQR:\n\nvideos |&gt;\n  summarise(\n    sd_comments = sd(comments_first_7_days),\n    iqr_comments = IQR(comments_first_7_days),\n    sd_views = sd(views_first_7_days),\n    iqr_views = IQR(views_first_7_days)\n  )\n\n# A tibble: 1 × 4\n  sd_comments iqr_comments sd_views iqr_views\n        &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;\n1        175.         93.5    7832.    10071.\n\n\nThe standard deviation of comments is heavily influenced by the long right tail. The IQR is more resistant."
   },
   {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-cs-data-modes",
-    "href": "lectures/l03_numeric_summaries.html#ex-cs-data-modes",
+    "objectID": "lectures/l03_numeric_summaries.html#practice-variance-and-standard-deviation",
+    "href": "lectures/l03_numeric_summaries.html#practice-variance-and-standard-deviation",
     "title": "Numeric Summaries",
-    "section": "Ex: CS Data Modes",
-    "text": "Ex: CS Data Modes\n\n\n\nExample 3.13\n\n\nCompute the mode(s) for region, SAT, and income in the CS dataset.\n\n\n\n\n\ntable(Region)\ntable(Region)[which(table(Region) == max(table(Region)))]\ntable(SAT)\ntable(SAT)[which(table(SAT) == max(table(SAT)))]"
+    "section": "Practice: Variance and Standard Deviation",
+    "text": "Practice: Variance and Standard Deviation\nCompute the variance and standard deviation of creator_audience_size and likes_first_7_days. Which variable has more variability relative to its mean?\n\n\n\n\nSolution\n\n\n\n\n# A tibble: 1 × 4\n  variance_audience sd_audience variance_likes sd_likes\n              &lt;dbl&gt;       &lt;dbl&gt;          &lt;dbl&gt;    &lt;dbl&gt;\n1       2521027340.      50210.        438362.     662.\n\n\nAudience size has much more variability, both in absolute terms and relative to its mean."
   },
   {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-cs-data-modes-continued",
-    "href": "lectures/l03_numeric_summaries.html#ex-cs-data-modes-continued",
+    "objectID": "lectures/l03_numeric_summaries.html#choosing-a-measure-of-variability",
+    "href": "lectures/l03_numeric_summaries.html#choosing-a-measure-of-variability",
     "title": "Numeric Summaries",
-    "section": "Ex: CS Data Modes (Continued)",
-    "text": "Ex: CS Data Modes (Continued)\n\n\n\nExample 3.13 (Continued)\n\n\nCompute the mode(s) for region, SAT, and income in the CS dataset.\n\n\n\n\n\ndensity(Income)$x[which.max(density(Income)$y)]"
+    "section": "Choosing a Measure of Variability",
+    "text": "Choosing a Measure of Variability\n\nVariance uses all observations and is the basis for many later methods, but its units are squared and it is sensitive to outliers.\nStandard deviation is in the original units and is easy to interpret, but it is also sensitive to skew and outliers.\nRange is simple but depends only on the two most extreme observations, so a single outlier can dominate it.\nIQR is resistant to outliers and describes the spread of the middle 50% of the data.\nFive-number summary gives a robust overall picture of center and spread.\n\nIn the video dataset, the standard deviation of comments is inflated by the long right tail, while the IQR gives a more stable description of the middle of the distribution.\nTakeaway: use the standard deviation for roughly symmetric data and the IQR for skewed data."
   },
   {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-failure-data-modes",
-    "href": "lectures/l03_numeric_summaries.html#ex-failure-data-modes",
+    "objectID": "lectures/l03_numeric_summaries.html#definitions-variability-for-categorical-data",
+    "href": "lectures/l03_numeric_summaries.html#definitions-variability-for-categorical-data",
     "title": "Numeric Summaries",
-    "section": "Ex: Failure Data Modes",
-    "text": "Ex: Failure Data Modes\n\n\n\nExample 3.14\n\n\nCompute the mode(s) for hardness, gear teeth, and shaft diameter in the failure time dataset.\n\n\n\n\n\n# YOUR CODE HERE"
+    "section": "Definitions: Variability for Categorical Data",
+    "text": "Definitions: Variability for Categorical Data\n\n\n\nDefinition\n\n\nFor categorical data, variability is described with proportions: the proportion of observations in each category is the category frequency divided by the total number of observations."
   },
   {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-cs-data-modes-continued-1",
-    "href": "lectures/l03_numeric_summaries.html#ex-cs-data-modes-continued-1",
+    "objectID": "lectures/l03_numeric_summaries.html#example-platform-proportions",
+    "href": "lectures/l03_numeric_summaries.html#example-platform-proportions",
     "title": "Numeric Summaries",
-    "section": "Ex: CS Data Modes (Continued)",
-    "text": "Ex: CS Data Modes (Continued)\n\n\n\nExample 3.14 (Continued)\n\n\nCompute the mode(s) for hardness, gear teeth, and shaft diameter in the failure time dataset.\n\n\n\n\n\n# YOUR CODE HERE"
+    "section": "Example: Platform Proportions",
+    "text": "Example: Platform Proportions\n\nvideos |&gt;\n  count(platform) |&gt;\n  mutate(proportion = n / sum(n)) |&gt;\n  select(platform, proportion)\n\n# A tibble: 3 × 2\n  platform        proportion\n  &lt;fct&gt;                &lt;dbl&gt;\n1 Instagram Reels      0.228\n2 TikTok               0.361\n3 YouTube              0.410\n\n\nRoughly 41% of the videos in the sample came from YouTube, 36% from TikTok, and 23% from Instagram Reels."
   },
   {
-    "objectID": "lectures/l03_numeric_summaries.html#quantiles-and-percentiles",
-    "href": "lectures/l03_numeric_summaries.html#quantiles-and-percentiles",
+    "objectID": "lectures/l03_numeric_summaries.html#example-paid-promotion-proportions",
+    "href": "lectures/l03_numeric_summaries.html#example-paid-promotion-proportions",
     "title": "Numeric Summaries",
-    "section": "Quantiles and Percentiles",
-    "text": "Quantiles and Percentiles\n\n\n\nDefinition 3.8\n\n\nQuantiles are cut points that divide data into equal parts, each of which contains the same percentage of the data. Percentiles are quantiles that divide the data into 100 equal parts. We define \\(P_k\\) as the \\(k^{th}\\) percentile which is computed by finding the value below which \\(k\\%\\) of the data falls."
+    "section": "Example: Paid Promotion Proportions",
+    "text": "Example: Paid Promotion Proportions\n\nvideos |&gt;\n  count(paid_promotion) |&gt;\n  mutate(proportion = n / sum(n)) |&gt;\n  select(paid_promotion, proportion)\n\n# A tibble: 2 × 2\n  paid_promotion proportion\n  &lt;fct&gt;               &lt;dbl&gt;\n1 no                  0.899\n2 yes                 0.101\n\n\nMost videos in the sample did not use paid promotion."
   },
   {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-cs-data-quantiles",
-    "href": "lectures/l03_numeric_summaries.html#ex-cs-data-quantiles",
+    "objectID": "lectures/l03_numeric_summaries.html#practice-categorical-variability",
+    "href": "lectures/l03_numeric_summaries.html#practice-categorical-variability",
     "title": "Numeric Summaries",
-    "section": "Ex: CS Data Quantiles",
-    "text": "Ex: CS Data Quantiles\n\n\n\nExample 3.15\n\n\nFind the 90th percentile for income as well as the 35th percentile for age in the CS dataset.\n\n\n\n\n\nquantile(Income, 0.9)\nquantile(Age, 0.35)"
+    "section": "Practice: Categorical Variability",
+    "text": "Practice: Categorical Variability\nFind the proportions for video_format and production_effort.\n\n\n\n\nSolution\n\n\n\n\n# A tibble: 5 × 2\n  video_format         proportion\n  &lt;fct&gt;                     &lt;dbl&gt;\n1 commentary                0.205\n2 demonstration/review      0.217\n3 skit/story                0.191\n4 tutorial/how-to           0.237\n5 vlog                      0.150\n\n\n# A tibble: 3 × 2\n  production_effort proportion\n  &lt;fct&gt;                  &lt;dbl&gt;\n1 low                    0.312\n2 medium                 0.491\n3 high                   0.197"
   },
   {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-failure-data-quantiles",
-    "href": "lectures/l03_numeric_summaries.html#ex-failure-data-quantiles",
+    "objectID": "lectures/l03_numeric_summaries.html#summaries-within-groups",
+    "href": "lectures/l03_numeric_summaries.html#summaries-within-groups",
     "title": "Numeric Summaries",
-    "section": "Ex: Failure Data Quantiles",
-    "text": "Ex: Failure Data Quantiles\n\n\n\nExample 3.16\n\n\nFind the 75th percentile for failure time as well as the 10th percentile for engine temperature.\n\n\n\n\n\n# YOUR CODE HERE"
+    "section": "Summaries Within Groups",
+    "text": "Summaries Within Groups\nA grouped summary describes a quantitative variable separately for each category of a categorical variable. Grouping makes it possible to compare groups instead of collapsing everything into a single summary.\nFor categorical outcomes, we can also compare the proportion in each category within each group."
   },
   {
-    "objectID": "lectures/l03_numeric_summaries.html#quartiles",
-    "href": "lectures/l03_numeric_summaries.html#quartiles",
+    "objectID": "lectures/l03_numeric_summaries.html#example-comparing-performance-across-platforms",
+    "href": "lectures/l03_numeric_summaries.html#example-comparing-performance-across-platforms",
     "title": "Numeric Summaries",
-    "section": "Quartiles",
-    "text": "Quartiles\n\n\n\nDefinition 3.9\n\n\nQuartiles are quantiles that divide the data into four equal parts, called \\(Q_1 = P_{25}\\), \\(Q_2 = P_{50}\\), and \\(Q_3 = P_{75}\\)."
+    "section": "Example: Comparing Performance Across Platforms",
+    "text": "Example: Comparing Performance Across Platforms\n\nvideos |&gt;\n  group_by(platform) |&gt;\n  summarise(\n    n = n(),\n    mean_views = mean(views_first_7_days),\n    median_views = median(views_first_7_days),\n    sd_views = sd(views_first_7_days)\n  )\n\n# A tibble: 3 × 5\n  platform            n mean_views median_views sd_views\n  &lt;fct&gt;           &lt;int&gt;      &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;\n1 Instagram Reels    79     26371.       26940     6853.\n2 TikTok            125     27579.       26940     8050.\n3 YouTube           142     27656.       26388.    8150.\n\n\nThe platforms have similar average view counts, but their medians and standard deviations differ slightly."
   },
   {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-cs-data-quartiles",
-    "href": "lectures/l03_numeric_summaries.html#ex-cs-data-quartiles",
+    "objectID": "lectures/l03_numeric_summaries.html#example-proportions-within-groups",
+    "href": "lectures/l03_numeric_summaries.html#example-proportions-within-groups",
     "title": "Numeric Summaries",
-    "section": "Ex: CS Data Quartiles",
-    "text": "Ex: CS Data Quartiles\n\n\n\nExample 3.17\n\n\nFind the quartiles for income as well as for education years in the CS dataset.\n\n\n\n\n\nquantile(Income, c(0.25, 0.5, 0.75))\nquantile(Education.Years, c(0.25, 0.5, 0.75))"
+    "section": "Example: Proportions Within Groups",
+    "text": "Example: Proportions Within Groups\n\nvideos |&gt;\n  count(platform, paid_promotion) |&gt;\n  group_by(platform) |&gt;\n  mutate(proportion = n / sum(n)) |&gt;\n  ungroup() |&gt;\n  select(platform, paid_promotion, proportion)\n\n# A tibble: 6 × 3\n  platform        paid_promotion proportion\n  &lt;fct&gt;           &lt;fct&gt;               &lt;dbl&gt;\n1 Instagram Reels no                  0.835\n2 Instagram Reels yes                 0.165\n3 TikTok          no                  0.944\n4 TikTok          yes                 0.056\n5 YouTube         no                  0.894\n6 YouTube         yes                 0.106\n\n\nThis shows the proportion of videos that used paid promotion within each platform."
   },
   {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-failure-data-quartiles",
-    "href": "lectures/l03_numeric_summaries.html#ex-failure-data-quartiles",
+    "objectID": "lectures/l03_numeric_summaries.html#practice-grouped-summary",
+    "href": "lectures/l03_numeric_summaries.html#practice-grouped-summary",
     "title": "Numeric Summaries",
-    "section": "Ex: Failure Data Quartiles",
-    "text": "Ex: Failure Data Quartiles\n\n\n\nExample 3.18\n\n\nFind the quartiles for failure time as well as for fasteners in the failure time dataset.\n\n\n\n\n\n# YOUR CODE HERE"
+    "section": "Practice: Grouped Summary",
+    "text": "Practice: Grouped Summary\nCompute the mean, median, and standard deviation of likes_first_7_days for each topic.\n\n\n\n\nSolution\n\n\n\n\n# A tibble: 5 × 5\n  topic              n mean_likes median_likes sd_likes\n  &lt;fct&gt;          &lt;int&gt;      &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;\n1 education         78      1704.        1652.     603.\n2 entertainment     76      1845.        1846.     632.\n3 gaming            65      1756.        1705      632.\n4 lifestyle         74      1804.        1744      769.\n5 product review    53      1710.        1644      670."
   },
   {
-    "objectID": "lectures/l03_numeric_summaries.html#minimum-and-maximum",
-    "href": "lectures/l03_numeric_summaries.html#minimum-and-maximum",
+    "objectID": "lectures/l03_numeric_summaries.html#definition-correlation",
+    "href": "lectures/l03_numeric_summaries.html#definition-correlation",
     "title": "Numeric Summaries",
-    "section": "Minimum and Maximum",
-    "text": "Minimum and Maximum\n\n\n\nDefinition 3.10\n\n\nThe minimum is defined as the smallest value in the dataset and the maximum is defined as the largest value in the dataset."
+    "section": "Definition: Correlation",
+    "text": "Definition: Correlation\n\n\n\nDefinition\n\n\nThe correlation coefficient \\(r\\) measures the direction and strength of the linear relationship between two quantitative variables. It always falls between \\(-1\\) and \\(1\\).\n\n\\(r &gt; 0\\) indicates a positive linear relationship.\n\\(r &lt; 0\\) indicates a negative linear relationship.\n\\(r\\) near \\(0\\) indicates little or no linear relationship.\n\nCorrelation describes association, not causation, and it can be strongly affected by outliers."
   },
   {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-cs-data-extrema",
-    "href": "lectures/l03_numeric_summaries.html#ex-cs-data-extrema",
+    "objectID": "lectures/l03_numeric_summaries.html#example-a-strong-positive-correlation",
+    "href": "lectures/l03_numeric_summaries.html#example-a-strong-positive-correlation",
     "title": "Numeric Summaries",
-    "section": "Ex: CS Data Extrema",
-    "text": "Ex: CS Data Extrema\n\n\n\nExample 3.19\n\n\nFind the minimum and maximum for both age as well as SAT score in the CS dataset.\n\n\n\n\n\nmin(Age)\nmax(Age)\nmin(SAT)\nmax(SAT)"
+    "section": "Example: A Strong Positive Correlation",
+    "text": "Example: A Strong Positive Correlation\nLonger videos tend to have longer average watch times:\n\nvideos |&gt;\n  summarise(r = cor(video_length_seconds, average_watch_time_seconds))\n\n# A tibble: 1 × 1\n      r\n  &lt;dbl&gt;\n1 0.802\n\n\nThe correlation is about 0.80, which indicates a strong positive linear relationship."
   },
   {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-failure-data-extrema",
-    "href": "lectures/l03_numeric_summaries.html#ex-failure-data-extrema",
+    "objectID": "lectures/l03_numeric_summaries.html#example-little-linear-relationship",
+    "href": "lectures/l03_numeric_summaries.html#example-little-linear-relationship",
     "title": "Numeric Summaries",
-    "section": "Ex: Failure Data Extrema",
-    "text": "Ex: Failure Data Extrema\n\n\n\nExample 3.19\n\n\nFind the minimum and maximum for both gear teeth as well as engine temperature in the failure time dataset.\n\n\n\n\n\n# YOUR CODE HERE"
+    "section": "Example: Little Linear Relationship",
+    "text": "Example: Little Linear Relationship\nViews and comments are both engagement measures, but they are not strongly linearly related in this sample:\n\nvideos |&gt;\n  summarise(r = cor(views_first_7_days, comments_first_7_days))\n\n# A tibble: 1 × 1\n       r\n   &lt;dbl&gt;\n1 0.0521\n\n\nThe correlation is about 0.05, which indicates little linear relationship. The relationship is dominated by a few videos with many comments."
   },
   {
-    "objectID": "lectures/l03_numeric_summaries.html#counts-and-proportions",
-    "href": "lectures/l03_numeric_summaries.html#counts-and-proportions",
+    "objectID": "lectures/l03_numeric_summaries.html#practice-correlation",
+    "href": "lectures/l03_numeric_summaries.html#practice-correlation",
     "title": "Numeric Summaries",
-    "section": "Counts and Proportions",
-    "text": "Counts and Proportions\n\n\n\nDefinition 3.11\n\n\nA count is the number of observations belonging to a certain category. A proportion is the number of observations belonging to a category divided by the total number of observations."
+    "section": "Practice: Correlation",
+    "text": "Practice: Correlation\nCompute and interpret the correlations between:\n\naverage_watch_time_seconds and average_percentage_viewed\nvideo_length_seconds and average_percentage_viewed\n\n\n\n\n\nSolution\n\n\n\n\n# A tibble: 1 × 2\n  r_watch_pct r_length_pct\n        &lt;dbl&gt;        &lt;dbl&gt;\n1       0.638        0.129\n\n\nWatch time and percentage viewed have a moderately strong positive correlation, while video length and percentage viewed have a weak positive correlation. Longer videos do not necessarily keep a larger percentage of their viewers."
   },
   {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-cs-data-countprops",
-    "href": "lectures/l03_numeric_summaries.html#ex-cs-data-countprops",
+    "objectID": "lectures/l03_numeric_summaries.html#choosing-summary-measures",
+    "href": "lectures/l03_numeric_summaries.html#choosing-summary-measures",
     "title": "Numeric Summaries",
-    "section": "Ex: CS Data Count/Props",
-    "text": "Ex: CS Data Count/Props\n\n\n\nExample 3.20\n\n\nFind the counts and proportions for both region as well as education degree in the CS dataset.\n\n\n\n\n\ntable(Region)\ntable(Region)/length(Region)\ntable(Education.Degree)\ntable(Education.Degree)/length(Education.Degree)"
-  },
-  {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-failure-data-countprops",
-    "href": "lectures/l03_numeric_summaries.html#ex-failure-data-countprops",
-    "title": "Numeric Summaries",
-    "section": "Ex: Failure Data Count/Props",
-    "text": "Ex: Failure Data Count/Props\n\n\n\nExample 3.21\n\n\nFind the counts and proportions for both hardness as well as material type in the failure time dataset.\n\n\n\n\n\n# YOUR CODE HERE"
-  },
-  {
-    "objectID": "lectures/l03_numeric_summaries.html#range-and-iqr",
-    "href": "lectures/l03_numeric_summaries.html#range-and-iqr",
-    "title": "Numeric Summaries",
-    "section": "Range and IQR",
-    "text": "Range and IQR\n\n\n\nDefinition 3.12\n\n\nThe range is defined as the difference between the maximum and minimum.\nThe interquartile range (IQR) is the difference between \\(Q_3\\) and \\(Q_1\\)."
-  },
-  {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-cs-data-rangeiqr",
-    "href": "lectures/l03_numeric_summaries.html#ex-cs-data-rangeiqr",
-    "title": "Numeric Summaries",
-    "section": "Ex: CS Data Range/IQR",
-    "text": "Ex: CS Data Range/IQR\n\n\n\nExample 3.22\n\n\nFind the range and IQR for income and age in the CS dataset.\n\n\n\n\n\nmax(Income) - min(Income)\nIQR(Income)\nmax(Age) - min(Age)\nIQR(Age)"
-  },
-  {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-failure-data-rangeiqr",
-    "href": "lectures/l03_numeric_summaries.html#ex-failure-data-rangeiqr",
-    "title": "Numeric Summaries",
-    "section": "Ex: Failure Data Range/IQR",
-    "text": "Ex: Failure Data Range/IQR\n\n\n\nExample 3.23\n\n\nFind the range and IQR for failure time and fasteners in the failure time dataset.\n\n\n\n\n\n# YOUR CODE HERE"
-  },
-  {
-    "objectID": "lectures/l03_numeric_summaries.html#five-number-summary",
-    "href": "lectures/l03_numeric_summaries.html#five-number-summary",
-    "title": "Numeric Summaries",
-    "section": "Five-Number Summary",
-    "text": "Five-Number Summary\n\n\n\nDefinition 3.13\n\n\nThe five-number summary describes the data using the minimum, \\(Q_1\\), the median (\\(Q_2\\)), \\(Q_3\\), and the maximum."
-  },
-  {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-cs-data-fns",
-    "href": "lectures/l03_numeric_summaries.html#ex-cs-data-fns",
-    "title": "Numeric Summaries",
-    "section": "Ex: CS Data FNS",
-    "text": "Ex: CS Data FNS\n\n\n\nExample 3.24\n\n\nReport the five-number summary for both SAT score and education years in the CS datset.\n\n\n\n\n\nsummary(SAT)\nsummary(Education.Years)"
-  },
-  {
-    "objectID": "lectures/l03_numeric_summaries.html#exfailure-data-fns",
-    "href": "lectures/l03_numeric_summaries.html#exfailure-data-fns",
-    "title": "Numeric Summaries",
-    "section": "Ex:Failure Data FNS",
-    "text": "Ex:Failure Data FNS\n\n\n\nExample 3.25\n\n\nReport the five-number summary for both gear teeth and shaft diameter in the failure time datset.\n\n\n\n\n\n# YOUR CODE HERE"
-  },
-  {
-    "objectID": "lectures/l03_numeric_summaries.html#outliers",
-    "href": "lectures/l03_numeric_summaries.html#outliers",
-    "title": "Numeric Summaries",
-    "section": "Outliers",
-    "text": "Outliers\n\n\n\nDefinition 3.14\n\n\nAn outlier is an observation that seems to be far away from the bulk of the data.\nA low-outlier is any observation below the ‘lower fence’, which is calculated as:\n\\[L = Q_1 - 1.5 \\times IQR\\]\nA high-outlier is any observation above the ‘upper fence’, which is calculated as:\n\\[U = Q_3 + 1.5 \\times IQR\\]"
-  },
-  {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-cs-data-outliers",
-    "href": "lectures/l03_numeric_summaries.html#ex-cs-data-outliers",
-    "title": "Numeric Summaries",
-    "section": "Ex: CS Data Outliers",
-    "text": "Ex: CS Data Outliers\n\n\n\nExample 3.26\n\n\nAre there any outliers for income in the CS dataset?\n\n\n\n\n\nlower_fence &lt;- quantile(Income, 0.25) - 1.5*IQR(Income)\nupper_fence &lt;- quantile(Income, 0.75) + 1.5*IQR(Income)\n\nwhich(Income &lt;= lower_fence)\nwhich(Income &gt;= upper_fence)"
-  },
-  {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-failure-data-outliers",
-    "href": "lectures/l03_numeric_summaries.html#ex-failure-data-outliers",
-    "title": "Numeric Summaries",
-    "section": "Ex: Failure Data Outliers",
-    "text": "Ex: Failure Data Outliers\n\n\n\nExample 3.27\n\n\nAre there any outliers for gear teeth in the failure time dataset?\n\n\n\n\n\n# YOUR CODE HERE"
-  },
-  {
-    "objectID": "lectures/l03_numeric_summaries.html#variance-and-standard-deviation",
-    "href": "lectures/l03_numeric_summaries.html#variance-and-standard-deviation",
-    "title": "Numeric Summaries",
-    "section": "Variance and Standard Deviation",
-    "text": "Variance and Standard Deviation\n\n\n\nDefinition 3.15\n\n\nThe sample variance \\(s^2\\) is an estimate of the population variance \\(\\sigma^2\\) and is computed as:\n\\[s^2 = \\frac{1}{n-1} \\sum_{i=1}^n (x_i - \\bar{x})^2\\]\nThe sample standard deviation \\(s\\) is defined as:\n\\[s = \\sqrt{s^2}\\]"
-  },
-  {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-cs-data-s2-and-s",
-    "href": "lectures/l03_numeric_summaries.html#ex-cs-data-s2-and-s",
-    "title": "Numeric Summaries",
-    "section": "Ex: CS Data \\(s^2\\) and \\(s\\)",
-    "text": "Ex: CS Data \\(s^2\\) and \\(s\\)\n\n\n\nExample 3.28\n\n\nCompute the sample variance and standard deviation for income and age in the CS dataset.\n\n\n\n\n\nvar(Income)\nsd(Income)\nvar(Age)\nsd(Age)"
-  },
-  {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-failure-data-s2-and-s",
-    "href": "lectures/l03_numeric_summaries.html#ex-failure-data-s2-and-s",
-    "title": "Numeric Summaries",
-    "section": "Ex: Failure Data \\(s^2\\) and \\(s\\)",
-    "text": "Ex: Failure Data \\(s^2\\) and \\(s\\)\n\n\n\nExample 3.29\n\n\nCompute the sample variance and standard deviation for failure time and engine temperature in the failure time dataset.\n\n\n\n\n\n# YOUR CODE HERE"
-  },
-  {
-    "objectID": "lectures/l03_numeric_summaries.html#central-tendency",
-    "href": "lectures/l03_numeric_summaries.html#central-tendency",
-    "title": "Numeric Summaries",
-    "section": "Central Tendency",
-    "text": "Central Tendency\n\n\n\nDefinition 3.16\n\n\nMeasures of central tendency are used to describe data in terms of common or typical values. For quantitative variables, these include:\n\nMean\nMedian\nMode\n\nFor qualitative variables, these include:\n\nMedian (if categories are ordered)\nMode"
-  },
-  {
-    "objectID": "lectures/l03_numeric_summaries.html#variability-or-spread",
-    "href": "lectures/l03_numeric_summaries.html#variability-or-spread",
-    "title": "Numeric Summaries",
-    "section": "Variability (or Spread)",
-    "text": "Variability (or Spread)\n\n\n\nDefinition 3.17\n\n\nMeasures of variability or spread either quantify how much observations deviate from typical values or how far apart observations are from one another. For quantitative variables, measures of variability or spread include:\n\nVariance\nStandard Deviation\nRange\nIQR\nFive-Number Summary\n\nFor qualitative variables, measures of variability or spread include:\n\nCounts\nProportions"
-  },
-  {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-cs-data-centrality",
-    "href": "lectures/l03_numeric_summaries.html#ex-cs-data-centrality",
-    "title": "Numeric Summaries",
-    "section": "Ex: CS Data Centrality",
-    "text": "Ex: CS Data Centrality\n\n\n\nExample 3.30\n\n\nFor each variable in the CS dataset, what measures of centrality would we use?\n\n\n\n\n\nIncome (Mean, Median, or Mode)\nSex (Mode)\nAge (Mean, Median, or Mode)\nBirth Year (Mean, Median, or Mode)\nEducation Degree (Median or Mode)\nEducation Years (Mean, Median, or Mode)\nEthnicity (Mode)\nSAT (Mean, Median, or Mode)\nRegion (Mode)"
-  },
-  {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-failure-data-centrality",
-    "href": "lectures/l03_numeric_summaries.html#ex-failure-data-centrality",
-    "title": "Numeric Summaries",
-    "section": "Ex: Failure Data Centrality",
-    "text": "Ex: Failure Data Centrality\n\n\n\nExample 3.31\n\n\nFor each variable in the failure time dataset, what measures of centrality would we use?\n\n\n\n\n\nGear Teeth (YOUR ANSWER)\nNumber of Fasteners (YOUR ANSWER)\nHardness (YOUR ANSWER)\nMaterial (YOUR ANSWER)\nShaft Diameter (YOUR ANSWER)\nEngine Temperature (YOUR ANSWER)\nVibration (YOUR ANSWER)\nLubricant (YOUR ANSWER)\nFailure Time (YOUR ANSWER)"
-  },
-  {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-cs-data-variability",
-    "href": "lectures/l03_numeric_summaries.html#ex-cs-data-variability",
-    "title": "Numeric Summaries",
-    "section": "Ex: CS Data Variability",
-    "text": "Ex: CS Data Variability\n\n\n\nExample 3.32\n\n\nFor each variable in the CS dataset, what measures of variability (or spread) would we use?\n\n\n\n\n\nIncome (Variance, Standard Deviation, IQR, Range, or FNS)\nSex (Counts or Proportions)\nAge (Variance, Standard Deviation, IQR, Range, or FNS)\nBirth Year (Variance, Standard Deviation, IQR, Range, or FNS)\nEducation Degree (Counts or Proportions)\nEducation Years (Variance, Standard Deviation, IQR, Range, or FNS)\nEthnicity (Counts or Proportions)\nSAT (Variance, Standard Deviation, IQR, Range, or FNS)\nRegion (Counts or Proportions)"
-  },
-  {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-failure-data-variability",
-    "href": "lectures/l03_numeric_summaries.html#ex-failure-data-variability",
-    "title": "Numeric Summaries",
-    "section": "Ex: Failure Data Variability",
-    "text": "Ex: Failure Data Variability\n\n\n\nExample 3.32\n\n\nFor each variable in the failure time dataset, what measures of variability (or spread) would we use?\n\n\n\n\n\nGear Teeth (YOUR ANSWER)\nNumber of Fasteners (YOUR ANSWER)\nHardness (YOUR ANSWER)\nMaterial (YOUR ANSWER)\nShaft Diameter (YOUR ANSWER)\nEngine Temperature (YOUR ANSWER)\nVibration (YOUR ANSWER)\nLubricant (YOUR ANSWER)\nFailure Time (YOUR ANSWER)"
-  },
-  {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-central-tendency",
-    "href": "lectures/l03_numeric_summaries.html#ex-central-tendency",
-    "title": "Numeric Summaries",
-    "section": "Ex: Central Tendency",
-    "text": "Ex: Central Tendency\n\n\n\nExample 2.33\n\n\nFor each of the following variables, which measures of central tendency would we use?\n\nWeight\nFavorite Color\nBMI\n\n\n\n\n\n\nWeight (Mean, Median, or Mode)\nFavorite Color (Mode)\nBMI (Mean, Median, or Mode)"
-  },
-  {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-central-tendency-1",
-    "href": "lectures/l03_numeric_summaries.html#ex-central-tendency-1",
-    "title": "Numeric Summaries",
-    "section": "Ex: Central Tendency",
-    "text": "Ex: Central Tendency\n\n\n\nExample 2.34\n\n\nFor each of the following variables, which measures of central tendency would we use?\n\nSatisfaction Rating: Very Unsatisfied to Very Satisfied\nPlace of Birth\nHeight\n\n\n\n\n\n\nSatisfaction Rating: Very Unsatisfied to Very Satisfied (YOUR ANSWER)\nPlace of Birth (YOUR ANSWER)\nHeight (YOUR ANSWER)"
-  },
-  {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-variability",
-    "href": "lectures/l03_numeric_summaries.html#ex-variability",
-    "title": "Numeric Summaries",
-    "section": "Ex: Variability",
-    "text": "Ex: Variability\n\n\n\nExample 2.35\n\n\nFor each of the following variables, which measures of variability (or spread) would we use?\n\nFuel Efficiency, in MPG\nClothing Brand\nBus Wait Times\n\n\n\n\n\n\nFuel Efficiency, in MPG (Variance, Standard Deviation, IQR, Range, or FNS)\nClothing Brand (Counts or Proportions)\nBus Wait Times (Variance, Standard Deviation, IQR, Range, or FNS)"
-  },
-  {
-    "objectID": "lectures/l03_numeric_summaries.html#ex-variability-1",
-    "href": "lectures/l03_numeric_summaries.html#ex-variability-1",
-    "title": "Numeric Summaries",
-    "section": "Ex: Variability",
-    "text": "Ex: Variability\n\n\n\nExample 2.36\n\n\nFor each of the following variables, which measures of variability would we use?\n\nWood Type\nFlour Amount in Recipe\nTire Tread Life\n\n\n\n\n\n\nWood Type (YOUR ANSWER)\nFlour Amount in Recipe (YOUR ANSWER)\nTire Tread Life (YOUR ANSWER)"
+    "section": "Choosing Summary Measures",
+    "text": "Choosing Summary Measures\n\nCategorical data: use the mode for centrality and proportions for variability.\nQuantitative data: use the mean or median for centrality, and the standard deviation or IQR for variability.\nGrouped comparisons: use grouped summaries to compare quantitative variables across categories.\nTwo quantitative variables: use the correlation coefficient to describe the direction and strength of a linear relationship."
   },
   {
     "objectID": "lectures/index.html",
@@ -6997,7 +6766,7 @@
     "href": "lectures/l17_sampling_distributions.html#sampling-distribution-of-sample-mean-simulation",
     "title": "Sampling Distributions",
     "section": "Sampling Distribution of Sample Mean (Simulation)",
-    "text": "Sampling Distribution of Sample Mean (Simulation)\n\nnum_samples &lt;- 100000\nn &lt;- 30\nsigma &lt;- 10\nmu &lt;- 20\nxbars &lt;- rep(0, num_samples)\n\nfor (i in 1:num_samples){\n  random_sample &lt;- rnorm(n, mu, sigma)\n  xbar &lt;- mean(random_sample)\n  xbars[i] &lt;- xbar\n}\n\nmean(xbars)\n\n[1] 19.99565\n\nmu\n\n[1] 20\n\nsd(xbars)\n\n[1] 1.827582\n\nsigma/sqrt(n)\n\n[1] 1.825742"
+    "text": "Sampling Distribution of Sample Mean (Simulation)\n\nnum_samples &lt;- 100000\nn &lt;- 30\nsigma &lt;- 10\nmu &lt;- 20\nxbars &lt;- rep(0, num_samples)\n\nfor (i in 1:num_samples){\n  random_sample &lt;- rnorm(n, mu, sigma)\n  xbar &lt;- mean(random_sample)\n  xbars[i] &lt;- xbar\n}\n\nmean(xbars)\n\n[1] 19.98979\n\nmu\n\n[1] 20\n\nsd(xbars)\n\n[1] 1.831333\n\nsigma/sqrt(n)\n\n[1] 1.825742"
   },
   {
     "objectID": "lectures/l17_sampling_distributions.html#sampling-distribution-of-sample-mean-simulation-1",

@@ -205,1104 +205,731 @@
 </div>
 
 </section>
-<section id="qualitative-data" class="slide level2">
-<h2>Qualitative Data</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Definition 3.1</strong></p>
-</div>
-<div class="callout-content">
-<p>Non-numerical data that can only be classified into groups or categories are said to be <strong>qualitative</strong> or <strong>categorical</strong> data.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="quantitative-data" class="slide level2">
-<h2>Quantitative Data</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Definition 3.2</strong></p>
-</div>
-<div class="callout-content">
-<p><strong>Quantitative</strong> data are observations measured on a numerical scale.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="cs-dataset" class="slide level2">
-<h2>CS Dataset</h2>
+<section id="the-content-creation-dataset" class="slide level2">
+<h2>The Content Creation Dataset</h2>
+<p>The dataset contains 346 short-form videos. Each row is one video, and the columns describe how the video was made, when it was posted, and how it performed during its first seven days.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a>cs_dataset <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/cs_dataset.csv"</span>)</span>
-<span id="cb1-2"><a aria-label="2"></a><span class="fu">attach</span>(cs_dataset)</span>
-<span id="cb1-3"><a aria-label="3"></a><span class="fu">head</span>(cs_dataset)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-label="1"></a>videos <span class="sc">|&gt;</span></span>
+<span id="cb1-2"><a aria-label="2"></a>  <span class="fu">select</span>(platform, topic, views_first_7_days, average_watch_time_seconds, average_percentage_viewed) <span class="sc">|&gt;</span></span>
+<span id="cb1-3"><a aria-label="3"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 5
+  platform        topic          views_first_7_days average_watch_time_seconds
+  &lt;fct&gt;           &lt;fct&gt;                       &lt;dbl&gt;                      &lt;dbl&gt;
+1 TikTok          product review              25262                        5.1
+2 Instagram Reels product review              25543                       10.7
+3 YouTube         lifestyle                   33723                       25.9
+# ℹ 1 more variable: average_percentage_viewed &lt;dbl&gt;</code></pre>
+</div>
 </div>
 </section>
-<section id="ex-cs-data-types" class="slide level2">
-<h2>Ex: CS Data Types</h2>
+<section id="definitions-types-of-data" class="slide level2">
+<h2>Definitions: Types of Data</h2>
 <div class="callout callout-none no-icon callout-titled callout-style-simple">
 <div class="callout-body">
 <div class="callout-title">
-<p><strong>Example 3.1</strong></p>
+<p><strong>Definitions</strong></p>
 </div>
 <div class="callout-content">
-<p>In the computer scientist dataset, which of the variables are quantitative and which are qualitative?</p>
+<p><strong>Categorical data</strong> are non-numerical observations that classify units into groups or categories.</p>
+<p><strong>Quantitative data</strong> are observations measured on a numerical scale.</p>
+<p>Quantitative data are <strong>discrete</strong> when there are a finite or countably infinite number of distinct values. These are often counts, such as the number of views.</p>
+<p>Quantitative data are <strong>continuous</strong> when there are uncountably many possible values. These are often measurements that could be recorded with more precision, such as time.</p>
 </div>
 </div>
-</div>
-<div class="fragment">
-<ul>
-<li>Income (Quantitative)</li>
-<li>Sex (Qualitative)</li>
-<li>Age (Quantitative)</li>
-<li>Birth Year (Quantitative)</li>
-<li>Education Degree (Qualitative)</li>
-<li>Education Years (Quantitative)</li>
-<li>Ethnicity (Qualitative)</li>
-<li>SAT (Quantitative)</li>
-<li>Region (Qualitative)</li>
-</ul>
 </div>
 </section>
-<section id="failure-time-dataset" class="slide level2">
-<h2>Failure Time Dataset</h2>
+<section id="example-discrete-and-continuous-quantitative-variables" class="slide level2">
+<h2>Example: Discrete and Continuous Quantitative Variables</h2>
+<p>In the video dataset:</p>
+<ul>
+<li><code>views_first_7_days</code> is <strong>quantitative and discrete</strong>. A video can have 26,692 views or 26,693 views, but not 26,692.4 views.</li>
+<li><code>average_watch_time_seconds</code> is <strong>quantitative and continuous</strong>. Watch time can take on values such as 17.8 seconds, 17.83 seconds, or 17.831 seconds depending on the precision of the measurement.</li>
+</ul>
+</section>
+<section id="example-nominal-and-ordinal-categorical-variables" class="slide level2">
+<h2>Example: Nominal and Ordinal Categorical Variables</h2>
+<p>In the video dataset:</p>
+<ul>
+<li><code>platform</code> is <strong>categorical and nominal</strong>. The categories YouTube, TikTok, and Instagram Reels have no natural order.</li>
+<li><code>production_effort</code> is <strong>categorical and ordinal</strong>. The categories low, medium, and high have a natural order.</li>
+</ul>
+</section>
+<section id="practice-classifying-variables" class="slide level2">
+<h2>Practice: Classifying Variables</h2>
+<p>Classify each variable as categorical or quantitative. For the quantitative variables, also say whether they are discrete or continuous.</p>
+<ul>
+<li><code>topic</code></li>
+<li><code>title_length_words</code></li>
+<li><code>posting_time_local</code></li>
+<li><code>subscribers_gained_first_7_days</code></li>
+</ul>
+<div class="fragment">
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Solution</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><code>topic</code>: categorical (nominal).</li>
+<li><code>title_length_words</code>: quantitative and discrete.</li>
+<li><code>posting_time_local</code>: categorical (ordinal).</li>
+<li><code>subscribers_gained_first_7_days</code>: quantitative and discrete.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="definitions-mean-median-and-mode" class="slide level2">
+<h2>Definitions: Mean, Median, and Mode</h2>
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Definitions</strong></p>
+</div>
+<div class="callout-content">
+<p>The <strong>mean</strong> is the sum of the data entries divided by the number of entries. It is computed for quantitative data: <span class="math display">\[
+\bar{x} = \frac{1}{n}\sum_{i=1}^{n} x_i
+\]</span></p>
+<p>The <strong>median</strong> is the middle value when the quantitative data are ordered. If <span class="math inline">\(n\)</span> is odd, it is the <span class="math inline">\(\left(\frac{n+1}{2}\right)^{th}\)</span> value. If <span class="math inline">\(n\)</span> is even, it is the average of the <span class="math inline">\(\left(\frac{n}{2}\right)^{th}\)</span> and <span class="math inline">\(\left(\frac{n+2}{2}\right)^{th}\)</span> values.</p>
+<p>The <strong>mode</strong> is the most frequently occurring category. It is used to describe categorical data.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="example-mean-and-median-views" class="slide level2">
+<h2>Example: Mean and Median Views</h2>
+<p>The mean and median first-week views are both close to 27 thousand:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-label="1"></a>failure <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/failure_time.csv"</span>)</span>
-<span id="cb2-2"><a aria-label="2"></a><span class="fu">attach</span>(failure)</span>
-<span id="cb2-3"><a aria-label="3"></a><span class="fu">head</span>(failure)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a>videos <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a aria-label="2"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb3-3"><a aria-label="3"></a>    <span class="at">mean_views =</span> <span class="fu">mean</span>(views_first_7_days),</span>
+<span id="cb3-4"><a aria-label="4"></a>    <span class="at">median_views =</span> <span class="fu">median</span>(views_first_7_days)</span>
+<span id="cb3-5"><a aria-label="5"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  mean_views median_views
+       &lt;dbl&gt;        &lt;dbl&gt;
+1     27335.        26692</code></pre>
 </div>
+</div>
+<p>The mean is slightly larger than the median, which suggests a mild right skew in the view counts.</p>
 </section>
-<section id="ex-failure-data-types" class="slide level2">
-<h2>Ex: Failure Data Types</h2>
+<section id="example-modal-categories" class="slide level2">
+<h2>Example: Modal Categories</h2>
+<p>To find the mode of a categorical variable, count how often each category occurs:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a>videos <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a aria-label="2"></a>  <span class="fu">count</span>(platform, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a aria-label="3"></a>  <span class="fu">mutate</span>(<span class="at">proportion =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n)) <span class="sc">|&gt;</span></span>
+<span id="cb5-4"><a aria-label="4"></a>  <span class="fu">select</span>(platform, proportion)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  platform        proportion
+  &lt;fct&gt;                &lt;dbl&gt;
+1 YouTube              0.410
+2 TikTok               0.361
+3 Instagram Reels      0.228</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a>videos <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a aria-label="2"></a>  <span class="fu">count</span>(video_format, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a aria-label="3"></a>  <span class="fu">mutate</span>(<span class="at">proportion =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n)) <span class="sc">|&gt;</span></span>
+<span id="cb7-4"><a aria-label="4"></a>  <span class="fu">select</span>(video_format, proportion)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+  video_format         proportion
+  &lt;fct&gt;                     &lt;dbl&gt;
+1 tutorial/how-to           0.237
+2 demonstration/review      0.217
+3 commentary                0.205
+4 skit/story                0.191
+5 vlog                      0.150</code></pre>
+</div>
+</div>
+<p>YouTube is the modal platform, and tutorial/how-to is the modal video format.</p>
+</section>
+<section id="practice-mean-median-and-mode" class="slide level2 scrollable">
+<h2>Practice: Mean, Median, and Mode</h2>
+<ol type="1">
+<li>Compute the mean and median of <code>creator_audience_size</code>.</li>
+<li>Find the modal category of <code>topic</code>.</li>
+<li>Find the modal category of <code>thumbnail_style</code>.</li>
+</ol>
+<div class="fragment">
 <div class="callout callout-none no-icon callout-titled callout-style-simple">
 <div class="callout-body">
 <div class="callout-title">
-<p><strong>Example 3.1</strong></p>
+<p><strong>Solution</strong></p>
 </div>
 <div class="callout-content">
-<p>In the failure time dataset, which of the variables are quantitative and which are qualitative?</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  mean_audience median_audience
+          &lt;dbl&gt;           &lt;dbl&gt;
+1        46177.           31436</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+  topic              n
+  &lt;fct&gt;          &lt;int&gt;
+1 education         78
+2 entertainment     76
+3 lifestyle         74
+4 gaming            65
+5 product review    53</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+  thumbnail_style            n
+  &lt;fct&gt;                  &lt;int&gt;
+1 text-led graphic         101
+2 creator face              96
+3 subject/product           94
+4 minimal/auto-generated    55</code></pre>
+</div>
+</div>
+<p>The mean audience size is about 46,177 and the median is 31,436, so the mean is pulled upward by large creators. Education is the modal topic, and text-led graphic is the modal thumbnail style.</p>
 </div>
 </div>
 </div>
-<div class="fragment">
+</div>
+</section>
+<section id="choosing-between-the-mean-and-median" class="slide level2">
+<h2>Choosing Between the Mean and Median</h2>
 <ul>
-<li>Gear Teeth (<strong><em>ANSWER HERE</em></strong>)</li>
-<li>Number of Fasteners (<strong><em>ANSWER HERE</em></strong>)</li>
-<li>Hardness (<strong><em>ANSWER HERE</em></strong>)</li>
-<li>Material (<strong><em>ANSWER HERE</em></strong>)</li>
-<li>Shaft Diameter (<strong><em>ANSWER HERE</em></strong>)</li>
-<li>Engine Temperature (<strong><em>ANSWER HERE</em></strong>)</li>
-<li>Vibration (<strong><em>ANSWER HERE</em></strong>)</li>
-<li>Lubricant (<strong><em>ANSWER HERE</em></strong>)</li>
-<li>Failure Time (<strong><em>ANSWER HERE</em></strong>)</li>
+<li>The <strong>mean</strong> uses every observation, so it contains more information. However, it is strongly affected by skew and outliers.</li>
+<li>The <strong>median</strong> is resistant to skew and outliers because it depends only on the middle of the ordered data.</li>
+<li>When data are roughly symmetric, the mean and median are close, and the mean is usually preferred.</li>
+<li>When data are skewed, the median better describes a typical observation because the mean is pulled toward the long tail.</li>
 </ul>
-</div>
+<p>In the video dataset, the mean watch time is 21.1 seconds and the median is 18 seconds, while the mean audience size is 46,177 and the median is 31,436. These gaps reflect right skew, so the median is the better measure of a typical video or creator here.</p>
+<p><strong>Takeaway:</strong> use the mean for roughly symmetric data and the median for skewed data.</p>
 </section>
-<section id="discrete-data" class="slide level2">
-<h2>Discrete Data</h2>
+<section id="definitions-quantiles-percentiles-and-quartiles" class="slide level2">
+<h2>Definitions: Quantiles, Percentiles, and Quartiles</h2>
 <div class="callout callout-none no-icon callout-titled callout-style-simple">
 <div class="callout-body">
 <div class="callout-title">
-<p><strong>Definition 3.3</strong></p>
+<p><strong>Definitions</strong></p>
 </div>
 <div class="callout-content">
-<p>Quantitative data are <strong>discrete</strong> when there are a finite or countably infinite number of distinct values. These are often thought of as whole numbers or integers.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="continuous-data" class="slide level2">
-<h2>Continuous Data</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Definition 3.4</strong></p>
-</div>
-<div class="callout-content">
-<p>Quantitative data are <strong>continuous</strong> when there are uncountably many values. These are often thought of as real numbers.</p>
+<p><strong>Quantiles</strong> are cut points that divide data into equal parts, each containing the same percentage of the data.</p>
+<p><strong>Percentiles</strong> divide the data into 100 equal parts. The <span class="math inline">\(k^{th}\)</span> percentile, <span class="math inline">\(P_k\)</span>, is the value below which <span class="math inline">\(k\%\)</span> of the data falls.</p>
+<p><strong>Quartiles</strong> divide the data into four equal parts: <span class="math inline">\(Q_1 = P_{25}\)</span>, <span class="math inline">\(Q_2 = P_{50}\)</span>, and <span class="math inline">\(Q_3 = P_{75}\)</span>.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="ex-cs-quantitative-data" class="slide level2">
-<h2>Ex: CS Quantitative Data</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 3.3</strong></p>
+<section id="example-percentiles-of-views" class="slide level2">
+<h2>Example: Percentiles of Views</h2>
+<p>The 90th percentile of first-week views tells us the view count that separates the bottom 90% of videos from the top 10%:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-label="1"></a>videos <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a aria-label="2"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb12-3"><a aria-label="3"></a>    <span class="at">p10_views =</span> <span class="fu">quantile</span>(views_first_7_days, <span class="fl">0.10</span>),</span>
+<span id="cb12-4"><a aria-label="4"></a>    <span class="at">p90_views =</span> <span class="fu">quantile</span>(views_first_7_days, <span class="fl">0.90</span>)</span>
+<span id="cb12-5"><a aria-label="5"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  p10_views p90_views
+      &lt;dbl&gt;     &lt;dbl&gt;
+1     18242    37770.</code></pre>
 </div>
-<div class="callout-content">
-<p>In the computer scientist dataset, which variables are discrete and which are continuous?</p>
+</div>
+</section>
+<section id="example-quartiles-of-audience-size" class="slide level2">
+<h2>Example: Quartiles of Audience Size</h2>
+<p>The quartiles split the videos into four groups of roughly equal size based on audience size:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-label="1"></a>videos <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a aria-label="2"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb14-3"><a aria-label="3"></a>    <span class="at">Q1 =</span> <span class="fu">quantile</span>(creator_audience_size, <span class="fl">0.25</span>),</span>
+<span id="cb14-4"><a aria-label="4"></a>    <span class="at">Q2 =</span> <span class="fu">quantile</span>(creator_audience_size, <span class="fl">0.50</span>),</span>
+<span id="cb14-5"><a aria-label="5"></a>    <span class="at">Q3 =</span> <span class="fu">quantile</span>(creator_audience_size, <span class="fl">0.75</span>)</span>
+<span id="cb14-6"><a aria-label="6"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+     Q1    Q2     Q3
+  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+1 9460. 31436 62296.</code></pre>
 </div>
 </div>
-</div>
+</section>
+<section id="practice-percentiles-and-quartiles" class="slide level2 scrollable">
+<h2>Practice: Percentiles and Quartiles</h2>
+<ol type="1">
+<li>Find the 10th and 90th percentiles of <code>comments_first_7_days</code>.</li>
+<li>Find the quartiles of <code>video_length_seconds</code>.</li>
+</ol>
 <div class="fragment">
-<ul>
-<li>Income (Continuous)</li>
-<li>Age (Discrete, if in whole years)</li>
-<li>Age (Continuous, if in years, months, etc.)</li>
-<li>Birth Year (Discrete)</li>
-<li>Education Years (Discrete)</li>
-<li>SAT (Discrete)</li>
-</ul>
-</div>
-</section>
-<section id="ex-failure-quantitative-data" class="slide level2">
-<h2>Ex: Failure Quantitative Data</h2>
 <div class="callout callout-none no-icon callout-titled callout-style-simple">
 <div class="callout-body">
 <div class="callout-title">
-<p><strong>Example 3.4</strong></p>
+<p><strong>Solution</strong></p>
 </div>
 <div class="callout-content">
-<p>In the failure time dataset, which variables are discrete and which are continuous?</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  p10_comments p90_comments
+         &lt;dbl&gt;        &lt;dbl&gt;
+1            0          221</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 3
+     Q1    Q2    Q3
+  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1  122.   162   230</code></pre>
 </div>
 </div>
 </div>
-<div class="fragment">
-<ul>
-<li>Gear Teeth (<strong><em>ANSWER HERE</em></strong>)</li>
-<li>Number of Fasteners (<strong><em>ANSWER HERE</em></strong>)</li>
-<li>Shaft Diameter (<strong><em>ANSWER HERE</em></strong>)</li>
-<li>Engine Temperature (<strong><em>ANSWER HERE</em></strong>)</li>
-<li>Failure Time (<strong><em>ANSWER HERE</em></strong>)</li>
-</ul>
+</div>
+</div>
 </div>
 </section>
-<section id="ex-students" class="slide level2">
-<h2>Ex: Students</h2>
+<section id="definitions-five-number-summary-outliers-range-and-iqr" class="slide level2">
+<h2>Definitions: Five-Number Summary, Outliers, Range, and IQR</h2>
 <div class="callout callout-none no-icon callout-titled callout-style-simple">
 <div class="callout-body">
 <div class="callout-title">
-<p><strong>Example 3.5</strong></p>
+<p><strong>Definitions</strong></p>
 </div>
 <div class="callout-content">
-<p>Two variables are being measured in a study on students. One is the type of degree they are pursuing, and the other is their GPA. Are these variables qualitative or quantitative?</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>The type of degree is <strong><em>qualitative</em></strong> and the GPA is <strong><em>quantitative</em></strong>.</p>
-</div>
-</section>
-<section id="ex-restaurants" class="slide level2">
-<h2>Ex: Restaurants</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 3.6</strong></p>
-</div>
-<div class="callout-content">
-<p>A survey collects information about the preferred type of cuisine and the chosen restaurant chain.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>Both of these are examples of <strong><em>qualitative</em></strong> variables.</p>
-</div>
-</section>
-<section id="ex-cars" class="slide level2">
-<h2>Ex: Cars</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 3.7</strong></p>
-</div>
-<div class="callout-content">
-<p>A study examines the number of cars in a parking lot and the total amount of fuel consumed by the cars in liters. Are these variables discrete or continuous?</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>The number of cars is <strong><em>YOUR ANSWER</em></strong> and the amount of fuel consumed is <strong><em>YOUR ANSWER</em></strong>.</p>
-</div>
-</section>
-<section id="ex-products" class="slide level2">
-<h2>Ex: Products</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 3.8</strong></p>
-</div>
-<div class="callout-content">
-<p>A survey is asking participants about the time (hours, minutes, seconds, etc.) they spend exercising each week and their cholesterol levels in milligrams per deciliter. Are these variables discrete or continuous?</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<p>The time spent exercising is <strong><em>YOUR ANSWER</em></strong> and their cholesterol level is <strong><em>YOUR ANSWER</em></strong>.</p>
-</div>
-</section>
-<section id="mean-average" class="slide level2">
-<h2>Mean (Average)</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Definition 3.5</strong></p>
-</div>
-<div class="callout-content">
-<p>The <strong>mean</strong> of a dataset is the sum of the data entries divided by the number of entries. The mean is only computed for quantitative data.</p>
-<p>The mean can be computed as follows:</p>
-<p><span class="math display">\[
-\bar{x} = \frac{1}{n}\sum_{i=1}^n x_i
+<p>The <strong>minimum</strong> and <strong>maximum</strong> are the smallest and largest values in a dataset.</p>
+<p>The <strong>five-number summary</strong> consists of the minimum, <span class="math inline">\(Q_1\)</span>, the median, <span class="math inline">\(Q_3\)</span>, and the maximum.</p>
+<p>The <strong>range</strong> is the maximum minus the minimum. The <strong>interquartile range (IQR)</strong> is <span class="math inline">\(Q_3 - Q_1\)</span>.</p>
+<p>An observation is a <strong>low outlier</strong> if it is below <span class="math display">\[
+L = Q_1 - 1.5 \times IQR
+\]</span> and a <strong>high outlier</strong> if it is above <span class="math display">\[
+U = Q_3 + 1.5 \times IQR
 \]</span></p>
 </div>
 </div>
 </div>
 </section>
-<section id="ex-cs-data-means" class="slide level2">
-<h2>Ex: CS Data Means</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 3.9</strong></p>
-</div>
-<div class="callout-content">
-<p>Compute the mean age, income, and SAT score in the CS dataset.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
+<section id="example-five-number-summary" class="slide level2">
+<h2>Example: Five-Number Summary</h2>
+<p>The five-number summary for first-week views is:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-label="1"></a><span class="fu">mean</span>(Age)</span>
-<span id="cb3-2"><a aria-label="2"></a><span class="fu">mean</span>(Income)</span>
-<span id="cb3-3"><a aria-label="3"></a><span class="fu">mean</span>(SAT)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a aria-label="1"></a>videos <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a aria-label="2"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb18-3"><a aria-label="3"></a>    <span class="at">minimum =</span> <span class="fu">min</span>(views_first_7_days),</span>
+<span id="cb18-4"><a aria-label="4"></a>    <span class="at">Q1 =</span> <span class="fu">quantile</span>(views_first_7_days, <span class="fl">0.25</span>),</span>
+<span id="cb18-5"><a aria-label="5"></a>    <span class="at">median =</span> <span class="fu">median</span>(views_first_7_days),</span>
+<span id="cb18-6"><a aria-label="6"></a>    <span class="at">Q3 =</span> <span class="fu">quantile</span>(views_first_7_days, <span class="fl">0.75</span>),</span>
+<span id="cb18-7"><a aria-label="7"></a>    <span class="at">maximum =</span> <span class="fu">max</span>(views_first_7_days),</span>
+<span id="cb18-8"><a aria-label="8"></a>    <span class="at">range =</span> maximum <span class="sc">-</span> minimum,</span>
+<span id="cb18-9"><a aria-label="9"></a>    <span class="at">IQR =</span> Q3 <span class="sc">-</span> Q1</span>
+<span id="cb18-10"><a aria-label="10"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 7
+  minimum     Q1 median     Q3 maximum range    IQR
+    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+1    9005 21746.  26692 31817.   54923 45918 10071.</code></pre>
 </div>
 </div>
 </section>
-<section id="ex-failure-data-means" class="slide level2">
-<h2>Ex: Failure Data Means</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 3.10</strong></p>
-</div>
-<div class="callout-content">
-<p>Compute the mean shaft diameter, engine temperature, and failure time in the failure dataset.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
+<section id="example-detecting-outliers" class="slide level2">
+<h2>Example: Detecting Outliers</h2>
+<p>Comments are strongly right-skewed, so the outlier fences are useful:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a aria-label="1"></a>fences <span class="ot">&lt;-</span> videos <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a aria-label="2"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb20-3"><a aria-label="3"></a>    <span class="at">lower =</span> <span class="fu">quantile</span>(comments_first_7_days, <span class="fl">0.25</span>) <span class="sc">-</span> <span class="fl">1.5</span> <span class="sc">*</span> <span class="fu">IQR</span>(comments_first_7_days),</span>
+<span id="cb20-4"><a aria-label="4"></a>    <span class="at">upper =</span> <span class="fu">quantile</span>(comments_first_7_days, <span class="fl">0.75</span>) <span class="sc">+</span> <span class="fl">1.5</span> <span class="sc">*</span> <span class="fu">IQR</span>(comments_first_7_days)</span>
+<span id="cb20-5"><a aria-label="5"></a>  )</span>
+<span id="cb20-6"><a aria-label="6"></a></span>
+<span id="cb20-7"><a aria-label="7"></a>fences</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  lower upper
+  &lt;dbl&gt; &lt;dbl&gt;
+1 -135.  239.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a aria-label="1"></a>videos <span class="sc">|&gt;</span></span>
+<span id="cb22-2"><a aria-label="2"></a>  <span class="fu">filter</span>(comments_first_7_days <span class="sc">&lt;</span> fences<span class="sc">$</span>lower <span class="sc">|</span> comments_first_7_days <span class="sc">&gt;</span> fences<span class="sc">$</span>upper) <span class="sc">|&gt;</span></span>
+<span id="cb22-3"><a aria-label="3"></a>  <span class="fu">count</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+      n
+  &lt;int&gt;
+1    31</code></pre>
 </div>
 </div>
 </section>
-<section id="median" class="slide level2">
-<h2>Median</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Definition 3.6</strong></p>
-</div>
-<div class="callout-content">
-<p>The <strong>median</strong> of a dataset is the middle of the data when the dataset is ordered. The median is usually computed for quantitative data. Sometimes a median will be computed for ordered qualitative variables</p>
-<p>The median is the <span class="math inline">\(\left(\frac{n+1}{2}\right)^{th}\)</span> value if <span class="math inline">\(n\)</span> is odd and the <span class="math inline">\(\frac{\left(\frac{n}{2}\right)^{th} + \left(\frac{n+2}{2}\right)^{th}}{2}\)</span> value when <span class="math inline">\(n\)</span> is even.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="ex-cs-data-medians" class="slide level2">
-<h2>Ex: CS Data Medians</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 3.11</strong></p>
-</div>
-<div class="callout-content">
-<p>Compute the median for age, income, and education degree (an ordered qualitative variable) in the CS dataset.</p>
-</div>
-</div>
-</div>
+<section id="practice-outliers-and-the-five-number-summary" class="slide level2">
+<h2>Practice: Outliers and the Five-Number Summary</h2>
+<p>Find the five-number summary, range, IQR, and number of outliers for <code>creator_audience_size</code>.</p>
 <div class="fragment">
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-label="1"></a><span class="fu">median</span>(Age)</span>
-<span id="cb5-2"><a aria-label="2"></a><span class="fu">median</span>(Income)</span>
-<span id="cb5-3"><a aria-label="3"></a>Ed_Deg_Ord <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">ordered</span>(Education.Degree, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"BS"</span>, <span class="st">"MS"</span>, <span class="st">"PhD"</span>)))</span>
-<span id="cb5-4"><a aria-label="4"></a><span class="fu">median</span>(Ed_Deg_Ord)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</section>
-<section id="ex-failure-data-medians" class="slide level2">
-<h2>Ex: Failure Data Medians</h2>
 <div class="callout callout-none no-icon callout-titled callout-style-simple">
 <div class="callout-body">
 <div class="callout-title">
-<p><strong>Example 3.12</strong></p>
+<p><strong>Solution</strong></p>
 </div>
 <div class="callout-content">
-<p>Compute the median shaft diameter, engine temperature, and vibration (an ordered qualitative variable) in the failure time dataset.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 9
+  minimum    Q1 median     Q3 maximum  range    IQR   lower   upper
+    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1     238 9460.  31436 62296.  336766 336528 52837. -69795. 141552.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+      n
+  &lt;int&gt;
+1    21</code></pre>
 </div>
 </div>
 </div>
+</div>
+</div>
+</div>
+</section>
+<section id="definitions-variance-and-standard-deviation" class="slide level2">
+<h2>Definitions: Variance and Standard Deviation</h2>
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Definitions</strong></p>
+</div>
+<div class="callout-content">
+<p>The <strong>sample variance</strong> is <span class="math display">\[
+s^2 = \frac{1}{n-1}\sum_{i=1}^{n}(x_i - \bar{x})^2
+\]</span></p>
+<p>The <strong>sample standard deviation</strong> is <span class="math display">\[
+s = \sqrt{s^2}
+\]</span></p>
+<p>Variance and standard deviation measure how far observations typically are from the mean.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="example-standard-deviation-of-watch-time" class="slide level2">
+<h2>Example: Standard Deviation of Watch Time</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a aria-label="1"></a>videos <span class="sc">|&gt;</span></span>
+<span id="cb26-2"><a aria-label="2"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb26-3"><a aria-label="3"></a>    <span class="at">variance_watch =</span> <span class="fu">var</span>(average_watch_time_seconds),</span>
+<span id="cb26-4"><a aria-label="4"></a>    <span class="at">sd_watch =</span> <span class="fu">sd</span>(average_watch_time_seconds),</span>
+<span id="cb26-5"><a aria-label="5"></a>    <span class="at">variance_views =</span> <span class="fu">var</span>(views_first_7_days),</span>
+<span id="cb26-6"><a aria-label="6"></a>    <span class="at">sd_views =</span> <span class="fu">sd</span>(views_first_7_days)</span>
+<span id="cb26-7"><a aria-label="7"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 4
+  variance_watch sd_watch variance_views sd_views
+           &lt;dbl&gt;    &lt;dbl&gt;          &lt;dbl&gt;    &lt;dbl&gt;
+1           206.     14.3      61335760.    7832.</code></pre>
+</div>
+</div>
+<p>The standard deviation of watch time is in seconds, while the variance is in squared seconds.</p>
+</section>
+<section id="example-standard-deviation-versus-iqr" class="slide level2">
+<h2>Example: Standard Deviation Versus IQR</h2>
+<p>Comments contain large outliers, so the standard deviation is inflated much more than the IQR:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a aria-label="1"></a>videos <span class="sc">|&gt;</span></span>
+<span id="cb28-2"><a aria-label="2"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb28-3"><a aria-label="3"></a>    <span class="at">sd_comments =</span> <span class="fu">sd</span>(comments_first_7_days),</span>
+<span id="cb28-4"><a aria-label="4"></a>    <span class="at">iqr_comments =</span> <span class="fu">IQR</span>(comments_first_7_days),</span>
+<span id="cb28-5"><a aria-label="5"></a>    <span class="at">sd_views =</span> <span class="fu">sd</span>(views_first_7_days),</span>
+<span id="cb28-6"><a aria-label="6"></a>    <span class="at">iqr_views =</span> <span class="fu">IQR</span>(views_first_7_days)</span>
+<span id="cb28-7"><a aria-label="7"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 4
+  sd_comments iqr_comments sd_views iqr_views
+        &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+1        175.         93.5    7832.    10071.</code></pre>
+</div>
+</div>
+<p>The standard deviation of comments is heavily influenced by the long right tail. The IQR is more resistant.</p>
+</section>
+<section id="practice-variance-and-standard-deviation" class="slide level2">
+<h2>Practice: Variance and Standard Deviation</h2>
+<p>Compute the variance and standard deviation of <code>creator_audience_size</code> and <code>likes_first_7_days</code>. Which variable has more variability relative to its mean?</p>
 <div class="fragment">
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Solution</strong></p>
+</div>
+<div class="callout-content">
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 4
+  variance_audience sd_audience variance_likes sd_likes
+              &lt;dbl&gt;       &lt;dbl&gt;          &lt;dbl&gt;    &lt;dbl&gt;
+1       2521027340.      50210.        438362.     662.</code></pre>
 </div>
 </div>
-</section>
-<section id="mode" class="slide level2">
-<h2>Mode</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Definition 3.7</strong></p>
+<p>Audience size has much more variability, both in absolute terms and relative to its mean.</p>
 </div>
-<div class="callout-content">
-<p>The <strong>mode</strong> is the data value that occurs most frequently in the dataset. This is easily computed for qualitative variables and discrete quantitative variables with few unique values. It is more difficult for discrete quantitative variables with many unique values and for continuous quantitative variables.</p>
-<p>A variable can have multiple modes.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="ex-cs-data-modes" class="slide level2">
-<h2>Ex: CS Data Modes</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 3.13</strong></p>
-</div>
-<div class="callout-content">
-<p>Compute the mode(s) for region, SAT, and income in the CS dataset.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-label="1"></a><span class="fu">table</span>(Region)</span>
-<span id="cb7-2"><a aria-label="2"></a><span class="fu">table</span>(Region)[<span class="fu">which</span>(<span class="fu">table</span>(Region) <span class="sc">==</span> <span class="fu">max</span>(<span class="fu">table</span>(Region)))]</span>
-<span id="cb7-3"><a aria-label="3"></a><span class="fu">table</span>(SAT)</span>
-<span id="cb7-4"><a aria-label="4"></a><span class="fu">table</span>(SAT)[<span class="fu">which</span>(<span class="fu">table</span>(SAT) <span class="sc">==</span> <span class="fu">max</span>(<span class="fu">table</span>(SAT)))]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</section>
-<section id="ex-cs-data-modes-continued" class="slide level2">
-<h2>Ex: CS Data Modes (Continued)</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 3.13 (Continued)</strong></p>
-</div>
-<div class="callout-content">
-<p>Compute the mode(s) for region, SAT, and income in the CS dataset.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-label="1"></a><span class="fu">density</span>(Income)<span class="sc">$</span>x[<span class="fu">which.max</span>(<span class="fu">density</span>(Income)<span class="sc">$</span>y)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</section>
-<section id="ex-failure-data-modes" class="slide level2">
-<h2>Ex: Failure Data Modes</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 3.14</strong></p>
-</div>
-<div class="callout-content">
-<p>Compute the mode(s) for hardness, gear teeth, and shaft diameter in the failure time dataset.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</section>
-<section id="ex-cs-data-modes-continued-1" class="slide level2">
-<h2>Ex: CS Data Modes (Continued)</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 3.14 (Continued)</strong></p>
-</div>
-<div class="callout-content">
-<p>Compute the mode(s) for hardness, gear teeth, and shaft diameter in the failure time dataset.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</section>
-<section id="quantiles-and-percentiles" class="slide level2">
-<h2>Quantiles and Percentiles</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Definition 3.8</strong></p>
-</div>
-<div class="callout-content">
-<p><strong>Quantiles</strong> are cut points that divide data into equal parts, each of which contains the same percentage of the data. <strong>Percentiles</strong> are quantiles that divide the data into 100 equal parts. We define <span class="math inline">\(P_k\)</span> as the <span class="math inline">\(k^{th}\)</span> percentile which is computed by finding the value below which <span class="math inline">\(k\%\)</span> of the data falls.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="ex-cs-data-quantiles" class="slide level2">
-<h2>Ex: CS Data Quantiles</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 3.15</strong></p>
-</div>
-<div class="callout-content">
-<p>Find the 90th percentile for income as well as the 35th percentile for age in the CS dataset.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-label="1"></a><span class="fu">quantile</span>(Income, <span class="fl">0.9</span>)</span>
-<span id="cb11-2"><a aria-label="2"></a><span class="fu">quantile</span>(Age, <span class="fl">0.35</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</section>
-<section id="ex-failure-data-quantiles" class="slide level2">
-<h2>Ex: Failure Data Quantiles</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 3.16</strong></p>
-</div>
-<div class="callout-content">
-<p>Find the 75th percentile for failure time as well as the 10th percentile for engine temperature.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</section>
-<section id="quartiles" class="slide level2">
-<h2>Quartiles</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Definition 3.9</strong></p>
-</div>
-<div class="callout-content">
-<p><strong>Quartiles</strong> are quantiles that divide the data into four equal parts, called <span class="math inline">\(Q_1 = P_{25}\)</span>, <span class="math inline">\(Q_2 = P_{50}\)</span>, and <span class="math inline">\(Q_3 = P_{75}\)</span>.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="ex-cs-data-quartiles" class="slide level2">
-<h2>Ex: CS Data Quartiles</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 3.17</strong></p>
-</div>
-<div class="callout-content">
-<p>Find the quartiles for income as well as for education years in the CS dataset.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-label="1"></a><span class="fu">quantile</span>(Income, <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>))</span>
-<span id="cb13-2"><a aria-label="2"></a><span class="fu">quantile</span>(Education.Years, <span class="fu">c</span>(<span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</section>
-<section id="ex-failure-data-quartiles" class="slide level2">
-<h2>Ex: Failure Data Quartiles</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 3.18</strong></p>
-</div>
-<div class="callout-content">
-<p>Find the quartiles for failure time as well as for fasteners in the failure time dataset.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</section>
-<section id="minimum-and-maximum" class="slide level2">
-<h2>Minimum and Maximum</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Definition 3.10</strong></p>
-</div>
-<div class="callout-content">
-<p>The <strong>minimum</strong> is defined as the smallest value in the dataset and the <strong>maximum</strong> is defined as the largest value in the dataset.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="ex-cs-data-extrema" class="slide level2">
-<h2>Ex: CS Data Extrema</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 3.19</strong></p>
-</div>
-<div class="callout-content">
-<p>Find the minimum and maximum for both age as well as SAT score in the CS dataset.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a aria-label="1"></a><span class="fu">min</span>(Age)</span>
-<span id="cb15-2"><a aria-label="2"></a><span class="fu">max</span>(Age)</span>
-<span id="cb15-3"><a aria-label="3"></a><span class="fu">min</span>(SAT)</span>
-<span id="cb15-4"><a aria-label="4"></a><span class="fu">max</span>(SAT)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</section>
-<section id="ex-failure-data-extrema" class="slide level2">
-<h2>Ex: Failure Data Extrema</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 3.19</strong></p>
-</div>
-<div class="callout-content">
-<p>Find the minimum and maximum for both gear teeth as well as engine temperature in the failure time dataset.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</section>
-<section id="counts-and-proportions" class="slide level2">
-<h2>Counts and Proportions</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Definition 3.11</strong></p>
-</div>
-<div class="callout-content">
-<p>A <strong>count</strong> is the number of observations belonging to a certain category. A <strong>proportion</strong> is the number of observations belonging to a category divided by the total number of observations.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="ex-cs-data-countprops" class="slide level2">
-<h2>Ex: CS Data Count/Props</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 3.20</strong></p>
-</div>
-<div class="callout-content">
-<p>Find the counts and proportions for both region as well as education degree in the CS dataset.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-label="1"></a><span class="fu">table</span>(Region)</span>
-<span id="cb17-2"><a aria-label="2"></a><span class="fu">table</span>(Region)<span class="sc">/</span><span class="fu">length</span>(Region)</span>
-<span id="cb17-3"><a aria-label="3"></a><span class="fu">table</span>(Education.Degree)</span>
-<span id="cb17-4"><a aria-label="4"></a><span class="fu">table</span>(Education.Degree)<span class="sc">/</span><span class="fu">length</span>(Education.Degree)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</section>
-<section id="ex-failure-data-countprops" class="slide level2">
-<h2>Ex: Failure Data Count/Props</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 3.21</strong></p>
-</div>
-<div class="callout-content">
-<p>Find the counts and proportions for both hardness as well as material type in the failure time dataset.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</section>
-<section id="range-and-iqr" class="slide level2">
-<h2>Range and IQR</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Definition 3.12</strong></p>
-</div>
-<div class="callout-content">
-<p>The <strong>range</strong> is defined as the difference between the maximum and minimum.</p>
-<p>The <strong>interquartile range (IQR)</strong> is the difference between <span class="math inline">\(Q_3\)</span> and <span class="math inline">\(Q_1\)</span>.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="ex-cs-data-rangeiqr" class="slide level2">
-<h2>Ex: CS Data Range/IQR</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 3.22</strong></p>
-</div>
-<div class="callout-content">
-<p>Find the range and IQR for income and age in the CS dataset.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-label="1"></a><span class="fu">max</span>(Income) <span class="sc">-</span> <span class="fu">min</span>(Income)</span>
-<span id="cb19-2"><a aria-label="2"></a><span class="fu">IQR</span>(Income)</span>
-<span id="cb19-3"><a aria-label="3"></a><span class="fu">max</span>(Age) <span class="sc">-</span> <span class="fu">min</span>(Age)</span>
-<span id="cb19-4"><a aria-label="4"></a><span class="fu">IQR</span>(Age)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</section>
-<section id="ex-failure-data-rangeiqr" class="slide level2">
-<h2>Ex: Failure Data Range/IQR</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 3.23</strong></p>
-</div>
-<div class="callout-content">
-<p>Find the range and IQR for failure time and fasteners in the failure time dataset.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</section>
-<section id="five-number-summary" class="slide level2">
-<h2>Five-Number Summary</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Definition 3.13</strong></p>
-</div>
-<div class="callout-content">
-<p>The <strong>five-number summary</strong> describes the data using the minimum, <span class="math inline">\(Q_1\)</span>, the median (<span class="math inline">\(Q_2\)</span>), <span class="math inline">\(Q_3\)</span>, and the maximum.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="ex-cs-data-fns" class="slide level2">
-<h2>Ex: CS Data FNS</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 3.24</strong></p>
-</div>
-<div class="callout-content">
-<p>Report the five-number summary for both SAT score and education years in the CS datset.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-label="1"></a><span class="fu">summary</span>(SAT)</span>
-<span id="cb21-2"><a aria-label="2"></a><span class="fu">summary</span>(Education.Years)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</section>
-<section id="exfailure-data-fns" class="slide level2">
-<h2>Ex:Failure Data FNS</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 3.25</strong></p>
-</div>
-<div class="callout-content">
-<p>Report the five-number summary for both gear teeth and shaft diameter in the failure time datset.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</section>
-<section id="outliers" class="slide level2">
-<h2>Outliers</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Definition 3.14</strong></p>
-</div>
-<div class="callout-content">
-<p>An <strong>outlier</strong> is an observation that seems to be far away from the bulk of the data.</p>
-<p>A <strong>low-outlier</strong> is any observation below the ‘lower fence’, which is calculated as:</p>
-<p><span class="math display">\[L = Q_1 - 1.5 \times IQR\]</span></p>
-<p>A <strong>high-outlier</strong> is any observation above the ‘upper fence’, which is calculated as:</p>
-<p><span class="math display">\[U = Q_3 + 1.5 \times IQR\]</span></p>
-</div>
-</div>
-</div>
-</section>
-<section id="ex-cs-data-outliers" class="slide level2">
-<h2>Ex: CS Data Outliers</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 3.26</strong></p>
-</div>
-<div class="callout-content">
-<p>Are there any outliers for income in the CS dataset?</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-label="1"></a>lower_fence <span class="ot">&lt;-</span> <span class="fu">quantile</span>(Income, <span class="fl">0.25</span>) <span class="sc">-</span> <span class="fl">1.5</span><span class="sc">*</span><span class="fu">IQR</span>(Income)</span>
-<span id="cb23-2"><a aria-label="2"></a>upper_fence <span class="ot">&lt;-</span> <span class="fu">quantile</span>(Income, <span class="fl">0.75</span>) <span class="sc">+</span> <span class="fl">1.5</span><span class="sc">*</span><span class="fu">IQR</span>(Income)</span>
-<span id="cb23-3"><a aria-label="3"></a></span>
-<span id="cb23-4"><a aria-label="4"></a><span class="fu">which</span>(Income <span class="sc">&lt;=</span> lower_fence)</span>
-<span id="cb23-5"><a aria-label="5"></a><span class="fu">which</span>(Income <span class="sc">&gt;=</span> upper_fence)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</section>
-<section id="ex-failure-data-outliers" class="slide level2">
-<h2>Ex: Failure Data Outliers</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 3.27</strong></p>
-</div>
-<div class="callout-content">
-<p>Are there any outliers for gear teeth in the failure time dataset?</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</section>
-<section id="variance-and-standard-deviation" class="slide level2">
-<h2>Variance and Standard Deviation</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Definition 3.15</strong></p>
-</div>
-<div class="callout-content">
-<p>The <strong>sample variance</strong> <span class="math inline">\(s^2\)</span> is an estimate of the population variance <span class="math inline">\(\sigma^2\)</span> and is computed as:</p>
-<p><span class="math display">\[s^2 = \frac{1}{n-1} \sum_{i=1}^n (x_i - \bar{x})^2\]</span></p>
-<p>The <strong>sample standard deviation</strong> <span class="math inline">\(s\)</span> is defined as:</p>
-<p><span class="math display">\[s = \sqrt{s^2}\]</span></p>
-</div>
-</div>
-</div>
-</section>
-<section id="ex-cs-data-s2-and-s" class="slide level2">
-<h2>Ex: CS Data <span class="math inline">\(s^2\)</span> and <span class="math inline">\(s\)</span></h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 3.28</strong></p>
-</div>
-<div class="callout-content">
-<p>Compute the sample variance and standard deviation for income and age in the CS dataset.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a aria-label="1"></a><span class="fu">var</span>(Income)</span>
-<span id="cb25-2"><a aria-label="2"></a><span class="fu">sd</span>(Income)</span>
-<span id="cb25-3"><a aria-label="3"></a><span class="fu">var</span>(Age)</span>
-<span id="cb25-4"><a aria-label="4"></a><span class="fu">sd</span>(Age)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</section>
-<section id="ex-failure-data-s2-and-s" class="slide level2">
-<h2>Ex: Failure Data <span class="math inline">\(s^2\)</span> and <span class="math inline">\(s\)</span></h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 3.29</strong></p>
-</div>
-<div class="callout-content">
-<p>Compute the sample variance and standard deviation for failure time and engine temperature in the failure time dataset.</p>
-</div>
-</div>
-</div>
-<div class="fragment">
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a aria-label="1"></a><span class="co"># YOUR CODE HERE</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</div>
-</section>
-<section id="central-tendency" class="slide level2">
-<h2>Central Tendency</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Definition 3.16</strong></p>
-</div>
-<div class="callout-content">
-<p>Measures of <strong>central tendency</strong> are used to describe data in terms of common or typical values. For quantitative variables, these include:</p>
+<section id="choosing-a-measure-of-variability" class="slide level2">
+<h2>Choosing a Measure of Variability</h2>
 <ul>
-<li>Mean</li>
-<li>Median</li>
-<li>Mode</li>
+<li><strong>Variance</strong> uses all observations and is the basis for many later methods, but its units are squared and it is sensitive to outliers.</li>
+<li><strong>Standard deviation</strong> is in the original units and is easy to interpret, but it is also sensitive to skew and outliers.</li>
+<li><strong>Range</strong> is simple but depends only on the two most extreme observations, so a single outlier can dominate it.</li>
+<li><strong>IQR</strong> is resistant to outliers and describes the spread of the middle 50% of the data.</li>
+<li><strong>Five-number summary</strong> gives a robust overall picture of center and spread.</li>
 </ul>
-<p>For qualitative variables, these include:</p>
-<ul>
-<li>Median (if categories are ordered)</li>
-<li>Mode</li>
-</ul>
+<p>In the video dataset, the standard deviation of comments is inflated by the long right tail, while the IQR gives a more stable description of the middle of the distribution.</p>
+<p><strong>Takeaway:</strong> use the standard deviation for roughly symmetric data and the IQR for skewed data.</p>
+</section>
+<section id="definitions-variability-for-categorical-data" class="slide level2">
+<h2>Definitions: Variability for Categorical Data</h2>
+<div class="callout callout-none no-icon callout-titled callout-style-simple">
+<div class="callout-body">
+<div class="callout-title">
+<p><strong>Definition</strong></p>
+</div>
+<div class="callout-content">
+<p>For categorical data, variability is described with <strong>proportions</strong>: the proportion of observations in each category is the category frequency divided by the total number of observations.</p>
 </div>
 </div>
 </div>
 </section>
-<section id="variability-or-spread" class="slide level2">
-<h2>Variability (or Spread)</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Definition 3.17</strong></p>
-</div>
-<div class="callout-content">
-<p>Measures of <strong>variability</strong> or <strong>spread</strong> either quantify how much observations deviate from typical values or how far apart observations are from one another. For quantitative variables, measures of variability or spread include:</p>
-<ul>
-<li>Variance</li>
-<li>Standard Deviation</li>
-<li>Range</li>
-<li>IQR</li>
-<li>Five-Number Summary</li>
-</ul>
-<p>For qualitative variables, measures of variability or spread include:</p>
-<ul>
-<li>Counts</li>
-<li>Proportions</li>
-</ul>
+<section id="example-platform-proportions" class="slide level2">
+<h2>Example: Platform Proportions</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a aria-label="1"></a>videos <span class="sc">|&gt;</span></span>
+<span id="cb31-2"><a aria-label="2"></a>  <span class="fu">count</span>(platform) <span class="sc">|&gt;</span></span>
+<span id="cb31-3"><a aria-label="3"></a>  <span class="fu">mutate</span>(<span class="at">proportion =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n)) <span class="sc">|&gt;</span></span>
+<span id="cb31-4"><a aria-label="4"></a>  <span class="fu">select</span>(platform, proportion)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  platform        proportion
+  &lt;fct&gt;                &lt;dbl&gt;
+1 Instagram Reels      0.228
+2 TikTok               0.361
+3 YouTube              0.410</code></pre>
 </div>
 </div>
-</div>
+<p>Roughly 41% of the videos in the sample came from YouTube, 36% from TikTok, and 23% from Instagram Reels.</p>
 </section>
-<section id="ex-cs-data-centrality" class="slide level2">
-<h2>Ex: CS Data Centrality</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 3.30</strong></p>
+<section id="example-paid-promotion-proportions" class="slide level2">
+<h2>Example: Paid Promotion Proportions</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a aria-label="1"></a>videos <span class="sc">|&gt;</span></span>
+<span id="cb33-2"><a aria-label="2"></a>  <span class="fu">count</span>(paid_promotion) <span class="sc">|&gt;</span></span>
+<span id="cb33-3"><a aria-label="3"></a>  <span class="fu">mutate</span>(<span class="at">proportion =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n)) <span class="sc">|&gt;</span></span>
+<span id="cb33-4"><a aria-label="4"></a>  <span class="fu">select</span>(paid_promotion, proportion)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  paid_promotion proportion
+  &lt;fct&gt;               &lt;dbl&gt;
+1 no                  0.899
+2 yes                 0.101</code></pre>
 </div>
-<div class="callout-content">
-<p>For each variable in the CS dataset, what measures of centrality would we use?</p>
 </div>
-</div>
-</div>
+<p>Most videos in the sample did not use paid promotion.</p>
+</section>
+<section id="practice-categorical-variability" class="slide level2">
+<h2>Practice: Categorical Variability</h2>
+<p>Find the proportions for <code>video_format</code> and <code>production_effort</code>.</p>
 <div class="fragment">
-<ul>
-<li>Income (Mean, Median, or Mode)</li>
-<li>Sex (Mode)</li>
-<li>Age (Mean, Median, or Mode)</li>
-<li>Birth Year (Mean, Median, or Mode)</li>
-<li>Education Degree (Median or Mode)</li>
-<li>Education Years (Mean, Median, or Mode)</li>
-<li>Ethnicity (Mode)</li>
-<li>SAT (Mean, Median, or Mode)</li>
-<li>Region (Mode)</li>
-</ul>
-</div>
-</section>
-<section id="ex-failure-data-centrality" class="slide level2">
-<h2>Ex: Failure Data Centrality</h2>
 <div class="callout callout-none no-icon callout-titled callout-style-simple">
 <div class="callout-body">
 <div class="callout-title">
-<p><strong>Example 3.31</strong></p>
+<p><strong>Solution</strong></p>
 </div>
 <div class="callout-content">
-<p>For each variable in the failure time dataset, what measures of centrality would we use?</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 2
+  video_format         proportion
+  &lt;fct&gt;                     &lt;dbl&gt;
+1 commentary                0.205
+2 demonstration/review      0.217
+3 skit/story                0.191
+4 tutorial/how-to           0.237
+5 vlog                      0.150</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  production_effort proportion
+  &lt;fct&gt;                  &lt;dbl&gt;
+1 low                    0.312
+2 medium                 0.491
+3 high                   0.197</code></pre>
 </div>
 </div>
 </div>
-<div class="fragment">
-<ul>
-<li>Gear Teeth (<strong><em>YOUR ANSWER</em></strong>)</li>
-<li>Number of Fasteners (<strong><em>YOUR ANSWER</em></strong>)</li>
-<li>Hardness (<strong><em>YOUR ANSWER</em></strong>)</li>
-<li>Material (<strong><em>YOUR ANSWER</em></strong>)</li>
-<li>Shaft Diameter (<strong><em>YOUR ANSWER</em></strong>)</li>
-<li>Engine Temperature (<strong><em>YOUR ANSWER</em></strong>)</li>
-<li>Vibration (<strong><em>YOUR ANSWER</em></strong>)</li>
-<li>Lubricant (<strong><em>YOUR ANSWER</em></strong>)</li>
-<li>Failure Time (<strong><em>YOUR ANSWER</em></strong>)</li>
-</ul>
+</div>
+</div>
 </div>
 </section>
-<section id="ex-cs-data-variability" class="slide level2">
-<h2>Ex: CS Data Variability</h2>
+<section id="summaries-within-groups" class="slide level2">
+<h2>Summaries Within Groups</h2>
+<p>A <strong>grouped summary</strong> describes a quantitative variable separately for each category of a categorical variable. Grouping makes it possible to compare groups instead of collapsing everything into a single summary.</p>
+<p>For categorical outcomes, we can also compare the proportion in each category within each group.</p>
+</section>
+<section id="example-comparing-performance-across-platforms" class="slide level2">
+<h2>Example: Comparing Performance Across Platforms</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a aria-label="1"></a>videos <span class="sc">|&gt;</span></span>
+<span id="cb37-2"><a aria-label="2"></a>  <span class="fu">group_by</span>(platform) <span class="sc">|&gt;</span></span>
+<span id="cb37-3"><a aria-label="3"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb37-4"><a aria-label="4"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb37-5"><a aria-label="5"></a>    <span class="at">mean_views =</span> <span class="fu">mean</span>(views_first_7_days),</span>
+<span id="cb37-6"><a aria-label="6"></a>    <span class="at">median_views =</span> <span class="fu">median</span>(views_first_7_days),</span>
+<span id="cb37-7"><a aria-label="7"></a>    <span class="at">sd_views =</span> <span class="fu">sd</span>(views_first_7_days)</span>
+<span id="cb37-8"><a aria-label="8"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 5
+  platform            n mean_views median_views sd_views
+  &lt;fct&gt;           &lt;int&gt;      &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;
+1 Instagram Reels    79     26371.       26940     6853.
+2 TikTok            125     27579.       26940     8050.
+3 YouTube           142     27656.       26388.    8150.</code></pre>
+</div>
+</div>
+<p>The platforms have similar average view counts, but their medians and standard deviations differ slightly.</p>
+</section>
+<section id="example-proportions-within-groups" class="slide level2">
+<h2>Example: Proportions Within Groups</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a aria-label="1"></a>videos <span class="sc">|&gt;</span></span>
+<span id="cb39-2"><a aria-label="2"></a>  <span class="fu">count</span>(platform, paid_promotion) <span class="sc">|&gt;</span></span>
+<span id="cb39-3"><a aria-label="3"></a>  <span class="fu">group_by</span>(platform) <span class="sc">|&gt;</span></span>
+<span id="cb39-4"><a aria-label="4"></a>  <span class="fu">mutate</span>(<span class="at">proportion =</span> n <span class="sc">/</span> <span class="fu">sum</span>(n)) <span class="sc">|&gt;</span></span>
+<span id="cb39-5"><a aria-label="5"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
+<span id="cb39-6"><a aria-label="6"></a>  <span class="fu">select</span>(platform, paid_promotion, proportion)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  platform        paid_promotion proportion
+  &lt;fct&gt;           &lt;fct&gt;               &lt;dbl&gt;
+1 Instagram Reels no                  0.835
+2 Instagram Reels yes                 0.165
+3 TikTok          no                  0.944
+4 TikTok          yes                 0.056
+5 YouTube         no                  0.894
+6 YouTube         yes                 0.106</code></pre>
+</div>
+</div>
+<p>This shows the proportion of videos that used paid promotion within each platform.</p>
+</section>
+<section id="practice-grouped-summary" class="slide level2">
+<h2>Practice: Grouped Summary</h2>
+<p>Compute the mean, median, and standard deviation of <code>likes_first_7_days</code> for each <code>topic</code>.</p>
+<div class="fragment">
 <div class="callout callout-none no-icon callout-titled callout-style-simple">
 <div class="callout-body">
 <div class="callout-title">
-<p><strong>Example 3.32</strong></p>
+<p><strong>Solution</strong></p>
 </div>
 <div class="callout-content">
-<p>For each variable in the CS dataset, what measures of variability (or spread) would we use?</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 5
+  topic              n mean_likes median_likes sd_likes
+  &lt;fct&gt;          &lt;int&gt;      &lt;dbl&gt;        &lt;dbl&gt;    &lt;dbl&gt;
+1 education         78      1704.        1652.     603.
+2 entertainment     76      1845.        1846.     632.
+3 gaming            65      1756.        1705      632.
+4 lifestyle         74      1804.        1744      769.
+5 product review    53      1710.        1644      670.</code></pre>
 </div>
 </div>
 </div>
-<div class="fragment">
-<ul>
-<li>Income (Variance, Standard Deviation, IQR, Range, or FNS)</li>
-<li>Sex (Counts or Proportions)</li>
-<li>Age (Variance, Standard Deviation, IQR, Range, or FNS)</li>
-<li>Birth Year (Variance, Standard Deviation, IQR, Range, or FNS)</li>
-<li>Education Degree (Counts or Proportions)</li>
-<li>Education Years (Variance, Standard Deviation, IQR, Range, or FNS)</li>
-<li>Ethnicity (Counts or Proportions)</li>
-<li>SAT (Variance, Standard Deviation, IQR, Range, or FNS)</li>
-<li>Region (Counts or Proportions)</li>
-</ul>
+</div>
+</div>
 </div>
 </section>
-<section id="ex-failure-data-variability" class="slide level2">
-<h2>Ex: Failure Data Variability</h2>
+<section id="definition-correlation" class="slide level2">
+<h2>Definition: Correlation</h2>
 <div class="callout callout-none no-icon callout-titled callout-style-simple">
 <div class="callout-body">
 <div class="callout-title">
-<p><strong>Example 3.32</strong></p>
+<p><strong>Definition</strong></p>
 </div>
 <div class="callout-content">
-<p>For each variable in the failure time dataset, what measures of variability (or spread) would we use?</p>
-</div>
-</div>
-</div>
-<div class="fragment">
+<p>The <strong>correlation coefficient</strong> <span class="math inline">\(r\)</span> measures the direction and strength of the linear relationship between two quantitative variables. It always falls between <span class="math inline">\(-1\)</span> and <span class="math inline">\(1\)</span>.</p>
 <ul>
-<li>Gear Teeth (<strong><em>YOUR ANSWER</em></strong>)</li>
-<li>Number of Fasteners (<strong><em>YOUR ANSWER</em></strong>)</li>
-<li>Hardness (<strong><em>YOUR ANSWER</em></strong>)</li>
-<li>Material (<strong><em>YOUR ANSWER</em></strong>)</li>
-<li>Shaft Diameter (<strong><em>YOUR ANSWER</em></strong>)</li>
-<li>Engine Temperature (<strong><em>YOUR ANSWER</em></strong>)</li>
-<li>Vibration (<strong><em>YOUR ANSWER</em></strong>)</li>
-<li>Lubricant (<strong><em>YOUR ANSWER</em></strong>)</li>
-<li>Failure Time (<strong><em>YOUR ANSWER</em></strong>)</li>
+<li><span class="math inline">\(r &gt; 0\)</span> indicates a positive linear relationship.</li>
+<li><span class="math inline">\(r &lt; 0\)</span> indicates a negative linear relationship.</li>
+<li><span class="math inline">\(r\)</span> near <span class="math inline">\(0\)</span> indicates little or no linear relationship.</li>
 </ul>
+<p>Correlation describes association, not causation, and it can be strongly affected by outliers.</p>
+</div>
+</div>
 </div>
 </section>
-<section id="ex-central-tendency" class="slide level2">
-<h2>Ex: Central Tendency</h2>
+<section id="example-a-strong-positive-correlation" class="slide level2">
+<h2>Example: A Strong Positive Correlation</h2>
+<p>Longer videos tend to have longer average watch times:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a aria-label="1"></a>videos <span class="sc">|&gt;</span></span>
+<span id="cb42-2"><a aria-label="2"></a>  <span class="fu">summarise</span>(<span class="at">r =</span> <span class="fu">cor</span>(video_length_seconds, average_watch_time_seconds))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+      r
+  &lt;dbl&gt;
+1 0.802</code></pre>
+</div>
+</div>
+<p>The correlation is about 0.80, which indicates a strong positive linear relationship.</p>
+</section>
+<section id="example-little-linear-relationship" class="slide level2">
+<h2>Example: Little Linear Relationship</h2>
+<p>Views and comments are both engagement measures, but they are not strongly linearly related in this sample:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a aria-label="1"></a>videos <span class="sc">|&gt;</span></span>
+<span id="cb44-2"><a aria-label="2"></a>  <span class="fu">summarise</span>(<span class="at">r =</span> <span class="fu">cor</span>(views_first_7_days, comments_first_7_days))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+       r
+   &lt;dbl&gt;
+1 0.0521</code></pre>
+</div>
+</div>
+<p>The correlation is about 0.05, which indicates little linear relationship. The relationship is dominated by a few videos with many comments.</p>
+</section>
+<section id="practice-correlation" class="slide level2 scrollable">
+<h2>Practice: Correlation</h2>
+<p>Compute and interpret the correlations between:</p>
+<ol type="1">
+<li><code>average_watch_time_seconds</code> and <code>average_percentage_viewed</code></li>
+<li><code>video_length_seconds</code> and <code>average_percentage_viewed</code></li>
+</ol>
+<div class="fragment">
 <div class="callout callout-none no-icon callout-titled callout-style-simple">
 <div class="callout-body">
 <div class="callout-title">
-<p><strong>Example 2.33</strong></p>
+<p><strong>Solution</strong></p>
 </div>
 <div class="callout-content">
-<p>For each of the following variables, which measures of central tendency would we use?</p>
-<ul>
-<li>Weight</li>
-<li>Favorite Color</li>
-<li>BMI</li>
-</ul>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  r_watch_pct r_length_pct
+        &lt;dbl&gt;        &lt;dbl&gt;
+1       0.638        0.129</code></pre>
+</div>
+</div>
+<p>Watch time and percentage viewed have a moderately strong positive correlation, while video length and percentage viewed have a weak positive correlation. Longer videos do not necessarily keep a larger percentage of their viewers.</p>
 </div>
 </div>
 </div>
-<div class="fragment">
-<ul>
-<li>Weight (Mean, Median, or Mode)</li>
-<li>Favorite Color (Mode)</li>
-<li>BMI (Mean, Median, or Mode)</li>
-</ul>
 </div>
 </section>
-<section id="ex-central-tendency-1" class="slide level2">
-<h2>Ex: Central Tendency</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 2.34</strong></p>
-</div>
-<div class="callout-content">
-<p>For each of the following variables, which measures of central tendency would we use?</p>
+<section id="choosing-summary-measures" class="slide level2">
+<h2>Choosing Summary Measures</h2>
 <ul>
-<li>Satisfaction Rating: Very Unsatisfied to Very Satisfied</li>
-<li>Place of Birth</li>
-<li>Height</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="fragment">
-<ul>
-<li>Satisfaction Rating: Very Unsatisfied to Very Satisfied (<strong><em>YOUR ANSWER</em></strong>)</li>
-<li>Place of Birth (<strong><em>YOUR ANSWER</em></strong>)</li>
-<li>Height (<strong><em>YOUR ANSWER</em></strong>)</li>
-</ul>
-</div>
-</section>
-<section id="ex-variability" class="slide level2">
-<h2>Ex: Variability</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 2.35</strong></p>
-</div>
-<div class="callout-content">
-<p>For each of the following variables, which measures of variability (or spread) would we use?</p>
-<ul>
-<li>Fuel Efficiency, in MPG</li>
-<li>Clothing Brand</li>
-<li>Bus Wait Times</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="fragment">
-<ul>
-<li>Fuel Efficiency, in MPG (Variance, Standard Deviation, IQR, Range, or FNS)</li>
-<li>Clothing Brand (Counts or Proportions)</li>
-<li>Bus Wait Times (Variance, Standard Deviation, IQR, Range, or FNS)</li>
-</ul>
-</div>
-</section>
-<section id="ex-variability-1" class="slide level2">
-<h2>Ex: Variability</h2>
-<div class="callout callout-none no-icon callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<p><strong>Example 2.36</strong></p>
-</div>
-<div class="callout-content">
-<p>For each of the following variables, which measures of variability would we use?</p>
-<ul>
-<li>Wood Type</li>
-<li>Flour Amount in Recipe</li>
-<li>Tire Tread Life</li>
-</ul>
-</div>
-</div>
-</div>
-<div class="fragment">
-<ul>
-<li>Wood Type (<strong><em>YOUR ANSWER</em></strong>)</li>
-<li>Flour Amount in Recipe (<strong><em>YOUR ANSWER</em></strong>)</li>
-<li>Tire Tread Life (<strong><em>YOUR ANSWER</em></strong>)</li>
+<li><strong>Categorical data:</strong> use the mode for centrality and proportions for variability.</li>
+<li><strong>Quantitative data:</strong> use the mean or median for centrality, and the standard deviation or IQR for variability.</li>
+<li><strong>Grouped comparisons:</strong> use grouped summaries to compare quantitative variables across categories.</li>
+<li><strong>Two quantitative variables:</strong> use the correlation coefficient to describe the direction and strength of a linear relationship.</li>
 </ul>
 
 
-</div>
 </section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
